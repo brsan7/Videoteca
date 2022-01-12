@@ -11,7 +11,7 @@ using Videoteca.BLL;
 
 namespace Videoteca.DAL
 {
-    class AtoresDAL
+    class AtorDAL
     {
         Conexao con = new Conexao();
 

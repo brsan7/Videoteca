@@ -74,5 +74,33 @@ namespace Videoteca.DAL
             cmd.ExecuteNonQuery();
             con.Desconectar();
         }
+
+        public void Excluir(int ID_SERIE)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"DELETE
+                                FROM 
+                                    ElencoSerie
+                                WHERE
+                                    ID_SERIE = @id_serie";
+            cmd.Parameters.AddWithValue("@id_serie", ID_SERIE);
+            cmd.ExecuteNonQuery();
+            con.Desconectar();
+        }
+
+        public void Excluir(string NOME_ATOR)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"DELETE
+                                FROM 
+                                    ElencoSerie
+                                WHERE
+                                    NOME_ATOR = @nome_ator";
+            cmd.Parameters.AddWithValue("@nome_ator", NOME_ATOR);
+            cmd.ExecuteNonQuery();
+            con.Desconectar();
+        }
     }
 }

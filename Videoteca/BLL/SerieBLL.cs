@@ -10,21 +10,21 @@ namespace Videoteca.BLL
     {
         private int _id_serie;
 
-        private string _titulo_serie;
+        private string _titulo_serie = "Desconhecido";
 
-        private string _descricao;
+        private string _descricao = "Desconhecido";
 
-        private string _genero;
+        private string _genero = "Desconhecido";
 
-        private string _pais;
+        private string _pais = "Desconhecido";
 
-        private int _ano;
+        private int _ano = 0;
 
-        private double _duracao;
+        private double _duracao = 0;
 
-        private double _avaliacao;
+        private double _avaliacao = 0;
 
-        private bool _assistido;
+        private bool _assistido = false;
 
         public int ID_SERIE
         {

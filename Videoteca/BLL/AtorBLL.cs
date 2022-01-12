@@ -10,11 +10,11 @@ namespace Videoteca.BLL
     {
         private string _NOME_ATOR;
 
-        private short _IDADE;
+        private short _IDADE = 0;
 
-        private string _PAIS;
+        private string _PAIS = "Desconhecido";
 
-        private short _ATIVO;
+        private short _ATIVO = 0;
 
         public string NOME_ATOR
         {

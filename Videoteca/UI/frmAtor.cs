@@ -20,7 +20,9 @@ namespace Videoteca.UI
         }
 
         AtorBLL ator = new AtorBLL();
-        AtoresDAL atorDAL = new AtoresDAL();
+        AtorDAL atorDAL = new AtorDAL();
+        ElencoFilmeDAL elencoFilmeDAL = new ElencoFilmeDAL();
+        ElencoSerieDAL elencoSerieDAL = new ElencoSerieDAL();
         bool atualizar;
 
         private void btnCadastrar_Click(object sender, EventArgs e)
@@ -110,6 +112,8 @@ namespace Videoteca.UI
                 if(resposta == DialogResult.Yes)
                 {
                     ator.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
+                    elencoFilmeDAL.Excluir(ator.NOME_ATOR);
+                    elencoSerieDAL.Excluir(ator.NOME_ATOR);
                     atorDAL.Excluir(ator);
                     txtFiltro_TextChanged(null, null);
                 }

@@ -191,6 +191,7 @@
             this.cmbAtores.Size = new System.Drawing.Size(198, 23);
             this.cmbAtores.TabIndex = 34;
             this.cmbAtores.SelectedIndexChanged += new System.EventHandler(this.cmbAtores_SelectedIndexChanged);
+            this.cmbAtores.TextChanged += new System.EventHandler(this.cmbAtores_TextChanged);
             // 
             // txtDURACAO
             // 

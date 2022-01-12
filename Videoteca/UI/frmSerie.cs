@@ -21,6 +21,8 @@ namespace Videoteca.UI
 
         SerieBLL serieBLL = new SerieBLL();
         SerieDAL serieDAL = new SerieDAL();
+        AtorBLL atorBLL = new AtorBLL();
+        AtorDAL atorDAL = new AtorDAL();
         ElencoSerieBLL elencoSerieBLL = new ElencoSerieBLL();
         ElencoSerieDAL elencoSerieDAL = new ElencoSerieDAL();
         List<string> lstElenco = new List<string>();
@@ -96,7 +98,7 @@ namespace Videoteca.UI
         private void frmSerie_Load(object sender, EventArgs e)
         {
             //Fonte de dados do ComboBox
-            AtoresDAL atoresDAL = new AtoresDAL();
+            AtorDAL atoresDAL = new AtorDAL();
             cmbAtores.DataSource = atoresDAL.Consultar();
 
             //Configurar qual coluna sera utilizada para os valores
@@ -153,6 +155,7 @@ namespace Videoteca.UI
                 if (resposta == DialogResult.Yes)
                 {
                     serieBLL.ID_SERIE = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value);
+                    elencoSerieDAL.Excluir(serieBLL.ID_SERIE);
                     serieDAL.Excluir(serieBLL);
                     txtFiltro_TextChanged(null, null);
                 }
@@ -219,34 +222,88 @@ namespace Videoteca.UI
 
         private void btnInserirAtorElenco_Click(object sender, EventArgs e)
         {
+            DialogResult resposta;
             string cmbAtorInsert = cmbAtores.Text;
-            if (lstElenco.Contains(cmbAtorInsert))
+
+            if (btnInserir.Text.Equals("Registrar"))
             {
-                lstElenco.Remove(cmbAtores.Text);
-                txtELENCO.Clear();
-                foreach (var ator in lstElenco)
+                resposta = MessageBox.Show("Ator não registrado, Deseja registrar?",
+                                    "Confirmação",
+                                    MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Question,
+                                    MessageBoxDefaultButton.Button2);
+                if (resposta == DialogResult.Yes)
                 {
-                    txtELENCO.Text += ator + Environment.NewLine;
+                    atorBLL.NOME_ATOR = cmbAtorInsert;
+                    atorDAL.Cadastrar(atorBLL);
+                    MessageBox.Show("Ator Cadastrado!");
+
+                    lstElenco.Add(cmbAtorInsert);
+                    txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
+
+                    btnInserir.Text = "Remover";
                 }
-                btnInserir.Text = "Inserir";
             }
             else
             {
-                lstElenco.Add(cmbAtorInsert);
-                txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
-                btnInserir.Text = "Remover";
+                if (lstElenco.Contains(cmbAtorInsert))
+                {
+                    lstElenco.Remove(cmbAtores.Text);
+                    txtELENCO.Clear();
+
+                    foreach (var ator in lstElenco)
+                    {
+                        txtELENCO.Text += ator + Environment.NewLine;
+                    }
+                    btnInserir.Text = "Inserir";
+                }
+                else
+                {
+                    lstElenco.Add(cmbAtorInsert);
+                    txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
+                    btnInserir.Text = "Remover";
+                }
             }
         }
 
         private void cmbAtores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstElenco.Contains(cmbAtores.Text))
+            btnInserir_statusTexto(false);
+        }
+
+        private void cmbAtores_TextChanged(object sender, EventArgs e)
+        {
+            bool registrar = true;
+
+            foreach (var cmbItem in cmbAtores.Items)
             {
-                btnInserir.Text = "Remover";
+                if (cmbAtores.Text.Equals(cmbAtores.GetItemText(cmbItem)))
+                {
+                    registrar = false;
+                }
+            }
+
+            btnInserir_statusTexto(registrar);
+
+            txtASSISTIDO.Checked = registrar;
+        }
+
+        private void btnInserir_statusTexto(bool registrar)
+        {
+            if (registrar)
+            {
+                btnInserir.Text = "Registrar";
             }
             else
             {
-                btnInserir.Text = "Inserir";
+                if (lstElenco.Contains(cmbAtores.Text))
+                {
+                    btnInserir.Text = "Remover";
+                }
+                else
+                {
+                    btnInserir.Text = "Inserir";
+                }
             }
         }
     }
