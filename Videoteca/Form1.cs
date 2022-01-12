@@ -32,7 +32,7 @@ namespace Videoteca
         private void filmeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Instanciando um objeto da tela frmAluno
-            UI.frmSerie tela = new UI.frmSerie();
+            UI.frmFilme tela = new UI.frmFilme();
 
             //Prender dentro deste formulario (frmMenu)
             tela.MdiParent = this;
@@ -91,38 +91,6 @@ namespace Videoteca
                 seriesToolStripMenuItem.Enabled = false;
                 backupToolStripMenuItem.Enabled = false;
             }
-            //this.Text = Properties.Settings.Default.Titulo;
-            //this.BackColor = Properties.Settings.Default.CorDasTelas;
-
-            //lblUsuario.Text = "Nenhum usuario logado";
-            //atoresToolStripMenuItem.Enabled = false;
-            //coordenadorToolStripMenuItem.Enabled = false;
-            //cursoToolStripMenuItem.Enabled = false;
-            //matriculaToolStripMenuItem.Enabled = false;
-            //backupToolStripMenuItem.Enabled = false;
-
-            //loginLogoutToolStripMenuItem.Text = "Login";
-
-            //UI.frmLogin tela = new UI.frmLogin();
-            //tela.ShowDialog();
-
-            //if (tela.RetornaLogin().Autenticado)
-            //{
-            //    lblUsuario.Text = "Usuário logado: " + tela.RetornaLogin().Usuario;
-            //    atoresToolStripMenuItem.Enabled = true;
-            //    coordenadorToolStripMenuItem.Enabled = true;
-            //    cursoToolStripMenuItem.Enabled = true;
-            //    matriculaToolStripMenuItem.Enabled = true;
-            //    backupToolStripMenuItem.Enabled = true;
-
-            //    loginLogoutToolStripMenuItem.Text = "Logout";
-            //}
-            //atoresToolStripMenuItem.Enabled = true;
-        }
-
-        private void loginLogoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //frmMenu_Load(null, null);
         }
 
         private void configuracoesToolStripMenuItem_Click(object sender, EventArgs e)

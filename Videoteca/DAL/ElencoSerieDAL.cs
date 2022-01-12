@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Data;
 using System.Data.SqlClient;
+using Videoteca.BLL;
 
 namespace Videoteca.DAL
 {
@@ -13,7 +14,7 @@ namespace Videoteca.DAL
     {
         Conexao con = new Conexao();
 
-        public void Cadastrar(BLL.ElencoSerieBLL e)
+        public void Cadastrar(ElencoSerieBLL e)
         {
             
             SqlCommand cmd = new SqlCommand();
@@ -57,5 +58,21 @@ namespace Videoteca.DAL
             return resultado;
         }
 
+        public void Excluir(ElencoSerieBLL e)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"DELETE
+                                FROM 
+                                    ElencoSerie
+                                WHERE
+                                    ID_SERIE = @id_serie
+                                AND
+                                    NOME_ATOR = @nome_ator";
+            cmd.Parameters.AddWithValue("@id_serie", e.ID_SERIE);
+            cmd.Parameters.AddWithValue("@nome_ator", e.NOME_ATOR);
+            cmd.ExecuteNonQuery();
+            con.Desconectar();
+        }
     }
 }

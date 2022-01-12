@@ -24,6 +24,8 @@ namespace Videoteca.UI
         ElencoFilmeBLL elencoFilmeBLL = new ElencoFilmeBLL();
         ElencoFilmeDAL elencoFilmeDAL = new ElencoFilmeDAL();
         List<string> lstElenco = new List<string>();
+        List<string> lstElencoRegistrado = new List<string>();
+
         bool atualizar;
 
         private void btnCadastrar_Click(object sender, EventArgs e)
@@ -41,8 +43,21 @@ namespace Videoteca.UI
             if (atualizar)
             {
                 filmeDAL.Atualizar(filmeBLL);
-                /////////////////ATUALIZAR ELENCO
-                MessageBox.Show("Filme cadastrado!");
+
+                elencoFilmeBLL.ID_FILME = filmeBLL.ID_FILME;
+                foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElenco))
+                {
+                    elencoFilmeBLL.NOME_ATOR = ator;
+                    elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
+                }
+
+                foreach (var ator in elencoFilmeBLL.lstAtoresRemover(lstElencoRegistrado, lstElenco))
+                {
+                    elencoFilmeBLL.NOME_ATOR = ator;
+                    elencoFilmeDAL.Excluir(elencoFilmeBLL);
+                }
+
+                MessageBox.Show("Filme Atualizado!");
                 btnCadastrar.Text = "Cadastrar";
                 atualizar = false;
                 txtPAIS.ReadOnly = false;
@@ -61,7 +76,7 @@ namespace Videoteca.UI
                 }
                 
 
-                MessageBox.Show("Filme cadastrado!");
+                MessageBox.Show("Filme Cadastrado!");
             }
 
             txtTITULO_FILME.Clear();
@@ -73,6 +88,8 @@ namespace Videoteca.UI
             txtAVALIACAO.Clear();
             txtASSISTIDO.Checked = false;
             txtELENCO.Clear();
+            lstElenco.Clear();
+            lstElencoRegistrado.Clear();
 
 
             txtTITULO_FILME.Focus();
@@ -120,7 +137,6 @@ namespace Videoteca.UI
         {
             if (e.TabPageIndex == 1) 
             {
-
                 dgvResultado.DataSource = filmeDAL.Consultar();
             }
         }
@@ -167,12 +183,17 @@ namespace Videoteca.UI
             txtDURACAO.Text = filmeBLL.DURACAO.ToString();
             txtAVALIACAO.Text = filmeBLL.AVALIACAO.ToString();
             txtASSISTIDO.Checked = Convert.ToBoolean(filmeBLL.ASSISTIDO);
+            txtELENCO.Clear();
+            lstElenco.Clear();
+            lstElencoRegistrado.Clear();
 
             foreach (var ator in elencoFilmeDAL.Consultar(Convert.ToInt16(filmeBLL.ID_FILME)))
             {
                 txtELENCO.Text += ator +Environment.NewLine;
+                lstElenco.Add(ator);
+                lstElencoRegistrado.Add(ator);
             }
-
+            
             tabControl1.SelectTab(0);
         }
 
@@ -191,16 +212,17 @@ namespace Videoteca.UI
             txtDURACAO.Clear();
             txtAVALIACAO.Clear();
             txtASSISTIDO.Checked = false;
+            txtELENCO.Clear();
+            lstElenco.Clear();
+            lstElencoRegistrado.Clear();
 
             txtTITULO_FILME.Focus();
         }
 
         private void btnInserirAtorElenco_Click(object sender, EventArgs e)
         {
-            DialogResult resposta;
             string cmbAtorInsert = cmbAtores.Text;
-            
-            if (btnInserir.Text.Equals("Remover") && verificarAtor(cmbAtorInsert))
+            if (lstElenco.Contains(cmbAtorInsert))
             {
                 lstElenco.Remove(cmbAtores.Text);
                 txtELENCO.Clear();
@@ -212,59 +234,22 @@ namespace Videoteca.UI
             }
             else
             {
-                if (!lstElenco.Contains(cmbAtorInsert) && verificarAtor(cmbAtorInsert))
-                {
-                    lstElenco.Add(cmbAtorInsert);
-                    txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
-                    btnInserir.Text = "Remover";
-                }
-                else
-                {
-                    if (!verificarAtor(cmbAtorInsert))
-                    {
-                        resposta = MessageBox.Show("Ator não registrado, Deseja registrar?",
-                                            "Confirmação",
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question,
-                                            MessageBoxDefaultButton.Button2);
-                        if (resposta == DialogResult.Yes)
-                        {
-                            lstElenco.Add(cmbAtorInsert);
-                            txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
-                            btnInserir.Text = "Remover";
-                        }
-                    }
-                }
+                lstElenco.Add(cmbAtorInsert);
+                txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
+                btnInserir.Text = "Remover";
             }
         }
 
         private void cmbAtores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstElenco.Count > 0)
+            if(lstElenco.Contains(cmbAtores.Text))
+            {
+                btnInserir.Text = "Remover";
+            }
+            else
             {
                 btnInserir.Text = "Inserir";
-                foreach (var ator in lstElenco)
-                {
-                    if (cmbAtores.Text.Equals(ator))
-                    {
-                        btnInserir.Text = "Remover";
-                        break;
-                    }
-                }
             }
-
-        }
-
-        private bool verificarAtor(string ator)
-        {
-            foreach (var cmbItem in cmbAtores.Items)
-            {
-                if (ator.Equals(cmbAtores.GetItemText(cmbItem)))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

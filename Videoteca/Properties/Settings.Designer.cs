@@ -25,7 +25,7 @@ namespace Videoteca.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Videoteca")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sistema Academico")]
         public string Titulo {
             get {
                 return ((string)(this["Titulo"]));
@@ -49,7 +49,7 @@ namespace Videoteca.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Videoteca")]
+        [global::System.Configuration.DefaultSettingValueAttribute("BD_CRUD")]
         public string NomeBaseDeDados {
             get {
                 return ((string)(this["NomeBaseDeDados"]));
@@ -74,10 +74,10 @@ namespace Videoteca.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(local);Initial Catalog=Videoteca;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(local);Initial Catalog=BD_CRUD;Integrated Security=True")]
         public string BD_CRUDConnectionString {
             get {
-                return ((string)(this["VideotecaConnectionString"]));
+                return ((string)(this["BD_CRUDConnectionString"]));
             }
         }
     }

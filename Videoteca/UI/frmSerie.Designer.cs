@@ -447,7 +447,7 @@
             this.Controls.Add(this.tabControl1);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "frmSerie";
-            this.Text = "Filme";
+            this.Text = "Serie";
             this.Load += new System.EventHandler(this.frmSerie_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage.ResumeLayout(false);
