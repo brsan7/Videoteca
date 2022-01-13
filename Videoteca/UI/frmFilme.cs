@@ -35,7 +35,7 @@ namespace Videoteca.UI
 
             filmeBLL.TITULO_FILME = txtTITULO_FILME.Text;
             filmeBLL.DESCRICAO = txtDESCRICAO.Text;
-            filmeBLL.GENERO = txtGENERO.Text;
+            filmeBLL.GENERO = cmbGENERO.Text;
             filmeBLL.PAIS = txtPAIS.Text;
             filmeBLL.ANO = int.Parse(txtANO.Text);
             filmeBLL.DURACAO = float.Parse(txtDURACAO.Text);
@@ -83,7 +83,7 @@ namespace Videoteca.UI
 
             txtTITULO_FILME.Clear();
             txtDESCRICAO.Clear();
-            txtGENERO.Clear();
+            cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
             txtPAIS.Clear();
             txtANO.Clear();
             txtDURACAO.Clear();
@@ -93,9 +93,7 @@ namespace Videoteca.UI
             lstElenco.Clear();
             lstElencoRegistrado.Clear();
 
-
             txtTITULO_FILME.Focus();
-
         }
 
         private void frmFilme_Load(object sender, EventArgs e)
@@ -103,6 +101,8 @@ namespace Videoteca.UI
             //Fonte de dados do ComboBox
             AtorDAL atoresDAL = new AtorDAL();
             cmbAtores.DataSource = atoresDAL.Consultar();
+            //Fonte de dados do ComboBox(Lista)
+            cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
 
             //Configurar qual coluna sera utilizada para os valores
             cmbAtores.ValueMember = "NOME_ATOR";
@@ -131,15 +131,33 @@ namespace Videoteca.UI
 
         private void txtFiltro_TextChanged(object sender, EventArgs e)
         {
+            cmbFiltroGenero.SelectedIndex = 0;
             filmeBLL.TITULO_FILME = txtFiltro.Text;
             dgvResultado.DataSource = filmeDAL.Consultar(filmeBLL);
+        }
+
+        private void cmbGeneros_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbFiltroGenero.SelectedIndex > 0)
+            {
+                dgvResultado.DataSource = filmeDAL.Consultar(cmbFiltroGenero.Text);
+            }
+            else
+            {
+                dgvResultado.DataSource = filmeDAL.Consultar();
+            }
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
             if (e.TabPageIndex == 1) 
             {
-                dgvResultado.DataSource = filmeDAL.Consultar();
+                DataTable fonte = new DataTable();
+                fonte = filmeDAL.Consultar();
+
+                dgvResultado.DataSource = fonte;
+
+                cmbFiltroGenero.DataSource = cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
             }
         }
 
@@ -178,9 +196,10 @@ namespace Videoteca.UI
 
             filmeBLL = filmeDAL.PreecheFilme(filmeBLL);
 
+            groupBox1.Text = "Atualização de Filme";
             txtTITULO_FILME.Text = filmeBLL.TITULO_FILME;
             txtDESCRICAO.Text = filmeBLL.DESCRICAO;
-            txtGENERO.Text = filmeBLL.GENERO;
+            cmbGENERO.Text = filmeBLL.GENERO;
             txtPAIS.Text = filmeBLL.PAIS;
             txtANO.Text = filmeBLL.ANO.ToString();
             txtDURACAO.Text = filmeBLL.DURACAO.ToString();
@@ -196,7 +215,7 @@ namespace Videoteca.UI
                 lstElenco.Add(ator);
                 lstElencoRegistrado.Add(ator);
             }
-            
+            btnInserir_statusTexto(false);
             tabControl1.SelectTab(0);
         }
 
@@ -207,9 +226,10 @@ namespace Videoteca.UI
             btnCancelar.Visible = false;
             txtPAIS.ReadOnly = false;
 
+            groupBox1.Text = "Registro de Filme";
             txtTITULO_FILME.Clear();
             txtDESCRICAO.Clear();
-            txtGENERO.Clear();
+            cmbGENERO.SelectedIndex = 0;
             txtPAIS.Clear();
             txtANO.Clear();
             txtDURACAO.Clear();

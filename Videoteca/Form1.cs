@@ -62,10 +62,6 @@ namespace Videoteca
             {
                 e.Cancel = true;
             }
-            else
-            {
-                MessageBox.Show(e.CloseReason.ToString());
-            }
         }
 
         private void frmMenu_Load(object sender, EventArgs e)

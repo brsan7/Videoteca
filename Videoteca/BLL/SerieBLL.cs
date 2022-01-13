@@ -12,7 +12,13 @@ namespace Videoteca.BLL
 
         private string _titulo_serie = "Desconhecido";
 
+        private string _capitulo = "Desconhecido";
+
         private string _descricao = "Desconhecido";
+
+        private int _temporada = 0;
+
+        private int _episodio = 0;
 
         private string _genero = "Desconhecido";
 
@@ -51,6 +57,19 @@ namespace Videoteca.BLL
             }
         }
 
+        public string CAPITULO
+        {
+            get
+            {
+                return _capitulo;
+            }
+
+            set
+            {
+                _capitulo = value;
+            }
+        }
+
         public string DESCRICAO
         {
             get
@@ -61,6 +80,32 @@ namespace Videoteca.BLL
             set
             {
                 _descricao = value;
+            }
+        }
+
+        public int TEMPORADA
+        {
+            get
+            {
+                return _temporada;
+            }
+
+            set
+            {
+                _temporada = value;
+            }
+        }
+
+        public int EPISODIO
+        {
+            get
+            {
+                return _episodio;
+            }
+
+            set
+            {
+                _episodio = value;
             }
         }
 

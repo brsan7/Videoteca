@@ -87,6 +87,28 @@ namespace Videoteca.DAL
             return dt;
         }
 
+        public DataTable Consultar(string GENERO)
+        {
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"SELECT 
+                                    *
+                                FROM
+                                    Filmes
+                                WHERE
+                                    GENERO = @genero";
+            cmd.Parameters.AddWithValue("@genero", GENERO);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+
+            con.Desconectar();
+
+            return dt;
+        }
+
         public FilmeBLL BuscarUltimoRegistro(FilmeBLL f)
         {
             DataTable dt = new DataTable();
@@ -209,6 +231,22 @@ namespace Videoteca.DAL
             cmd.Parameters.AddWithValue("@id_filme", f.ID_FILME);
             cmd.ExecuteNonQuery();
             con.Desconectar();
+        }
+
+        public List<string> listarGeneros(DataTable fonte)
+        {
+            DataTableReader dr = new DataTableReader(fonte);
+            List<string> lstGenero = new List<string>();
+            lstGenero.Add("Gêneros");
+            while (dr.Read())
+            {
+                if (!lstGenero.Contains(dr["GENERO"].ToString()))
+                {
+                    lstGenero.Add(dr["GENERO"].ToString());
+                }
+            }
+            dr.Close();
+            return lstGenero;
         }
     }
 }

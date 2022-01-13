@@ -33,8 +33,11 @@ namespace Videoteca.UI
         {
 
             serieBLL.TITULO_SERIE = txtTITULO_SERIE.Text;
+            serieBLL.CAPITULO = txtCAPITULO.Text;
             serieBLL.DESCRICAO = txtDESCRICAO.Text;
-            serieBLL.GENERO = txtGENERO.Text;
+            serieBLL.TEMPORADA = int.Parse(txtTEMPORADA.Text);
+            serieBLL.EPISODIO = int.Parse(txtEPISODIO.Text);
+            serieBLL.GENERO = cmbGENERO.Text;
             serieBLL.PAIS = txtPAIS.Text;
             serieBLL.ANO = int.Parse(txtANO.Text);
             serieBLL.DURACAO = float.Parse(txtDURACAO.Text);
@@ -81,8 +84,11 @@ namespace Videoteca.UI
             }
 
             txtTITULO_SERIE.Clear();
+            txtCAPITULO.Clear();
             txtDESCRICAO.Clear();
-            txtGENERO.Clear();
+            txtTEMPORADA.Clear();
+            txtEPISODIO.Clear();
+            cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
             txtPAIS.Clear();
             txtANO.Clear();
             txtDURACAO.Clear();
@@ -97,9 +103,11 @@ namespace Videoteca.UI
 
         private void frmSerie_Load(object sender, EventArgs e)
         {
-            //Fonte de dados do ComboBox
+            //Fonte de dados do ComboBox(DataTable)
             AtorDAL atoresDAL = new AtorDAL();
             cmbAtores.DataSource = atoresDAL.Consultar();
+            //Fonte de dados do ComboBox(Lista)
+            cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
 
             //Configurar qual coluna sera utilizada para os valores
             cmbAtores.ValueMember = "NOME_ATOR";
@@ -128,16 +136,33 @@ namespace Videoteca.UI
 
         private void txtFiltro_TextChanged(object sender, EventArgs e)
         {
+            cmbFiltroGenero.SelectedIndex = 0;
             serieBLL.TITULO_SERIE = txtFiltro.Text;
             dgvResultado.DataSource = serieDAL.Consultar(serieBLL);
+        }
+
+        private void cmbGeneros_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbFiltroGenero.SelectedIndex > 0)
+            {
+                dgvResultado.DataSource = serieDAL.Consultar(cmbFiltroGenero.Text);
+            }
+            else
+            {
+                dgvResultado.DataSource = serieDAL.Consultar();
+            }
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
             if (e.TabPageIndex == 1) 
             {
+                DataTable fonte = new DataTable();
+                fonte = serieDAL.Consultar();
 
-                dgvResultado.DataSource = serieDAL.Consultar();
+                dgvResultado.DataSource = fonte;
+
+                cmbFiltroGenero.DataSource = serieDAL.listarGeneros(fonte);
             }
         }
 
@@ -176,9 +201,13 @@ namespace Videoteca.UI
 
             serieBLL = serieDAL.PreecheSerie(serieBLL);
 
+            groupBox1.Text = "Atualização de Série";
             txtTITULO_SERIE.Text = serieBLL.TITULO_SERIE;
+            txtCAPITULO.Text = serieBLL.CAPITULO;
             txtDESCRICAO.Text = serieBLL.DESCRICAO;
-            txtGENERO.Text = serieBLL.GENERO;
+            txtTEMPORADA.Text = serieBLL.TEMPORADA.ToString();
+            txtEPISODIO.Text = serieBLL.EPISODIO.ToString();
+            cmbGENERO.Text = serieBLL.GENERO;
             txtPAIS.Text = serieBLL.PAIS;
             txtANO.Text = serieBLL.ANO.ToString();
             txtDURACAO.Text = serieBLL.DURACAO.ToString();
@@ -194,7 +223,7 @@ namespace Videoteca.UI
                 lstElenco.Add(ator);
                 lstElencoRegistrado.Add(ator);
             }
-
+            btnInserir_statusTexto(false);
             tabControl1.SelectTab(0);
         }
 
@@ -205,9 +234,13 @@ namespace Videoteca.UI
             btnCancelar.Visible = false;
             txtPAIS.ReadOnly = false;
 
+            groupBox1.Text = "Registro de Série";
             txtTITULO_SERIE.Clear();
+            txtCAPITULO.Clear();
             txtDESCRICAO.Clear();
-            txtGENERO.Clear();
+            txtTEMPORADA.Clear();
+            txtEPISODIO.Clear();
+            cmbGENERO.SelectedIndex = 0;
             txtPAIS.Clear();
             txtANO.Clear();
             txtDURACAO.Clear();
@@ -216,6 +249,7 @@ namespace Videoteca.UI
             txtELENCO.Clear();
             lstElenco.Clear();
             lstElencoRegistrado.Clear();
+            btnInserir_statusTexto(false);
 
             txtTITULO_SERIE.Focus();
         }

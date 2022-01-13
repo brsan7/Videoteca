@@ -20,17 +20,23 @@ namespace Videoteca.DAL
             cmd.Connection = con.Conectar();
             cmd.CommandText = @"INSERT INTO Series(                                   
                                     TITULO_SERIE,
+                                    CAPITULO,
                                     DESCRICAO,
+                                    TEMPORADA,
+                                    EPISODIO,
                                     GENERO,
                                     PAIS,
                                     ANO,
                                     DURACAO,
                                     AVALIACAO,
                                     ASSISTIDO)
-                                VALUES(@titulo_serie,@descricao,@genero,@pais,@ano,@duracao,@avaliacao,@assistido)";
+                                VALUES(@titulo_serie,@capitulo,@descricao,@temporada,@episodio,@genero,@pais,@ano,@duracao,@avaliacao,@assistido)";
 
             cmd.Parameters.AddWithValue("@titulo_serie", s.TITULO_SERIE);
+            cmd.Parameters.AddWithValue("@capitulo", s.CAPITULO);
             cmd.Parameters.AddWithValue("@descricao", s.DESCRICAO);
+            cmd.Parameters.AddWithValue("@temporada", s.TEMPORADA);
+            cmd.Parameters.AddWithValue("@episodio", s.EPISODIO);
             cmd.Parameters.AddWithValue("@genero", s.GENERO);
             cmd.Parameters.AddWithValue("@pais", s.PAIS);
             cmd.Parameters.AddWithValue("@ano", s.ANO);
@@ -89,6 +95,28 @@ namespace Videoteca.DAL
             return dt;
         }
 
+        public DataTable Consultar(string GENERO)
+        {
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"SELECT 
+                                    *
+                                FROM
+                                    Series
+                                WHERE
+                                    GENERO = @genero";
+            cmd.Parameters.AddWithValue("@genero", GENERO);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+
+            con.Desconectar();
+
+            return dt;
+        }
+
         public SerieBLL BuscarUltimoRegistro(SerieBLL s)
         {
             DataTable dt = new DataTable();
@@ -100,7 +128,10 @@ namespace Videoteca.DAL
                                     Series
                                 WHERE
                                     TITULO_SERIE = @titulo_serie AND
+                                    CAPITULO = @capitulo AND
                                     DESCRICAO = @descricao AND
+                                    TEMPORADA = @temporada AND
+                                    EPISODIO = @episodio AND
                                     GENERO = @genero AND
                                     PAIS = @pais AND
                                     ANO = @ano AND
@@ -108,7 +139,10 @@ namespace Videoteca.DAL
                                     AVALIACAO = @avaliacao AND
                                     ASSISTIDO = @assistido";
             cmd.Parameters.AddWithValue("@titulo_serie", s.TITULO_SERIE);
+            cmd.Parameters.AddWithValue("@capitulo", s.CAPITULO);
             cmd.Parameters.AddWithValue("@descricao", s.DESCRICAO);
+            cmd.Parameters.AddWithValue("@temporada", s.TEMPORADA);
+            cmd.Parameters.AddWithValue("@episodio", s.EPISODIO);
             cmd.Parameters.AddWithValue("@genero", s.GENERO);
             cmd.Parameters.AddWithValue("@pais", s.PAIS);
             cmd.Parameters.AddWithValue("@ano", s.ANO);
@@ -163,7 +197,10 @@ namespace Videoteca.DAL
                 dr.Read();
                 s.ID_SERIE = Convert.ToInt16(dr["ID_SERIE"]);
                 s.TITULO_SERIE = dr["TITULO_SERIE"].ToString();
+                s.CAPITULO = dr["CAPITULO"].ToString();
                 s.DESCRICAO = dr["DESCRICAO"].ToString();
+                s.TEMPORADA = Convert.ToInt16(dr["TEMPORADA"]);
+                s.EPISODIO = Convert.ToInt16(dr["EPISODIO"]);
                 s.GENERO = dr["GENERO"].ToString();
                 s.PAIS = dr["PAIS"].ToString();
                 s.ANO = Convert.ToInt16(dr["ANO"]);
@@ -190,7 +227,10 @@ namespace Videoteca.DAL
                                     Series
                                 SET
                                     TITULO_SERIE = @titulo_serie,
+                                    CAPITULO = @capitulo,
                                     DESCRICAO = @descricao,
+                                    TEMPORADA = @temporada,
+                                    EPISODIO = @episodio,
                                     GENERO = @genero,
                                     PAIS = @pais,
                                     ANO = @ano,
@@ -201,7 +241,10 @@ namespace Videoteca.DAL
                                     ID_SERIE = @id_serie";
             cmd.Parameters.AddWithValue("@id_serie", s.ID_SERIE);
             cmd.Parameters.AddWithValue("@titulo_serie", s.TITULO_SERIE);
+            cmd.Parameters.AddWithValue("@capitulo", s.CAPITULO);
             cmd.Parameters.AddWithValue("@descricao", s.DESCRICAO);
+            cmd.Parameters.AddWithValue("@temporada", s.TEMPORADA);
+            cmd.Parameters.AddWithValue("@episodio", s.EPISODIO);
             cmd.Parameters.AddWithValue("@genero", s.GENERO);
             cmd.Parameters.AddWithValue("@pais", s.PAIS);
             cmd.Parameters.AddWithValue("@ano", s.ANO);
@@ -210,6 +253,22 @@ namespace Videoteca.DAL
             cmd.Parameters.AddWithValue("@assistido", s.ASSISTIDO);
             cmd.ExecuteNonQuery();
             con.Desconectar();
+        }
+
+        public List<string> listarGeneros(DataTable fonte)
+        {
+            DataTableReader dr = new DataTableReader(fonte);
+            List<string> lstGenero = new List<string>();
+            lstGenero.Add("Gêneros");
+            while (dr.Read())
+            {
+                if (!lstGenero.Contains(dr["GENERO"].ToString()))
+                {
+                    lstGenero.Add(dr["GENERO"].ToString());
+                }
+            }
+            dr.Close();
+            return lstGenero;
         }
     }
 }
