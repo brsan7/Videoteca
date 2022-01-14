@@ -83,6 +83,7 @@ namespace Videoteca.UI
                 MessageBox.Show("Série Cadastrada!");
             }
 
+            groupBox1.Text = "Registro de Serie";
             txtTITULO_SERIE.Clear();
             txtCAPITULO.Clear();
             txtDESCRICAO.Clear();
@@ -193,15 +194,22 @@ namespace Videoteca.UI
 
         private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            int id_serie = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value.ToString());
+            PreencherRegistro(id_serie);
+
+            tabControl1.SelectTab(0);
+        }
+
+        public void PreencherRegistro(int id_serie)
+        {
+            groupBox1.Text = "Atualização de Série";
             atualizar = true;
             btnCancelar.Visible = true;
             btnCadastrar.Text = "Atualizar";
-
-            serieBLL.ID_SERIE = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value.ToString());
-
+            
+            serieBLL.ID_SERIE = id_serie;
             serieBLL = serieDAL.PreecheSerie(serieBLL);
-
-            groupBox1.Text = "Atualização de Série";
+            
             txtTITULO_SERIE.Text = serieBLL.TITULO_SERIE;
             txtCAPITULO.Text = serieBLL.CAPITULO;
             txtDESCRICAO.Text = serieBLL.DESCRICAO;
@@ -213,18 +221,18 @@ namespace Videoteca.UI
             txtDURACAO.Text = serieBLL.DURACAO.ToString();
             txtAVALIACAO.Text = serieBLL.AVALIACAO.ToString();
             txtASSISTIDO.Checked = Convert.ToBoolean(serieBLL.ASSISTIDO);
+
             txtELENCO.Clear();
             lstElenco.Clear();
             lstElencoRegistrado.Clear();
 
             foreach (var ator in elencoSerieDAL.Consultar(Convert.ToInt16(serieBLL.ID_SERIE)))
             {
-                txtELENCO.Text += ator +Environment.NewLine;
+                txtELENCO.Text += ator + Environment.NewLine;
                 lstElenco.Add(ator);
                 lstElencoRegistrado.Add(ator);
             }
             btnInserir_statusTexto(false);
-            tabControl1.SelectTab(0);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

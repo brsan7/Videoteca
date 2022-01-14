@@ -58,6 +58,28 @@ namespace Videoteca.DAL
             return resultado;
         }
 
+        public DataTable Consultar(AtorBLL a)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"SELECT
+                                    Series.ID_SERIE,
+                                    TITULO_SERIE
+                                FROM ElencoSerie
+                                INNER JOIN Series 
+                                    ON (Series.ID_SERIE = ElencoSerie.ID_SERIE)
+	                                WHERE NOME_ATOR  = @nome_ator";
+            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+
+            con.Desconectar();
+
+            return dt;
+        }
+
         public void Excluir(ElencoSerieBLL e)
         {
             SqlCommand cmd = new SqlCommand();

@@ -31,6 +31,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbGENERO = new System.Windows.Forms.ComboBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.txtASSISTIDO = new System.Windows.Forms.CheckBox();
             this.btnCadastrar = new System.Windows.Forms.Button();
@@ -59,7 +60,6 @@
             this.lblFiltroTitulo = new System.Windows.Forms.Label();
             this.txtFiltro = new System.Windows.Forms.TextBox();
             this.dgvResultado = new System.Windows.Forms.DataGridView();
-            this.cmbGENERO = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -95,7 +95,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.BackColor = System.Drawing.Color.DarkGray;
             this.groupBox1.Controls.Add(this.cmbGENERO);
             this.groupBox1.Controls.Add(this.btnCancelar);
@@ -126,6 +125,16 @@
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Registro de Filme";
+            // 
+            // cmbGENERO
+            // 
+            this.cmbGENERO.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbGENERO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cmbGENERO.FormattingEnabled = true;
+            this.cmbGENERO.Location = new System.Drawing.Point(131, 375);
+            this.cmbGENERO.Name = "cmbGENERO";
+            this.cmbGENERO.Size = new System.Drawing.Size(202, 29);
+            this.cmbGENERO.TabIndex = 37;
             // 
             // btnCancelar
             // 
@@ -398,7 +407,8 @@
             // 
             // cmbFiltroGenero
             // 
-            this.cmbFiltroGenero.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiltroGenero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbFiltroGenero.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbFiltroGenero.FormattingEnabled = true;
             this.cmbFiltroGenero.Location = new System.Drawing.Point(600, 33);
@@ -409,6 +419,8 @@
             // 
             // lblFiltroGenero
             // 
+            this.lblFiltroGenero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFiltroGenero.AutoSize = true;
             this.lblFiltroGenero.Location = new System.Drawing.Point(600, 15);
             this.lblFiltroGenero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -465,16 +477,6 @@
             this.dgvResultado.Size = new System.Drawing.Size(927, 450);
             this.dgvResultado.TabIndex = 4;
             this.dgvResultado.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultado_CellDoubleClick);
-            // 
-            // cmbGENERO
-            // 
-            this.cmbGENERO.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.cmbGENERO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbGENERO.FormattingEnabled = true;
-            this.cmbGENERO.Location = new System.Drawing.Point(131, 375);
-            this.cmbGENERO.Name = "cmbGENERO";
-            this.cmbGENERO.Size = new System.Drawing.Size(202, 29);
-            this.cmbGENERO.TabIndex = 37;
             // 
             // frmFilme
             // 

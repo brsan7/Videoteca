@@ -19,7 +19,7 @@ namespace Videoteca.UI
             InitializeComponent();
         }
 
-        AtorBLL ator = new AtorBLL();
+        AtorBLL atorBLL = new AtorBLL();
         AtorDAL atorDAL = new AtorDAL();
         ElencoFilmeDAL elencoFilmeDAL = new ElencoFilmeDAL();
         ElencoSerieDAL elencoSerieDAL = new ElencoSerieDAL();
@@ -28,15 +28,15 @@ namespace Videoteca.UI
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
             //Preencher o objeto da BLL com o conteudo da UI.
-            ator.NOME_ATOR = txtNOME_ATOR.Text;
-            ator.IDADE = Convert.ToInt16(txtIDADE.Text);
-            ator.PAIS = txtPAIS.Text;
-            ator.ATIVO = Convert.ToInt16(txtATIVO.Text);
+            atorBLL.NOME_ATOR = txtNOME_ATOR.Text;
+            atorBLL.IDADE = Convert.ToInt16(txtIDADE.Text);
+            atorBLL.PAIS = txtPAIS.Text;
+            atorBLL.APOSENTADO = Convert.ToBoolean(ckbAPOSENTADO.Checked);
 
             if (atualizar)
             {
-                atorDAL.Atualizar(ator);
-                MessageBox.Show("Ator cadastrado!");
+                atorDAL.Atualizar(atorBLL);
+                MessageBox.Show("Ator atualizado!");
                 btnCadastrar.Text = "Cadastrar";
                 atualizar = false;
                 txtNOME_ATOR.ReadOnly = false;
@@ -46,16 +46,18 @@ namespace Videoteca.UI
             else
             {
                 //Enviar para o Cadastrar da camada DAL
-                atorDAL.Cadastrar(ator);
+                atorDAL.Cadastrar(atorBLL);
                 MessageBox.Show("Ator cadastrado!");
 
             }
 
-            
+            groupBox1.Text = "Registrar Ator";
             txtNOME_ATOR.Clear();
             txtIDADE.Clear();
             txtPAIS.Clear();
-            txtATIVO.Clear();
+            ckbAPOSENTADO.Checked = false;
+            dgvAtorFilmes.DataSource = null;
+            dgvAtorSeries.DataSource = null;
             txtNOME_ATOR.Focus();
         }
 
@@ -88,14 +90,16 @@ namespace Videoteca.UI
             dgvResultado.AllowUserToResizeRows = false;
             //Selecionar a linha inteira independente de qual selula clicar
             dgvResultado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAtorFilmes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAtorSeries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             atualizar = false;
         }
 
         private void txtFiltro_TextChanged(object sender, EventArgs e)
         {
-            ator.NOME_ATOR = txtFiltro.Text;
-            dgvResultado.DataSource = atorDAL.Consultar(ator);
+            atorBLL.NOME_ATOR = txtFiltro.Text;
+            dgvResultado.DataSource = atorDAL.Consultar(atorBLL);
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
@@ -111,10 +115,10 @@ namespace Videoteca.UI
                                             MessageBoxDefaultButton.Button2);
                 if(resposta == DialogResult.Yes)
                 {
-                    ator.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
-                    elencoFilmeDAL.Excluir(ator.NOME_ATOR);
-                    elencoSerieDAL.Excluir(ator.NOME_ATOR);
-                    atorDAL.Excluir(ator);
+                    atorBLL.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
+                    elencoFilmeDAL.Excluir(atorBLL.NOME_ATOR);
+                    elencoSerieDAL.Excluir(atorBLL.NOME_ATOR);
+                    atorDAL.Excluir(atorBLL);
                     txtFiltro_TextChanged(null, null);
                 }
             }
@@ -126,6 +130,7 @@ namespace Videoteca.UI
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            groupBox1.Text = "Registrar Ator";
             btnCadastrar.Text = "Cadastrar"; 
             atualizar = false;
             btnCancelar.Visible = false;
@@ -133,8 +138,10 @@ namespace Videoteca.UI
 
             txtNOME_ATOR.Clear();
             txtIDADE.Clear();
-            txtATIVO.Clear();
             txtPAIS.Clear();
+            ckbAPOSENTADO.Checked = false;
+            dgvAtorFilmes.DataSource = null;
+            dgvAtorSeries.DataSource = null;
 
             txtNOME_ATOR.Focus();
         }
@@ -145,18 +152,41 @@ namespace Videoteca.UI
             txtNOME_ATOR.ReadOnly = true;
             btnCancelar.Visible = true;
             btnCadastrar.Text = "atualizar";
+            groupBox1.Text = "Atualizar Ator";
 
-            ator.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
+            atorBLL.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
+            atorBLL = atorDAL.PreecheAtor(atorBLL);
+            
+            dgvAtorFilmes.DataSource = elencoFilmeDAL.Consultar(atorBLL);
+            dgvAtorSeries.DataSource = elencoSerieDAL.Consultar(atorBLL);
+            dgvAtorFilmes.Columns["ID_FILME"].Visible = false;
+            dgvAtorSeries.Columns["ID_SERIE"].Visible = false;
 
-            ator = atorDAL.PreecheAtor(ator);
-
-            txtNOME_ATOR.Text = ator.NOME_ATOR;
-            txtIDADE.Text = ator.IDADE.ToString();
-            txtPAIS.Text = ator.PAIS;
-            txtATIVO.Text = ator.ATIVO.ToString();
-
+            txtNOME_ATOR.Text = atorBLL.NOME_ATOR;
+            txtIDADE.Text = atorBLL.IDADE.ToString();
+            txtPAIS.Text = atorBLL.PAIS;
+            ckbAPOSENTADO.Checked = atorBLL.APOSENTADO;
+            
             tabControl1.SelectTab(0); //Seleciona a aba Cadastrar
 
+        }
+
+        private void dgvAtorFilmes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id_filme = Convert.ToInt16(dgvAtorFilmes.SelectedRows[0].Cells["ID_FILME"].Value.ToString());
+            frmFilme visualizacao = new frmFilme();
+            visualizacao.MdiParent = frmMenu.ActiveForm;
+            visualizacao.Show();
+            visualizacao.PreencherRegistro(id_filme);
+        }
+
+        private void dgvAtorSeries_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id_serie = Convert.ToInt16(dgvAtorSeries.SelectedRows[0].Cells["ID_SERIE"].Value.ToString());
+            frmSerie visualizacao = new frmSerie();
+            visualizacao.MdiParent = frmMenu.ActiveForm;
+            visualizacao.Show();
+            visualizacao.PreencherRegistro(id_serie);
         }
     }
 }

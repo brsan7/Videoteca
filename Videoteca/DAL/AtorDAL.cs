@@ -26,13 +26,13 @@ namespace Videoteca.DAL
                                     NOME_ATOR,
                                     IDADE,
                                     PAIS,
-                                    ATIVO)
-                                VALUES(@NOME_ATOR,@IDADE,@PAIS,@ATIVO)";
+                                    APOSENTADO)
+                                VALUES(@nome_ator,@idade,@pais,@aposentado)";
             //Configurar os valores.
-            cmd.Parameters.AddWithValue("@NOME_ATOR", a.NOME_ATOR);
-            cmd.Parameters.AddWithValue("@IDADE", a.IDADE);
-            cmd.Parameters.AddWithValue("@PAIS", a.PAIS);
-            cmd.Parameters.AddWithValue("@ATIVO", a.ATIVO);
+            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
+            cmd.Parameters.AddWithValue("@idade", a.IDADE);
+            cmd.Parameters.AddWithValue("@pais", a.PAIS);
+            cmd.Parameters.AddWithValue("@aposentado", a.APOSENTADO);
             //Executar os comandos SQL.
             cmd.ExecuteNonQuery();
             //Fechar a conexão com o banco de dados.
@@ -120,7 +120,7 @@ namespace Videoteca.DAL
                 a.NOME_ATOR = dr["NOME_ATOR"].ToString();
                 a.IDADE = Convert.ToInt16(dr["IDADE"].ToString());
                 a.PAIS = dr["PAIS"].ToString();
-                a.ATIVO = Convert.ToInt16(dr["ATIVO"]);
+                a.APOSENTADO = Convert.ToBoolean(dr["APOSENTADO"]);
                 dr.Close();
                 con.Desconectar();
             }
@@ -143,13 +143,13 @@ namespace Videoteca.DAL
                                     NOME_ATOR = @nome_ator,
                                     IDADE = @idade,
                                     PAIS = @pais,
-                                    ATIVO = @ativo
+                                    APOSENTADO = @aposentado
                                 WHERE
                                     NOME_ATOR = @nome_ator";
             cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
             cmd.Parameters.AddWithValue("@idade", a.IDADE);
             cmd.Parameters.AddWithValue("@pais", a.PAIS);
-            cmd.Parameters.AddWithValue("@ativo", a.ATIVO);
+            cmd.Parameters.AddWithValue("@aposentado", a.APOSENTADO);
             cmd.ExecuteNonQuery();
             con.Desconectar();
         }

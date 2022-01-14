@@ -58,6 +58,30 @@ namespace Videoteca.DAL
             return resultado;
         }
 
+
+        public DataTable Consultar(AtorBLL a)
+        {
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con.Conectar();
+            cmd.CommandText = @"SELECT
+                                    Filmes.ID_FILME,
+                                    TITULO_FILME
+                                FROM ElencoFilme
+                                INNER JOIN Filmes 
+                                    ON (Filmes.ID_FILME = ElencoFilme.ID_FILME)
+	                                WHERE NOME_ATOR  = @nome_ator";
+            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+
+            con.Desconectar();
+
+            return dt;
+        }
+
         public void Excluir(ElencoFilmeBLL e)
         {
             SqlCommand cmd = new SqlCommand();

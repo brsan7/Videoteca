@@ -8,24 +8,24 @@ namespace Videoteca.BLL
 {
     class AtorBLL
     {
-        private string _NOME_ATOR;
+        private string _nome_ator;
 
-        private short _IDADE = 0;
+        private short _idade = 0;
 
-        private string _PAIS = "Desconhecido";
+        private string _pais = "Desconhecido";
 
-        private short _ATIVO = 0;
+        private bool _aposentado = false;
 
         public string NOME_ATOR
         {
             get
             {
-                return _NOME_ATOR;
+                return _nome_ator;
             }
 
             set
             {
-                _NOME_ATOR = value;
+                _nome_ator = value;
             }
         }
 
@@ -33,12 +33,12 @@ namespace Videoteca.BLL
         {
             get
             {
-                return _IDADE;
+                return _idade;
             }
 
             set
             {
-                _IDADE = value;
+                _idade = value;
             }
         }
 
@@ -46,25 +46,25 @@ namespace Videoteca.BLL
         {
             get
             {
-                return _PAIS;
+                return _pais;
             }
 
             set
             {
-                _PAIS = value;
+                _pais = value;
             }
         }
 
-        public short ATIVO
+        public bool APOSENTADO
         {
             get
             {
-                return _ATIVO;
+                return _aposentado;
             }
 
             set
             {
-                _ATIVO = value;
+                _aposentado = value;
             }
         }
     }

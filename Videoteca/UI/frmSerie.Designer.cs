@@ -101,7 +101,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.BackColor = System.Drawing.Color.DarkGray;
             this.groupBox1.Controls.Add(this.cmbGENERO);
             this.groupBox1.Controls.Add(this.lblEpisodio);
@@ -489,7 +488,8 @@
             // 
             // cmbFiltroGenero
             // 
-            this.cmbFiltroGenero.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiltroGenero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbFiltroGenero.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbFiltroGenero.FormattingEnabled = true;
             this.cmbFiltroGenero.Location = new System.Drawing.Point(600, 33);
@@ -500,6 +500,8 @@
             // 
             // lblFiltroGenero
             // 
+            this.lblFiltroGenero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFiltroGenero.AutoSize = true;
             this.lblFiltroGenero.Location = new System.Drawing.Point(600, 15);
             this.lblFiltroGenero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);

@@ -81,6 +81,7 @@ namespace Videoteca.UI
                 MessageBox.Show("Filme Cadastrado!");
             }
 
+            groupBox1.Text = "Registro de Filme";
             txtTITULO_FILME.Clear();
             txtDESCRICAO.Clear();
             cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
@@ -188,15 +189,22 @@ namespace Videoteca.UI
 
         private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            int id_filme = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_FILME"].Value.ToString());
+            PreencherRegistro(id_filme);
+            
+            tabControl1.SelectTab(0);
+        }
+
+        public void PreencherRegistro(int id_filme)
+        {
             atualizar = true;
             btnCancelar.Visible = true;
             btnCadastrar.Text = "Atualizar";
-
-            filmeBLL.ID_FILME = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_FILME"].Value.ToString());
-
-            filmeBLL = filmeDAL.PreecheFilme(filmeBLL);
-
             groupBox1.Text = "Atualização de Filme";
+
+            filmeBLL.ID_FILME = id_filme;
+            filmeBLL = filmeDAL.PreecheFilme(filmeBLL);
+            
             txtTITULO_FILME.Text = filmeBLL.TITULO_FILME;
             txtDESCRICAO.Text = filmeBLL.DESCRICAO;
             cmbGENERO.Text = filmeBLL.GENERO;
@@ -205,28 +213,28 @@ namespace Videoteca.UI
             txtDURACAO.Text = filmeBLL.DURACAO.ToString();
             txtAVALIACAO.Text = filmeBLL.AVALIACAO.ToString();
             txtASSISTIDO.Checked = Convert.ToBoolean(filmeBLL.ASSISTIDO);
+
             txtELENCO.Clear();
             lstElenco.Clear();
             lstElencoRegistrado.Clear();
 
             foreach (var ator in elencoFilmeDAL.Consultar(Convert.ToInt16(filmeBLL.ID_FILME)))
             {
-                txtELENCO.Text += ator +Environment.NewLine;
+                txtELENCO.Text += ator + Environment.NewLine;
                 lstElenco.Add(ator);
                 lstElencoRegistrado.Add(ator);
             }
             btnInserir_statusTexto(false);
-            tabControl1.SelectTab(0);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            groupBox1.Text = "Registro de Filme";
             btnCadastrar.Text = "Cadastrar";
             atualizar = false;
             btnCancelar.Visible = false;
             txtPAIS.ReadOnly = false;
 
-            groupBox1.Text = "Registro de Filme";
             txtTITULO_FILME.Clear();
             txtDESCRICAO.Clear();
             cmbGENERO.SelectedIndex = 0;
