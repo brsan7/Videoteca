@@ -25,7 +25,7 @@ namespace Videoteca.UI
         AtorDAL atorDAL = new AtorDAL();
         ElencoFilmeBLL elencoFilmeBLL = new ElencoFilmeBLL();
         ElencoFilmeDAL elencoFilmeDAL = new ElencoFilmeDAL();
-        List<string> lstElenco = new List<string>();
+        List<AtorBLL> lstElencoFilme = new List<AtorBLL>();
         List<string> lstElencoRegistrado = new List<string>();
 
         bool atualizar;
@@ -47,13 +47,13 @@ namespace Videoteca.UI
                 filmeDAL.Atualizar(filmeBLL);
 
                 elencoFilmeBLL.ID_FILME = filmeBLL.ID_FILME;
-                foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElenco))
+                foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoFilme))
                 {
                     elencoFilmeBLL.NOME_ATOR = ator;
                     elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
                 }
 
-                foreach (var ator in elencoFilmeBLL.lstAtoresRemover(lstElencoRegistrado, lstElenco))
+                foreach (var ator in elencoFilmeBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoFilme))
                 {
                     elencoFilmeBLL.NOME_ATOR = ator;
                     elencoFilmeDAL.Excluir(elencoFilmeBLL);
@@ -71,9 +71,9 @@ namespace Videoteca.UI
                 filmeDAL.Cadastrar(filmeBLL);
 
                 elencoFilmeBLL.ID_FILME = filmeDAL.BuscarUltimoRegistro(filmeBLL).ID_FILME;
-                foreach (var ator in lstElenco)
+                foreach (var item in lstElencoFilme)
                 {
-                    elencoFilmeBLL.NOME_ATOR = ator;
+                    elencoFilmeBLL.NOME_ATOR = item.NOME_ATOR;
                     elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
                 }
                 
@@ -90,26 +90,20 @@ namespace Videoteca.UI
             txtDURACAO.Clear();
             txtAVALIACAO.Clear();
             txtASSISTIDO.Checked = false;
-            txtELENCO.Clear();
-            lstElenco.Clear();
+            lstElencoFilme.Clear();
             lstElencoRegistrado.Clear();
+            dgvElenco.DataSource = null;
 
             txtTITULO_FILME.Focus();
         }
 
         private void frmFilme_Load(object sender, EventArgs e)
         {
-            //Fonte de dados do ComboBox
-            AtorDAL atoresDAL = new AtorDAL();
-            cmbAtores.DataSource = atoresDAL.Consultar();
+            //Fonte de dados do ComboBox(DataTable)
+            setup_cmbAtores();
+
             //Fonte de dados do ComboBox(Lista)
             cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
-
-            //Configurar qual coluna sera utilizada para os valores
-            cmbAtores.ValueMember = "NOME_ATOR";
-
-            //Configurar qual coluna sera utilizada para exibiçao
-            cmbAtores.DisplayMember = "NOME_ATOR";
 
             //Configurar DataGridView
             //Evitar Edição
@@ -128,9 +122,10 @@ namespace Videoteca.UI
             dgvResultado.AllowUserToResizeRows = false;
             //Selecionar a linha inteira independente de qual selula clicar
             dgvResultado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvElenco.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
-        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        private void txtFiltro_TextChanged(object? sender, EventArgs? e)
         {
             cmbFiltroGenero.SelectedIndex = 0;
             filmeBLL.TITULO_FILME = txtFiltro.Text;
@@ -189,13 +184,13 @@ namespace Videoteca.UI
 
         private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id_filme = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_FILME"].Value.ToString());
-            PreencherRegistro(id_filme);
+            int id_filme = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_FILME"].Value);
+            preencherRegistroFilme(id_filme);
             
             tabControl1.SelectTab(0);
         }
 
-        public void PreencherRegistro(int id_filme)
+        public void preencherRegistroFilme(int id_filme)
         {
             atualizar = true;
             btnCancelar.Visible = true;
@@ -214,22 +209,33 @@ namespace Videoteca.UI
             txtAVALIACAO.Text = filmeBLL.AVALIACAO.ToString();
             txtASSISTIDO.Checked = Convert.ToBoolean(filmeBLL.ASSISTIDO);
 
-            txtELENCO.Clear();
-            lstElenco.Clear();
+            lstElencoFilme.Clear();
             lstElencoRegistrado.Clear();
 
             foreach (var ator in elencoFilmeDAL.Consultar(Convert.ToInt16(filmeBLL.ID_FILME)))
             {
-                txtELENCO.Text += ator + Environment.NewLine;
-                lstElenco.Add(ator);
+                lstElencoFilme.Add(new AtorBLL() { NOME_ATOR = ator});
                 lstElencoRegistrado.Add(ator);
             }
+            setup_dgvElenco();
             btnInserir_statusTexto(false);
+        }
+
+        private void dgvElenco_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ator = dgvElenco.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString() ?? "";
+            txtDESCRICAO.Text = ator;
+
+            frmAtor visualizacao = new frmAtor();
+            visualizacao.MdiParent = frmMenu.ActiveForm;
+            visualizacao.Show();
+            visualizacao.preencherRegistroAtor(ator);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             groupBox1.Text = "Registro de Filme";
+            btnInserir.Text = "Inserir";
             btnCadastrar.Text = "Cadastrar";
             atualizar = false;
             btnCancelar.Visible = false;
@@ -243,8 +249,8 @@ namespace Videoteca.UI
             txtDURACAO.Clear();
             txtAVALIACAO.Clear();
             txtASSISTIDO.Checked = false;
-            txtELENCO.Clear();
-            lstElenco.Clear();
+            dgvElenco.DataSource = null;
+            lstElencoFilme.Clear();
             lstElencoRegistrado.Clear();
 
             txtTITULO_FILME.Focus();
@@ -268,32 +274,27 @@ namespace Videoteca.UI
                     atorDAL.Cadastrar(atorBLL);
                     MessageBox.Show("Ator Cadastrado!");
 
-                    lstElenco.Add(cmbAtorInsert);
-                    txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
+                    lstElencoFilme.Add(new AtorBLL() { NOME_ATOR = cmbAtorInsert });
+                    setup_cmbAtores();
+                    cmbAtores.Text = cmbAtorInsert;
 
                     btnInserir.Text = "Remover";
                 }
             }
             else
             {
-                if (lstElenco.Contains(cmbAtorInsert))
+                if (verificarAtorInserido(cmbAtorInsert))
                 {
-                    lstElenco.Remove(cmbAtores.Text);
-                    txtELENCO.Clear();
-
-                    foreach (var ator in lstElenco)
-                    {
-                        txtELENCO.Text += ator + Environment.NewLine;
-                    }
+                    lstElencoFilme.RemoveAt(lstElencoFilme_getIndex(cmbAtorInsert));
                     btnInserir.Text = "Inserir";
                 }
                 else
                 {
-                    lstElenco.Add(cmbAtorInsert);
-                    txtELENCO.Text += cmbAtorInsert + Environment.NewLine;
+                    lstElencoFilme.Add(new AtorBLL() { NOME_ATOR = cmbAtorInsert });
                     btnInserir.Text = "Remover";
                 }
             }
+            setup_dgvElenco();
         }
 
         private void cmbAtores_SelectedIndexChanged(object sender, EventArgs e)
@@ -326,7 +327,7 @@ namespace Videoteca.UI
             }
             else
             {
-                if (lstElenco.Contains(cmbAtores.Text))
+                if (verificarAtorInserido(cmbAtores.Text))
                 {
                     btnInserir.Text = "Remover";
                 }
@@ -335,6 +336,55 @@ namespace Videoteca.UI
                     btnInserir.Text = "Inserir";
                 }
             }
+        }
+
+        private void setup_cmbAtores()
+        {
+            AtorDAL atoresDAL = new AtorDAL();
+
+            //Fonte de dados do ComboBox(DataTable)
+            cmbAtores.DataSource = atoresDAL.Consultar();
+            //Configurar qual coluna sera utilizada para os valores
+            cmbAtores.ValueMember = "NOME_ATOR";
+            //Configurar qual coluna sera utilizada para exibiçao
+            cmbAtores.DisplayMember = "NOME_ATOR";
+        }
+
+        private void setup_dgvElenco()
+        {
+            dgvElenco.DataSource = null;
+            dgvElenco.DataSource = lstElencoFilme;
+            dgvElenco.Columns["IDADE"].Visible = false;
+            dgvElenco.Columns["PAIS"].Visible = false;
+            dgvElenco.Columns["APOSENTADO"].Visible = false;
+        }
+
+        private int lstElencoFilme_getIndex(string ator)
+        {
+            int index = 0;
+            foreach(var a in lstElencoFilme)
+            {
+                if(a.NOME_ATOR.Equals(ator))
+                {
+                    break;
+                }
+                index++;
+            }
+            return index;
+        }
+
+        private bool verificarAtorInserido(string ator)
+        {
+            bool contido = false;
+            foreach (AtorBLL item in lstElencoFilme)
+            {
+                if (item.NOME_ATOR.Equals(ator))
+                {
+                    contido = true; 
+                    break;
+                }
+            }
+            return contido;
         }
     }
 }

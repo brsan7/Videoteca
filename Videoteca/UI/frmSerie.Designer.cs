@@ -43,7 +43,6 @@
             this.btnCadastrar = new System.Windows.Forms.Button();
             this.txtAVALIACAO = new System.Windows.Forms.TextBox();
             this.txtDURACAO = new System.Windows.Forms.TextBox();
-            this.txtELENCO = new System.Windows.Forms.TextBox();
             this.txtANO = new System.Windows.Forms.TextBox();
             this.lblAvaliacao = new System.Windows.Forms.Label();
             this.txtDESCRICAO = new System.Windows.Forms.TextBox();
@@ -57,6 +56,7 @@
             this.txtPAIS = new System.Windows.Forms.TextBox();
             this.txtTITULO_SERIE = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dgvElenco = new System.Windows.Forms.DataGridView();
             this.btnInserir = new System.Windows.Forms.Button();
             this.cmbAtores = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -70,6 +70,7 @@
             this.tabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvElenco)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultado)).BeginInit();
             this.SuspendLayout();
@@ -114,7 +115,6 @@
             this.groupBox1.Controls.Add(this.btnCadastrar);
             this.groupBox1.Controls.Add(this.txtAVALIACAO);
             this.groupBox1.Controls.Add(this.txtDURACAO);
-            this.groupBox1.Controls.Add(this.txtELENCO);
             this.groupBox1.Controls.Add(this.txtANO);
             this.groupBox1.Controls.Add(this.lblAvaliacao);
             this.groupBox1.Controls.Add(this.txtDESCRICAO);
@@ -272,19 +272,6 @@
             this.txtDURACAO.Size = new System.Drawing.Size(57, 29);
             this.txtDURACAO.TabIndex = 9;
             // 
-            // txtELENCO
-            // 
-            this.txtELENCO.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtELENCO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtELENCO.Location = new System.Drawing.Point(573, 70);
-            this.txtELENCO.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtELENCO.Multiline = true;
-            this.txtELENCO.Name = "txtELENCO";
-            this.txtELENCO.ReadOnly = true;
-            this.txtELENCO.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtELENCO.Size = new System.Drawing.Size(327, 333);
-            this.txtELENCO.TabIndex = 33;
-            // 
             // txtANO
             // 
             this.txtANO.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -435,6 +422,7 @@
             // 
             this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.dgvElenco);
             this.groupBox2.Controls.Add(this.btnInserir);
             this.groupBox2.Controls.Add(this.cmbAtores);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -444,6 +432,25 @@
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Elenco";
+            // 
+            // dgvElenco
+            // 
+            this.dgvElenco.AllowUserToAddRows = false;
+            this.dgvElenco.AllowUserToDeleteRows = false;
+            this.dgvElenco.AllowUserToOrderColumns = true;
+            this.dgvElenco.AllowUserToResizeRows = false;
+            this.dgvElenco.AllowUserToResizeColumns = false;
+            this.dgvElenco.ReadOnly = true;
+            this.dgvElenco.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvElenco.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvElenco.ColumnHeadersVisible = false;
+            this.dgvElenco.Location = new System.Drawing.Point(6, 22);
+            this.dgvElenco.Name = "dgvElenco";
+            this.dgvElenco.RowHeadersVisible = false;
+            this.dgvElenco.RowTemplate.Height = 25;
+            this.dgvElenco.Size = new System.Drawing.Size(355, 328);
+            this.dgvElenco.TabIndex = 14;
+            this.dgvElenco.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvElenco_CellDoubleClick);
             // 
             // btnInserir
             // 
@@ -574,6 +581,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvElenco)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultado)).EndInit();
@@ -609,7 +617,6 @@
         private CheckBox txtASSISTIDO;
         private GroupBox groupBox1;
         private ComboBox cmbAtores;
-        private TextBox txtELENCO;
         private Button btnInserir;
         private GroupBox groupBox2;
         private Label lblFiltroGenero;
@@ -621,5 +628,6 @@
         private Label lblCapitulo;
         private TextBox txtCAPITULO;
         private ComboBox cmbGENERO;
+        private DataGridView dgvElenco;
     }
 }

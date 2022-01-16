@@ -12,7 +12,7 @@ namespace Videoteca.BLL
 
         private int _id_filme;
 
-        private string _nome_ator;
+        private string _nome_ator = "";
 
         public int ID_ELENCO
         {
@@ -53,28 +53,38 @@ namespace Videoteca.BLL
             }
         }
 
-        public List<string> lstAtoresInserir(List<string> lstRegistrada, List<string> lstAtualizada)
+        public List<string> lstAtoresInserir(List<string> lstRegistrada, List<AtorBLL> lstAtualizada)
         {
             List<string> inserir = new List<string>();
-            foreach(string ator in lstAtualizada)
+            foreach(AtorBLL item in lstAtualizada)
             {
-                if(!lstRegistrada.Contains(ator))
+                if(!lstRegistrada.Contains(item.NOME_ATOR))
                 {
-                    inserir.Add(ator);
+                    inserir.Add(item.NOME_ATOR);
                 }
             }
             return inserir;
         }
 
-        public List<string> lstAtoresRemover(List<string> lstRegistrada, List<string> lstAtualizada)
+        public List<string> lstAtoresRemover(List<string> lstRegistrada, List<AtorBLL> lstAtualizada)
         {
             List<string> remover = new List<string>();
-            foreach (string ator in lstRegistrada)
+            bool contido = false;
+
+            foreach (string ator_lstRegistrada in lstRegistrada)
             {
-                if (!lstAtualizada.Contains(ator))
+                foreach (AtorBLL item_lstAtualizada in lstAtualizada)
                 {
-                    remover.Add(ator);
+                    if (item_lstAtualizada.NOME_ATOR.Equals(ator_lstRegistrada)) 
+                    {
+                        contido = true;
+                    }
                 }
+                if(!contido)
+                {
+                    remover.Add(ator_lstRegistrada);
+                }
+                contido = false;
             }
             return remover;
         }

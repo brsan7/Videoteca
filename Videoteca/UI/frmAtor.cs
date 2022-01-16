@@ -96,7 +96,7 @@ namespace Videoteca.UI
             atualizar = false;
         }
 
-        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        private void txtFiltro_TextChanged(object? sender, EventArgs? e)
         {
             atorBLL.NOME_ATOR = txtFiltro.Text;
             dgvResultado.DataSource = atorDAL.Consultar(atorBLL);
@@ -115,7 +115,7 @@ namespace Videoteca.UI
                                             MessageBoxDefaultButton.Button2);
                 if(resposta == DialogResult.Yes)
                 {
-                    atorBLL.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
+                    atorBLL.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString() ?? "";
                     elencoFilmeDAL.Excluir(atorBLL.NOME_ATOR);
                     elencoSerieDAL.Excluir(atorBLL.NOME_ATOR);
                     atorDAL.Excluir(atorBLL);
@@ -148,15 +148,24 @@ namespace Videoteca.UI
 
         private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            string ator = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString() ?? "";
+            preencherRegistroAtor(ator);
+
+            tabControl1.SelectTab(0); //Seleciona a aba Cadastrar
+
+        }
+
+        public void preencherRegistroAtor(string ator)
+        {
+            groupBox1.Text = "Atualizar Ator";
+            btnCadastrar.Text = "atualizar";
             atualizar = true;
             txtNOME_ATOR.ReadOnly = true;
             btnCancelar.Visible = true;
-            btnCadastrar.Text = "atualizar";
-            groupBox1.Text = "Atualizar Ator";
 
-            atorBLL.NOME_ATOR = dgvResultado.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString();
+            atorBLL.NOME_ATOR = ator;
             atorBLL = atorDAL.PreecheAtor(atorBLL);
-            
+
             dgvAtorFilmes.DataSource = elencoFilmeDAL.Consultar(atorBLL);
             dgvAtorSeries.DataSource = elencoSerieDAL.Consultar(atorBLL);
             dgvAtorFilmes.Columns["ID_FILME"].Visible = false;
@@ -166,27 +175,24 @@ namespace Videoteca.UI
             txtIDADE.Text = atorBLL.IDADE.ToString();
             txtPAIS.Text = atorBLL.PAIS;
             ckbAPOSENTADO.Checked = atorBLL.APOSENTADO;
-            
-            tabControl1.SelectTab(0); //Seleciona a aba Cadastrar
-
         }
 
         private void dgvAtorFilmes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id_filme = Convert.ToInt16(dgvAtorFilmes.SelectedRows[0].Cells["ID_FILME"].Value.ToString());
+            int id_filme = Convert.ToInt16(dgvAtorFilmes.SelectedRows[0].Cells["ID_FILME"].Value);
             frmFilme visualizacao = new frmFilme();
             visualizacao.MdiParent = frmMenu.ActiveForm;
             visualizacao.Show();
-            visualizacao.PreencherRegistro(id_filme);
+            visualizacao.preencherRegistroFilme(id_filme);
         }
 
         private void dgvAtorSeries_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id_serie = Convert.ToInt16(dgvAtorSeries.SelectedRows[0].Cells["ID_SERIE"].Value.ToString());
+            int id_serie = Convert.ToInt16(dgvAtorSeries.SelectedRows[0].Cells["ID_SERIE"].Value);
             frmSerie visualizacao = new frmSerie();
             visualizacao.MdiParent = frmMenu.ActiveForm;
             visualizacao.Show();
-            visualizacao.PreencherRegistro(id_serie);
+            visualizacao.preencherRegistroSerie(id_serie);
         }
     }
 }
