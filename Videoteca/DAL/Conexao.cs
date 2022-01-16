@@ -45,12 +45,15 @@ namespace Videoteca.DAL
 
         public bool TestarConexao()
         {
-            bool teste = false;
-            con.Open();
-            if (con.State == ConnectionState.Open)
+            bool teste = true;
+            try
             {
+                con.Open();
                 con.Close();
-                teste = true;
+            }
+            catch (Exception)
+            {
+                teste = false;
             }
             return teste;
         }

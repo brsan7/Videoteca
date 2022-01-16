@@ -71,25 +71,38 @@ namespace Videoteca
 
             DAL.Conexao status = new DAL.Conexao();
 
-            if (status.TestarConexao())
+            atoresToolStripMenuItem.Enabled = false;
+            filmesToolStripMenuItem.Enabled = false;
+            seriesToolStripMenuItem.Enabled = false;
+            backupToolStripMenuItem.Enabled = false;
+
+            if (Properties.Settings.Default.EnderecoServidorSQL.ToString().Equals("(local)"))
             {
-                lblUsuario.Text = "Conexão Estabelecida";
-                atoresToolStripMenuItem.Enabled = true;
-                filmesToolStripMenuItem.Enabled = true;
-                seriesToolStripMenuItem.Enabled = true;
-                backupToolStripMenuItem.Enabled = true;
+                lblUsuario.Text = "Status : Banco de Dados não configurado";
+                MessageBox.Show("Configure a conexão com o Banco de Dados");
+                configuracoesToolStripMenuItem_Click(null, null);
             }
             else
             {
-                lblUsuario.Text = "Conexão não Estabelecida";
-                atoresToolStripMenuItem.Enabled = false;
-                filmesToolStripMenuItem.Enabled = false;
-                seriesToolStripMenuItem.Enabled = false;
-                backupToolStripMenuItem.Enabled = false;
+                if(status.TestarConexao())
+                {
+                    lblUsuario.Text = "Status : Conexão Estabelecida";
+                    atoresToolStripMenuItem.Enabled = true;
+                    filmesToolStripMenuItem.Enabled = true;
+                    seriesToolStripMenuItem.Enabled = true;
+                    backupToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    lblUsuario.Text = "Status : Conexão não Estabelecida";
+                    MessageBox.Show("Verifique a configuração de conexão com o Banco de Dados");
+                    configuracoesToolStripMenuItem_Click(null, null);
+                }
+                
             }
         }
 
-        private void configuracoesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void configuracoesToolStripMenuItem_Click(object? sender, EventArgs? e)
         {
             UI.frmConfiguracao tela = new UI.frmConfiguracao();
             tela.MdiParent = this;
