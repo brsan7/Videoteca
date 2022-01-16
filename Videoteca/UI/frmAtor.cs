@@ -29,7 +29,7 @@ namespace Videoteca.UI
         {
             //Preencher o objeto da BLL com o conteudo da UI.
             atorBLL.NOME_ATOR = txtNOME_ATOR.Text;
-            atorBLL.IDADE = Convert.ToInt16(txtIDADE.Text);
+            atorBLL.IDADE = Convert.ToInt16(numIDADE.Value);
             atorBLL.PAIS = txtPAIS.Text;
             atorBLL.APOSENTADO = Convert.ToBoolean(ckbAPOSENTADO.Checked);
 
@@ -53,7 +53,7 @@ namespace Videoteca.UI
 
             groupBox1.Text = "Registrar Ator";
             txtNOME_ATOR.Clear();
-            txtIDADE.Clear();
+            numIDADE.Value = 0;
             txtPAIS.Clear();
             ckbAPOSENTADO.Checked = false;
             dgvAtorFilmes.DataSource = null;
@@ -137,7 +137,7 @@ namespace Videoteca.UI
             txtNOME_ATOR.ReadOnly = false;
 
             txtNOME_ATOR.Clear();
-            txtIDADE.Clear();
+            numIDADE.Value = 0;
             txtPAIS.Clear();
             ckbAPOSENTADO.Checked = false;
             dgvAtorFilmes.DataSource = null;
@@ -172,7 +172,7 @@ namespace Videoteca.UI
             dgvAtorSeries.Columns["ID_SERIE"].Visible = false;
 
             txtNOME_ATOR.Text = atorBLL.NOME_ATOR;
-            txtIDADE.Text = atorBLL.IDADE.ToString();
+            numIDADE.Value = atorBLL.IDADE;
             txtPAIS.Text = atorBLL.PAIS;
             ckbAPOSENTADO.Checked = atorBLL.APOSENTADO;
         }

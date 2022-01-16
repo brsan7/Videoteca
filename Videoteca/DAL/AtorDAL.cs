@@ -117,9 +117,9 @@ namespace Videoteca.DAL
             if (dr.HasRows)
             {
                 dr.Read();
-                a.NOME_ATOR = dr["NOME_ATOR"].ToString();
+                a.NOME_ATOR = dr["NOME_ATOR"].ToString() ?? "";
                 a.IDADE = Convert.ToInt16(dr["IDADE"].ToString());
-                a.PAIS = dr["PAIS"].ToString();
+                a.PAIS = dr["PAIS"].ToString() ?? "";
                 a.APOSENTADO = Convert.ToBoolean(dr["APOSENTADO"]);
                 dr.Close();
                 con.Desconectar();

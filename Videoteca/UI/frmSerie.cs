@@ -35,13 +35,13 @@ namespace Videoteca.UI
             serieBLL.TITULO_SERIE = txtTITULO_SERIE.Text;
             serieBLL.CAPITULO = txtCAPITULO.Text;
             serieBLL.DESCRICAO = txtDESCRICAO.Text;
-            serieBLL.TEMPORADA = int.Parse(txtTEMPORADA.Text);
-            serieBLL.EPISODIO = int.Parse(txtEPISODIO.Text);
+            serieBLL.TEMPORADA = Convert.ToInt32(numTEMPORADA.Value);
+            serieBLL.EPISODIO = Convert.ToInt32(numEPISODIO.Value);
             serieBLL.GENERO = cmbGENERO.Text;
             serieBLL.PAIS = txtPAIS.Text;
-            serieBLL.ANO = int.Parse(txtANO.Text);
-            serieBLL.DURACAO = float.Parse(txtDURACAO.Text);
-            serieBLL.AVALIACAO = float.Parse(txtAVALIACAO.Text);
+            serieBLL.ANO = Convert.ToInt32(numANO.Value);
+            serieBLL.DURACAO = Convert.ToInt32(numDURACAO.Value);
+            serieBLL.AVALIACAO = Convert.ToInt32(numAVALIACAO.Value);
             serieBLL.ASSISTIDO = txtASSISTIDO.Checked;
 
             if (atualizar)
@@ -87,13 +87,13 @@ namespace Videoteca.UI
             txtTITULO_SERIE.Clear();
             txtCAPITULO.Clear();
             txtDESCRICAO.Clear();
-            txtTEMPORADA.Clear();
-            txtEPISODIO.Clear();
+            numTEMPORADA.Value = 0;
+            numEPISODIO.Value = 0;
             cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
             txtPAIS.Clear();
-            txtANO.Clear();
-            txtDURACAO.Clear();
-            txtAVALIACAO.Clear();
+            numANO.Value = 0;
+            numDURACAO.Value = 0;
+            numAVALIACAO.Value = 0;
             txtASSISTIDO.Checked = false;
             lstElencoSerie.Clear();
             lstElencoRegistrado.Clear();
@@ -208,13 +208,13 @@ namespace Videoteca.UI
             txtTITULO_SERIE.Text = serieBLL.TITULO_SERIE;
             txtCAPITULO.Text = serieBLL.CAPITULO;
             txtDESCRICAO.Text = serieBLL.DESCRICAO;
-            txtTEMPORADA.Text = serieBLL.TEMPORADA.ToString();
-            txtEPISODIO.Text = serieBLL.EPISODIO.ToString();
+            numTEMPORADA.Value = serieBLL.TEMPORADA;
+            numEPISODIO.Value = serieBLL.EPISODIO;
             cmbGENERO.Text = serieBLL.GENERO;
             txtPAIS.Text = serieBLL.PAIS;
-            txtANO.Text = serieBLL.ANO.ToString();
-            txtDURACAO.Text = serieBLL.DURACAO.ToString();
-            txtAVALIACAO.Text = serieBLL.AVALIACAO.ToString();
+            numANO.Value = serieBLL.ANO;
+            numDURACAO.Value = serieBLL.DURACAO;
+            numAVALIACAO.Value = serieBLL.AVALIACAO;
             txtASSISTIDO.Checked = Convert.ToBoolean(serieBLL.ASSISTIDO);
 
             lstElencoSerie.Clear();
@@ -249,13 +249,13 @@ namespace Videoteca.UI
             txtTITULO_SERIE.Clear();
             txtCAPITULO.Clear();
             txtDESCRICAO.Clear();
-            txtTEMPORADA.Clear();
-            txtEPISODIO.Clear();
+            numTEMPORADA.Value = 0;
+            numEPISODIO.Value = 0;
             cmbGENERO.SelectedIndex = 0;
             txtPAIS.Clear();
-            txtANO.Clear();
-            txtDURACAO.Clear();
-            txtAVALIACAO.Clear();
+            numANO.Value = 0;
+            numDURACAO.Value = 0;
+            numAVALIACAO.Value = 0;
             txtASSISTIDO.Checked = false;
             dgvElenco.DataSource = null;
             lstElencoSerie.Clear();

@@ -31,6 +31,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbpCadastro = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numIDADE = new System.Windows.Forms.NumericUpDown();
             this.ckbAPOSENTADO = new System.Windows.Forms.CheckBox();
             this.lblPais = new System.Windows.Forms.Label();
             this.lblAtivo = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.lblNome = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnCadastrar = new System.Windows.Forms.Button();
-            this.txtIDADE = new System.Windows.Forms.TextBox();
             this.txtNOME_ATOR = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvAtorSeries = new System.Windows.Forms.DataGridView();
@@ -52,6 +52,7 @@
             this.tabControl1.SuspendLayout();
             this.tbpCadastro.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIDADE)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAtorSeries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAtorFilmes)).BeginInit();
@@ -87,6 +88,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.DarkGray;
+            this.groupBox1.Controls.Add(this.numIDADE);
             this.groupBox1.Controls.Add(this.ckbAPOSENTADO);
             this.groupBox1.Controls.Add(this.lblPais);
             this.groupBox1.Controls.Add(this.lblAtivo);
@@ -95,7 +97,6 @@
             this.groupBox1.Controls.Add(this.lblNome);
             this.groupBox1.Controls.Add(this.btnCancelar);
             this.groupBox1.Controls.Add(this.btnCadastrar);
-            this.groupBox1.Controls.Add(this.txtIDADE);
             this.groupBox1.Controls.Add(this.txtNOME_ATOR);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -106,13 +107,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Registro Ator";
             // 
+            // numIDADE
+            // 
+            this.numIDADE.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numIDADE.Location = new System.Drawing.Point(137, 98);
+            this.numIDADE.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numIDADE.Name = "numIDADE";
+            this.numIDADE.Size = new System.Drawing.Size(54, 29);
+            this.numIDADE.TabIndex = 2;
+            // 
             // ckbAPOSENTADO
             // 
             this.ckbAPOSENTADO.AutoSize = true;
             this.ckbAPOSENTADO.Location = new System.Drawing.Point(137, 184);
             this.ckbAPOSENTADO.Name = "ckbAPOSENTADO";
             this.ckbAPOSENTADO.Size = new System.Drawing.Size(15, 14);
-            this.ckbAPOSENTADO.TabIndex = 6;
+            this.ckbAPOSENTADO.TabIndex = 4;
             this.ckbAPOSENTADO.UseVisualStyleBackColor = true;
             // 
             // lblPais
@@ -158,7 +172,7 @@
             this.txtPAIS.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtPAIS.Name = "txtPAIS";
             this.txtPAIS.Size = new System.Drawing.Size(157, 29);
-            this.txtPAIS.TabIndex = 2;
+            this.txtPAIS.TabIndex = 3;
             // 
             // lblNome
             // 
@@ -179,7 +193,7 @@
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(107, 37);
-            this.btnCancelar.TabIndex = 5;
+            this.btnCancelar.TabIndex = 6;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Visible = false;
@@ -192,19 +206,10 @@
             this.btnCadastrar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnCadastrar.Name = "btnCadastrar";
             this.btnCadastrar.Size = new System.Drawing.Size(107, 37);
-            this.btnCadastrar.TabIndex = 4;
+            this.btnCadastrar.TabIndex = 5;
             this.btnCadastrar.Text = "Salvar";
             this.btnCadastrar.UseVisualStyleBackColor = true;
             this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
-            // 
-            // txtIDADE
-            // 
-            this.txtIDADE.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtIDADE.Location = new System.Drawing.Point(137, 97);
-            this.txtIDADE.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtIDADE.Name = "txtIDADE";
-            this.txtIDADE.Size = new System.Drawing.Size(57, 29);
-            this.txtIDADE.TabIndex = 1;
             // 
             // txtNOME_ATOR
             // 
@@ -213,7 +218,7 @@
             this.txtNOME_ATOR.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNOME_ATOR.Name = "txtNOME_ATOR";
             this.txtNOME_ATOR.Size = new System.Drawing.Size(331, 29);
-            this.txtNOME_ATOR.TabIndex = 0;
+            this.txtNOME_ATOR.TabIndex = 1;
             // 
             // groupBox2
             // 
@@ -342,6 +347,7 @@
             this.tbpCadastro.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIDADE)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAtorSeries)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAtorFilmes)).EndInit();
@@ -359,7 +365,6 @@
         private System.Windows.Forms.TabPage tbpConsulta;
         private System.Windows.Forms.Button btnCadastrar;
         private System.Windows.Forms.TextBox txtPAIS;
-        private System.Windows.Forms.TextBox txtIDADE;
         private System.Windows.Forms.TextBox txtNOME_ATOR;
         private System.Windows.Forms.Label lblPais;
         private System.Windows.Forms.Label lblAtivo;
@@ -375,5 +380,6 @@
         private GroupBox groupBox2;
         private DataGridView dgvAtorFilmes;
         private DataGridView dgvAtorSeries;
+        private NumericUpDown numIDADE;
     }
 }

@@ -187,9 +187,9 @@ namespace Videoteca.DAL
                 f.DESCRICAO = dr["DESCRICAO"].ToString();
                 f.GENERO = dr["GENERO"].ToString();
                 f.PAIS = dr["PAIS"].ToString();
-                f.ANO = Convert.ToInt16(dr["ANO"]);
-                f.DURACAO = Convert.ToDouble(dr["DURACAO"]);
-                f.AVALIACAO = Convert.ToDouble(dr["AVALIACAO"]);
+                f.ANO = Convert.ToInt32(dr["ANO"]);
+                f.DURACAO = Convert.ToInt32(dr["DURACAO"]);
+                f.AVALIACAO = Convert.ToInt32(dr["AVALIACAO"]);
                 f.ASSISTIDO = Convert.ToBoolean(dr["ASSISTIDO"]);
                 dr.Close();
                 con.Desconectar();

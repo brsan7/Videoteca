@@ -20,9 +20,9 @@ namespace Videoteca.BLL
 
         private int _ano = 0;
 
-        private double _duracao = 0;
+        private int _duracao = 0;
 
-        private double _avaliacao = 0;
+        private int _avaliacao = 0;
 
         private bool _assistido = false;
 
@@ -104,7 +104,7 @@ namespace Videoteca.BLL
             }
         }
 
-        public double DURACAO
+        public int DURACAO
         {
             get
             {
@@ -117,7 +117,7 @@ namespace Videoteca.BLL
             }
         }
 
-        public double AVALIACAO
+        public int AVALIACAO
         {
             get
             {

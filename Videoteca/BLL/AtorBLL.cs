@@ -10,7 +10,7 @@ namespace Videoteca.BLL
     {
         private string _nome_ator;
 
-        private short _idade = 0;
+        private int _idade = 0;
 
         private string _pais = "Desconhecido";
 
@@ -29,7 +29,7 @@ namespace Videoteca.BLL
             }
         }
 
-        public short IDADE
+        public int IDADE
         {
             get
             {

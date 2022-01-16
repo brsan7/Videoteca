@@ -199,13 +199,13 @@ namespace Videoteca.DAL
                 s.TITULO_SERIE = dr["TITULO_SERIE"].ToString();
                 s.CAPITULO = dr["CAPITULO"].ToString();
                 s.DESCRICAO = dr["DESCRICAO"].ToString();
-                s.TEMPORADA = Convert.ToInt16(dr["TEMPORADA"]);
-                s.EPISODIO = Convert.ToInt16(dr["EPISODIO"]);
+                s.TEMPORADA = Convert.ToInt32(dr["TEMPORADA"]);
+                s.EPISODIO = Convert.ToInt32(dr["EPISODIO"]);
                 s.GENERO = dr["GENERO"].ToString();
                 s.PAIS = dr["PAIS"].ToString();
-                s.ANO = Convert.ToInt16(dr["ANO"]);
-                s.DURACAO = Convert.ToDouble(dr["DURACAO"]);
-                s.AVALIACAO = Convert.ToDouble(dr["AVALIACAO"]);
+                s.ANO = Convert.ToInt32(dr["ANO"]);
+                s.DURACAO = Convert.ToInt32(dr["DURACAO"]);
+                s.AVALIACAO = Convert.ToInt32(dr["AVALIACAO"]);
                 s.ASSISTIDO = Convert.ToBoolean(dr["ASSISTIDO"]);
                 dr.Close();
                 con.Desconectar();

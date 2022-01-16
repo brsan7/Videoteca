@@ -37,9 +37,9 @@ namespace Videoteca.UI
             filmeBLL.DESCRICAO = txtDESCRICAO.Text;
             filmeBLL.GENERO = cmbGENERO.Text;
             filmeBLL.PAIS = txtPAIS.Text;
-            filmeBLL.ANO = int.Parse(txtANO.Text);
-            filmeBLL.DURACAO = float.Parse(txtDURACAO.Text);
-            filmeBLL.AVALIACAO = float.Parse(txtAVALIACAO.Text);
+            filmeBLL.ANO = Convert.ToInt32(numANO.Value);
+            filmeBLL.DURACAO = Convert.ToInt32(numDURACAO.Value);
+            filmeBLL.AVALIACAO = Convert.ToInt32(numAVALIACAO.Value);
             filmeBLL.ASSISTIDO = txtASSISTIDO.Checked;
 
             if (atualizar)
@@ -86,9 +86,9 @@ namespace Videoteca.UI
             txtDESCRICAO.Clear();
             cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
             txtPAIS.Clear();
-            txtANO.Clear();
-            txtDURACAO.Clear();
-            txtAVALIACAO.Clear();
+            numANO.Value = 0;
+            numDURACAO.Value = 0;
+            numAVALIACAO.Value = 0;
             txtASSISTIDO.Checked = false;
             lstElencoFilme.Clear();
             lstElencoRegistrado.Clear();
@@ -204,9 +204,9 @@ namespace Videoteca.UI
             txtDESCRICAO.Text = filmeBLL.DESCRICAO;
             cmbGENERO.Text = filmeBLL.GENERO;
             txtPAIS.Text = filmeBLL.PAIS;
-            txtANO.Text = filmeBLL.ANO.ToString();
-            txtDURACAO.Text = filmeBLL.DURACAO.ToString();
-            txtAVALIACAO.Text = filmeBLL.AVALIACAO.ToString();
+            numANO.Value = filmeBLL.ANO;
+            numDURACAO.Value = filmeBLL.DURACAO;
+            numAVALIACAO.Value = filmeBLL.AVALIACAO;
             txtASSISTIDO.Checked = Convert.ToBoolean(filmeBLL.ASSISTIDO);
 
             lstElencoFilme.Clear();
@@ -245,9 +245,9 @@ namespace Videoteca.UI
             txtDESCRICAO.Clear();
             cmbGENERO.SelectedIndex = 0;
             txtPAIS.Clear();
-            txtANO.Clear();
-            txtDURACAO.Clear();
-            txtAVALIACAO.Clear();
+            numANO.Value = 0;
+            numDURACAO.Value = 0;
+            numAVALIACAO.Value = 0;
             txtASSISTIDO.Checked = false;
             dgvElenco.DataSource = null;
             lstElencoFilme.Clear();

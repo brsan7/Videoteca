@@ -31,13 +31,13 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numAVALIACAO = new System.Windows.Forms.NumericUpDown();
+            this.numDURACAO = new System.Windows.Forms.NumericUpDown();
+            this.numANO = new System.Windows.Forms.NumericUpDown();
             this.cmbGENERO = new System.Windows.Forms.ComboBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.txtASSISTIDO = new System.Windows.Forms.CheckBox();
             this.btnCadastrar = new System.Windows.Forms.Button();
-            this.txtAVALIACAO = new System.Windows.Forms.TextBox();
-            this.txtDURACAO = new System.Windows.Forms.TextBox();
-            this.txtANO = new System.Windows.Forms.TextBox();
             this.lblAvaliacao = new System.Windows.Forms.Label();
             this.txtDESCRICAO = new System.Windows.Forms.TextBox();
             this.lblAssistido = new System.Windows.Forms.Label();
@@ -63,6 +63,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAVALIACAO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDURACAO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numANO)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvElenco)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -97,13 +100,13 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.DarkGray;
+            this.groupBox1.Controls.Add(this.numAVALIACAO);
+            this.groupBox1.Controls.Add(this.numDURACAO);
+            this.groupBox1.Controls.Add(this.numANO);
             this.groupBox1.Controls.Add(this.cmbGENERO);
             this.groupBox1.Controls.Add(this.btnCancelar);
             this.groupBox1.Controls.Add(this.txtASSISTIDO);
             this.groupBox1.Controls.Add(this.btnCadastrar);
-            this.groupBox1.Controls.Add(this.txtAVALIACAO);
-            this.groupBox1.Controls.Add(this.txtDURACAO);
-            this.groupBox1.Controls.Add(this.txtANO);
             this.groupBox1.Controls.Add(this.lblAvaliacao);
             this.groupBox1.Controls.Add(this.txtDESCRICAO);
             this.groupBox1.Controls.Add(this.lblAssistido);
@@ -125,6 +128,45 @@
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Registro de Filme";
+            // 
+            // numAVALIACAO
+            // 
+            this.numAVALIACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numAVALIACAO.Location = new System.Drawing.Point(131, 465);
+            this.numAVALIACAO.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numAVALIACAO.Name = "numAVALIACAO";
+            this.numAVALIACAO.Size = new System.Drawing.Size(69, 29);
+            this.numAVALIACAO.TabIndex = 40;
+            // 
+            // numDURACAO
+            // 
+            this.numDURACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numDURACAO.Location = new System.Drawing.Point(422, 419);
+            this.numDURACAO.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numDURACAO.Name = "numDURACAO";
+            this.numDURACAO.Size = new System.Drawing.Size(69, 29);
+            this.numDURACAO.TabIndex = 39;
+            // 
+            // numANO
+            // 
+            this.numANO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numANO.Location = new System.Drawing.Point(422, 375);
+            this.numANO.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numANO.Name = "numANO";
+            this.numANO.Size = new System.Drawing.Size(69, 29);
+            this.numANO.TabIndex = 38;
             // 
             // cmbGENERO
             // 
@@ -170,36 +212,6 @@
             this.btnCadastrar.Text = "Cadastrar";
             this.btnCadastrar.UseVisualStyleBackColor = true;
             this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
-            // 
-            // txtAVALIACAO
-            // 
-            this.txtAVALIACAO.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtAVALIACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtAVALIACAO.Location = new System.Drawing.Point(131, 464);
-            this.txtAVALIACAO.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtAVALIACAO.Name = "txtAVALIACAO";
-            this.txtAVALIACAO.Size = new System.Drawing.Size(57, 29);
-            this.txtAVALIACAO.TabIndex = 7;
-            // 
-            // txtDURACAO
-            // 
-            this.txtDURACAO.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtDURACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtDURACAO.Location = new System.Drawing.Point(422, 419);
-            this.txtDURACAO.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtDURACAO.Name = "txtDURACAO";
-            this.txtDURACAO.Size = new System.Drawing.Size(57, 29);
-            this.txtDURACAO.TabIndex = 6;
-            // 
-            // txtANO
-            // 
-            this.txtANO.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtANO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtANO.Location = new System.Drawing.Point(422, 375);
-            this.txtANO.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtANO.Name = "txtANO";
-            this.txtANO.Size = new System.Drawing.Size(57, 29);
-            this.txtANO.TabIndex = 4;
             // 
             // lblAvaliacao
             // 
@@ -357,14 +369,14 @@
             this.dgvElenco.AllowUserToAddRows = false;
             this.dgvElenco.AllowUserToDeleteRows = false;
             this.dgvElenco.AllowUserToOrderColumns = true;
-            this.dgvElenco.AllowUserToResizeRows = false;
             this.dgvElenco.AllowUserToResizeColumns = false;
-            this.dgvElenco.ReadOnly = true;
+            this.dgvElenco.AllowUserToResizeRows = false;
             this.dgvElenco.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvElenco.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvElenco.ColumnHeadersVisible = false;
             this.dgvElenco.Location = new System.Drawing.Point(6, 28);
             this.dgvElenco.Name = "dgvElenco";
+            this.dgvElenco.ReadOnly = true;
             this.dgvElenco.RowHeadersVisible = false;
             this.dgvElenco.RowTemplate.Height = 25;
             this.dgvElenco.Size = new System.Drawing.Size(355, 328);
@@ -499,6 +511,9 @@
             this.tabPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAVALIACAO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDURACAO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numANO)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvElenco)).EndInit();
             this.tabPage2.ResumeLayout(false);
@@ -526,9 +541,6 @@
         private System.Windows.Forms.DataGridView dgvResultado;
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnCancelar;
-        private TextBox txtAVALIACAO;
-        private TextBox txtDURACAO;
-        private TextBox txtANO;
         private Label lblAvaliacao;
         private Label lblAssistido;
         private Label lblDuracao;
@@ -542,5 +554,8 @@
         private ComboBox cmbFiltroGenero;
         private ComboBox cmbGENERO;
         private DataGridView dgvElenco;
+        private NumericUpDown numAVALIACAO;
+        private NumericUpDown numDURACAO;
+        private NumericUpDown numANO;
     }
 }
