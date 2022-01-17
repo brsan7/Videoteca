@@ -33,32 +33,40 @@ namespace Videoteca.UI
             atorBLL.PAIS = txtPAIS.Text;
             atorBLL.APOSENTADO = Convert.ToBoolean(ckbAPOSENTADO.Checked);
 
-            if (atualizar)
+            if (atorBLL.validacao())
             {
-                atorDAL.Atualizar(atorBLL);
-                MessageBox.Show("Ator atualizado!");
-                btnCadastrar.Text = "Cadastrar";
-                atualizar = false;
-                txtNOME_ATOR.ReadOnly = false;
-                btnCancelar.Visible = false;
-            }
+                if (atualizar)
+                {
+                    atorDAL.Atualizar(atorBLL);
+                    MessageBox.Show("Ator atualizado!");
+                    btnCadastrar.Text = "Cadastrar";
+                    atualizar = false;
+                    txtNOME_ATOR.ReadOnly = false;
+                    btnCancelar.Visible = false;
+                }
 
+                else
+                {
+                    //Enviar para o Cadastrar da camada DAL
+                    atorDAL.Cadastrar(atorBLL);
+                    MessageBox.Show("Ator cadastrado!");
+
+                }
+
+                groupBox1.Text = "Registrar Ator";
+                txtNOME_ATOR.Clear();
+                numIDADE.Value = 0;
+                txtPAIS.Clear();
+                ckbAPOSENTADO.Checked = false;
+                dgvAtorFilmes.DataSource = null;
+                dgvAtorSeries.DataSource = null;
+                txtNOME_ATOR.Focus();
+            }
             else
             {
-                //Enviar para o Cadastrar da camada DAL
-                atorDAL.Cadastrar(atorBLL);
-                MessageBox.Show("Ator cadastrado!");
-
+                txtNOME_ATOR.PlaceholderText = "*Campo Obrigatório";
+                MessageBox.Show("O Campo ''Nome'' é obrigatório");
             }
-
-            groupBox1.Text = "Registrar Ator";
-            txtNOME_ATOR.Clear();
-            numIDADE.Value = 0;
-            txtPAIS.Clear();
-            ckbAPOSENTADO.Checked = false;
-            dgvAtorFilmes.DataSource = null;
-            dgvAtorSeries.DataSource = null;
-            txtNOME_ATOR.Focus();
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
@@ -158,7 +166,7 @@ namespace Videoteca.UI
         public void preencherRegistroAtor(string ator)
         {
             groupBox1.Text = "Atualizar Ator";
-            btnCadastrar.Text = "atualizar";
+            btnCadastrar.Text = "Atualizar";
             atualizar = true;
             txtNOME_ATOR.ReadOnly = true;
             btnCancelar.Visible = true;

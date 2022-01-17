@@ -183,10 +183,10 @@ namespace Videoteca.DAL
             {
                 dr.Read();
                 f.ID_FILME = Convert.ToInt16(dr["ID_FILME"]);
-                f.TITULO_FILME = dr["TITULO_FILME"].ToString();
-                f.DESCRICAO = dr["DESCRICAO"].ToString();
-                f.GENERO = dr["GENERO"].ToString();
-                f.PAIS = dr["PAIS"].ToString();
+                f.TITULO_FILME = dr["TITULO_FILME"].ToString() ?? "";
+                f.DESCRICAO = dr["DESCRICAO"].ToString() ?? "";
+                f.GENERO = dr["GENERO"].ToString() ?? "";
+                f.PAIS = dr["PAIS"].ToString() ?? "";
                 f.ANO = Convert.ToInt32(dr["ANO"]);
                 f.DURACAO = Convert.ToInt32(dr["DURACAO"]);
                 f.AVALIACAO = Convert.ToInt32(dr["AVALIACAO"]);
@@ -237,12 +237,12 @@ namespace Videoteca.DAL
         {
             DataTableReader dr = new DataTableReader(fonte);
             List<string> lstGenero = new List<string>();
-            lstGenero.Add("Gêneros");
+            lstGenero.Add("Gênero");
             while (dr.Read())
             {
-                if (!lstGenero.Contains(dr["GENERO"].ToString()))
+                if (!lstGenero.Contains(dr["GENERO"].ToString() ?? ""))
                 {
-                    lstGenero.Add(dr["GENERO"].ToString());
+                    lstGenero.Add(dr["GENERO"].ToString() ?? "");
                 }
             }
             dr.Close();

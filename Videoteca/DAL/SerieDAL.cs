@@ -196,13 +196,13 @@ namespace Videoteca.DAL
             {
                 dr.Read();
                 s.ID_SERIE = Convert.ToInt16(dr["ID_SERIE"]);
-                s.TITULO_SERIE = dr["TITULO_SERIE"].ToString();
-                s.CAPITULO = dr["CAPITULO"].ToString();
-                s.DESCRICAO = dr["DESCRICAO"].ToString();
+                s.TITULO_SERIE = dr["TITULO_SERIE"].ToString() ?? "";
+                s.CAPITULO = dr["CAPITULO"].ToString() ?? "";
+                s.DESCRICAO = dr["DESCRICAO"].ToString() ?? "";
                 s.TEMPORADA = Convert.ToInt32(dr["TEMPORADA"]);
                 s.EPISODIO = Convert.ToInt32(dr["EPISODIO"]);
-                s.GENERO = dr["GENERO"].ToString();
-                s.PAIS = dr["PAIS"].ToString();
+                s.GENERO = dr["GENERO"].ToString() ?? "";
+                s.PAIS = dr["PAIS"].ToString() ?? "";
                 s.ANO = Convert.ToInt32(dr["ANO"]);
                 s.DURACAO = Convert.ToInt32(dr["DURACAO"]);
                 s.AVALIACAO = Convert.ToInt32(dr["AVALIACAO"]);
@@ -259,12 +259,12 @@ namespace Videoteca.DAL
         {
             DataTableReader dr = new DataTableReader(fonte);
             List<string> lstGenero = new List<string>();
-            lstGenero.Add("Gêneros");
+            lstGenero.Add("Gênero");
             while (dr.Read())
             {
-                if (!lstGenero.Contains(dr["GENERO"].ToString()))
+                if (!lstGenero.Contains(dr["GENERO"].ToString() ?? ""))
                 {
-                    lstGenero.Add(dr["GENERO"].ToString());
+                    lstGenero.Add(dr["GENERO"].ToString() ?? "");
                 }
             }
             dr.Close();

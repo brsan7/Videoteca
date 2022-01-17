@@ -8,11 +8,11 @@ namespace Videoteca.BLL
 {
     class AtorBLL
     {
-        private string _nome_ator;
+        private string _nome_ator = "";
 
         private int _idade = 0;
 
-        private string _pais = "Desconhecido";
+        private string _pais = "";
 
         private bool _aposentado = false;
 
@@ -66,6 +66,16 @@ namespace Videoteca.BLL
             {
                 _aposentado = value;
             }
+        }
+
+        public bool validacao()
+        {
+            bool valido = true;
+            if (_nome_ator.Equals(""))
+            {
+                valido = false;
+            }
+            return valido;
         }
     }
 }

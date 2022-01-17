@@ -31,6 +31,9 @@ namespace Videoteca.UI
 
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
+            numTEMPORADA.ForeColor = Color.Black;
+            numEPISODIO.ForeColor = Color.Black;
+            cmbGENERO.ForeColor = Color.Black;
 
             serieBLL.TITULO_SERIE = txtTITULO_SERIE.Text;
             serieBLL.CAPITULO = txtCAPITULO.Text;
@@ -44,62 +47,99 @@ namespace Videoteca.UI
             serieBLL.AVALIACAO = Convert.ToInt32(numAVALIACAO.Value);
             serieBLL.ASSISTIDO = txtASSISTIDO.Checked;
 
-            if (atualizar)
+            string[] validacao = serieBLL.validacao();
+
+            if (validacao[0].Equals("valido"))
             {
-                serieDAL.Atualizar(serieBLL);
-
-                elencoSerieBLL.ID_SERIE = serieBLL.ID_SERIE;
-                foreach (var ator in elencoSerieBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoSerie))
+                if (atualizar)
                 {
-                    elencoSerieBLL.NOME_ATOR = ator;
-                    elencoSerieDAL.Cadastrar(elencoSerieBLL);
+                    serieDAL.Atualizar(serieBLL);
+
+                    elencoSerieBLL.ID_SERIE = serieBLL.ID_SERIE;
+                    foreach (var ator in elencoSerieBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoSerie))
+                    {
+                        elencoSerieBLL.NOME_ATOR = ator;
+                        elencoSerieDAL.Cadastrar(elencoSerieBLL);
+                    }
+
+                    foreach (var ator in elencoSerieBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoSerie))
+                    {
+                        elencoSerieBLL.NOME_ATOR = ator;
+                        elencoSerieDAL.Excluir(elencoSerieBLL);
+                    }
+
+                    MessageBox.Show("Serie Atualizada!");
+                    btnCadastrar.Text = "Cadastrar";
+                    atualizar = false;
+                    txtPAIS.ReadOnly = false;
+                    btnCancelar.Visible = false;
                 }
 
-                foreach (var ator in elencoSerieBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoSerie))
+                else
                 {
-                    elencoSerieBLL.NOME_ATOR = ator;
-                    elencoSerieDAL.Excluir(elencoSerieBLL);
+                    serieDAL.Cadastrar(serieBLL);
+
+                    elencoSerieBLL.ID_SERIE = serieDAL.BuscarUltimoRegistro(serieBLL).ID_SERIE;
+                    foreach (var item in lstElencoSerie)
+                    {
+                        elencoSerieBLL.NOME_ATOR = item.NOME_ATOR;
+                        elencoSerieDAL.Cadastrar(elencoSerieBLL);
+                    }
+
+
+                    MessageBox.Show("Série Cadastrada!");
                 }
 
-                MessageBox.Show("Serie Atualizada!");
-                btnCadastrar.Text = "Cadastrar";
-                atualizar = false;
-                txtPAIS.ReadOnly = false;
-                btnCancelar.Visible = false;
+                groupBox1.Text = "Registro de Serie";
+                txtTITULO_SERIE.Clear();
+                txtCAPITULO.Clear();
+                txtDESCRICAO.Clear();
+                numTEMPORADA.Value = 0;
+                numEPISODIO.Value = 0;
+                cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
+                txtPAIS.Clear();
+                numANO.Value = 0;
+                numDURACAO.Value = 0;
+                numAVALIACAO.Value = 0;
+                txtASSISTIDO.Checked = false;
+                lstElencoSerie.Clear();
+                lstElencoRegistrado.Clear();
+                dgvElenco.DataSource = null;
+
+                txtTITULO_SERIE.Focus();
             }
-
             else
             {
-                serieDAL.Cadastrar(serieBLL);
+                string mensagem = "";
 
-                elencoSerieBLL.ID_SERIE = serieDAL.BuscarUltimoRegistro(serieBLL).ID_SERIE;
-                foreach (var item in lstElencoSerie)
+                foreach (string itemValidacao in validacao)
                 {
-                    elencoSerieBLL.NOME_ATOR = item.NOME_ATOR;
-                    elencoSerieDAL.Cadastrar(elencoSerieBLL);
+                    switch (itemValidacao)
+                    {
+                        case "TITULO_SERIE":
+                            txtTITULO_SERIE.PlaceholderText = "*Campo Obrigatório";
+                            mensagem += "O Campo ''Título'' é obrigatório"
+                                + Environment.NewLine + Environment.NewLine;
+                            break;
+                        case "TEMPORADA":
+                            numTEMPORADA.ForeColor = Color.Red;
+                            mensagem += "O Campo ''Temporada'' é obrigatório" 
+                                + Environment.NewLine + Environment.NewLine;
+                            break;
+                        case "EPISODIO":
+                            numEPISODIO.ForeColor = Color.Red;
+                            mensagem += "O Campo ''Episódio'' é obrigatório" 
+                                + Environment.NewLine + Environment.NewLine;
+                            break;
+                        case "GENERO":
+                            cmbGENERO.ForeColor = Color.Red;
+                            mensagem += "O Campo ''Gênero'' é obrigatório" 
+                                + Environment.NewLine + Environment.NewLine;
+                            break;
+                    }
                 }
-                
-
-                MessageBox.Show("Série Cadastrada!");
+                MessageBox.Show(mensagem);
             }
-
-            groupBox1.Text = "Registro de Serie";
-            txtTITULO_SERIE.Clear();
-            txtCAPITULO.Clear();
-            txtDESCRICAO.Clear();
-            numTEMPORADA.Value = 0;
-            numEPISODIO.Value = 0;
-            cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
-            txtPAIS.Clear();
-            numANO.Value = 0;
-            numDURACAO.Value = 0;
-            numAVALIACAO.Value = 0;
-            txtASSISTIDO.Checked = false;
-            lstElencoSerie.Clear();
-            lstElencoRegistrado.Clear();
-            dgvElenco.DataSource = null;
-
-            txtTITULO_SERIE.Focus();
         }
 
         private void frmSerie_Load(object sender, EventArgs e)

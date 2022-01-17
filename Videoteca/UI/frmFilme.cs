@@ -32,6 +32,7 @@ namespace Videoteca.UI
 
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
+            cmbGENERO.ForeColor = Color.Black;
 
             filmeBLL.TITULO_FILME = txtTITULO_FILME.Text;
             filmeBLL.DESCRICAO = txtDESCRICAO.Text;
@@ -42,59 +43,86 @@ namespace Videoteca.UI
             filmeBLL.AVALIACAO = Convert.ToInt32(numAVALIACAO.Value);
             filmeBLL.ASSISTIDO = txtASSISTIDO.Checked;
 
-            if (atualizar)
+            string[] validacao = filmeBLL.validacao();
+
+            if (validacao[0].Equals("valido"))
             {
-                filmeDAL.Atualizar(filmeBLL);
-
-                elencoFilmeBLL.ID_FILME = filmeBLL.ID_FILME;
-                foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoFilme))
+                if (atualizar)
                 {
-                    elencoFilmeBLL.NOME_ATOR = ator;
-                    elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
+                    filmeDAL.Atualizar(filmeBLL);
+
+                    elencoFilmeBLL.ID_FILME = filmeBLL.ID_FILME;
+                    foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoFilme))
+                    {
+                        elencoFilmeBLL.NOME_ATOR = ator;
+                        elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
+                    }
+
+                    foreach (var ator in elencoFilmeBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoFilme))
+                    {
+                        elencoFilmeBLL.NOME_ATOR = ator;
+                        elencoFilmeDAL.Excluir(elencoFilmeBLL);
+                    }
+
+                    MessageBox.Show("Filme Atualizado!");
+                    btnCadastrar.Text = "Cadastrar";
+                    atualizar = false;
+                    txtPAIS.ReadOnly = false;
+                    btnCancelar.Visible = false;
                 }
 
-                foreach (var ator in elencoFilmeBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoFilme))
+                else
                 {
-                    elencoFilmeBLL.NOME_ATOR = ator;
-                    elencoFilmeDAL.Excluir(elencoFilmeBLL);
+                    filmeDAL.Cadastrar(filmeBLL);
+
+                    elencoFilmeBLL.ID_FILME = filmeDAL.BuscarUltimoRegistro(filmeBLL).ID_FILME;
+                    foreach (var item in lstElencoFilme)
+                    {
+                        elencoFilmeBLL.NOME_ATOR = item.NOME_ATOR;
+                        elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
+                    }
+
+
+                    MessageBox.Show("Filme Cadastrado!");
                 }
 
-                MessageBox.Show("Filme Atualizado!");
-                btnCadastrar.Text = "Cadastrar";
-                atualizar = false;
-                txtPAIS.ReadOnly = false;
-                btnCancelar.Visible = false;
+                groupBox1.Text = "Registro de Filme";
+                txtTITULO_FILME.Clear();
+                txtDESCRICAO.Clear();
+                cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
+                txtPAIS.Clear();
+                numANO.Value = 0;
+                numDURACAO.Value = 0;
+                numAVALIACAO.Value = 0;
+                txtASSISTIDO.Checked = false;
+                lstElencoFilme.Clear();
+                lstElencoRegistrado.Clear();
+                dgvElenco.DataSource = null;
+
+                txtTITULO_FILME.Focus();
             }
-
             else
             {
-                filmeDAL.Cadastrar(filmeBLL);
+                string mensagem = "";
 
-                elencoFilmeBLL.ID_FILME = filmeDAL.BuscarUltimoRegistro(filmeBLL).ID_FILME;
-                foreach (var item in lstElencoFilme)
+                foreach (string itemValidacao in validacao)
                 {
-                    elencoFilmeBLL.NOME_ATOR = item.NOME_ATOR;
-                    elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
+                    switch (itemValidacao)
+                    {
+                        case "TITULO_FILME":
+                            txtTITULO_FILME.PlaceholderText = "*Campo Obrigatório";
+                            mensagem += "O Campo ''Título'' é obrigatório"
+                                + Environment.NewLine + Environment.NewLine;
+                            break;
+                        case "GENERO":
+                            cmbGENERO.ForeColor = Color.Red;
+                            mensagem += "O Campo ''Gênero'' é obrigatório"
+                                + Environment.NewLine + Environment.NewLine;
+                            break;
+                    }
                 }
-                
-
-                MessageBox.Show("Filme Cadastrado!");
+                MessageBox.Show(mensagem);
             }
-
-            groupBox1.Text = "Registro de Filme";
-            txtTITULO_FILME.Clear();
-            txtDESCRICAO.Clear();
-            cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
-            txtPAIS.Clear();
-            numANO.Value = 0;
-            numDURACAO.Value = 0;
-            numAVALIACAO.Value = 0;
-            txtASSISTIDO.Checked = false;
-            lstElencoFilme.Clear();
-            lstElencoRegistrado.Clear();
-            dgvElenco.DataSource = null;
-
-            txtTITULO_FILME.Focus();
         }
 
         private void frmFilme_Load(object sender, EventArgs e)

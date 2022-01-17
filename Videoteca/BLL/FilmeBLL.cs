@@ -10,13 +10,13 @@ namespace Videoteca.BLL
     {
         private int _id_filme;
 
-        private string _titulo_filme = "Desconhecido";
+        private string _titulo_filme = "";
 
-        private string _descricao = "Desconhecido";
+        private string _descricao = "";
 
-        private string _genero = "Desconhecido";
+        private string _genero = "";
 
-        private string _pais = "Desconhecido";
+        private string _pais = "";
 
         private int _ano = 0;
 
@@ -141,6 +141,23 @@ namespace Videoteca.BLL
             {
                 _assistido = value;
             }
+        }
+
+        public string[] validacao()
+        {
+            string[] arrayValidacao = new string[3];
+            arrayValidacao[0] = "valido";
+            if (TITULO_FILME.Equals(""))
+            {
+                arrayValidacao[0] = "invalido";
+                arrayValidacao[1] = "TITULO_FILME";
+            }
+            if (GENERO.Equals("Gênero"))
+            {
+                arrayValidacao[0] = "invalido";
+                arrayValidacao[2] = "GENERO";
+            }
+            return arrayValidacao;
         }
     }
 }

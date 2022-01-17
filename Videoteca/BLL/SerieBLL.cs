@@ -10,19 +10,19 @@ namespace Videoteca.BLL
     {
         private int _id_serie;
 
-        private string _titulo_serie = "Desconhecido";
+        private string _titulo_serie = "";
 
-        private string _capitulo = "Desconhecido";
+        private string _capitulo = "";
 
-        private string _descricao = "Desconhecido";
+        private string _descricao = "";
 
         private int _temporada = 0;
 
         private int _episodio = 0;
 
-        private string _genero = "Desconhecido";
+        private string _genero = "";
 
-        private string _pais = "Desconhecido";
+        private string _pais = "";
 
         private int _ano = 0;
 
@@ -185,6 +185,33 @@ namespace Videoteca.BLL
             {
                 _assistido = value;
             }
+        }
+
+        public string[] validacao()
+        {
+            string[] arrayValidacao = new string[5];
+            arrayValidacao[0] = "valido";
+            if (TITULO_SERIE.Equals(""))
+            {
+                arrayValidacao[0] = "invalido";
+                arrayValidacao[1] = "TITULO_SERIE";
+            }
+            if (TEMPORADA == 0)
+            {
+                arrayValidacao[0] = "invalido";
+                arrayValidacao[2] = "TEMPORADA";
+            }
+            if (EPISODIO == 0)
+            {
+                arrayValidacao[0] = "invalido";
+                arrayValidacao[3] = "EPISODIO";
+            }
+            if (GENERO.Equals("Gênero"))
+            {
+                arrayValidacao[0] = "invalido";
+                arrayValidacao[4] = "GENERO";
+            }
+            return arrayValidacao;
         }
     }
 }
