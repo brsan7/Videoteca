@@ -74,19 +74,16 @@ namespace Videoteca.UI
                     txtPAIS.ReadOnly = false;
                     btnCancelar.Visible = false;
                 }
-
                 else
                 {
                     serieDAL.Cadastrar(serieBLL);
-
                     elencoSerieBLL.ID_SERIE = serieDAL.BuscarUltimoRegistro(serieBLL).ID_SERIE;
+
                     foreach (var item in lstElencoSerie)
                     {
                         elencoSerieBLL.NOME_ATOR = item.NOME_ATOR;
                         elencoSerieDAL.Cadastrar(elencoSerieBLL);
                     }
-
-
                     MessageBox.Show("Série Cadastrada!");
                 }
 
@@ -193,11 +190,8 @@ namespace Videoteca.UI
         {
             if (e.TabPageIndex == 1) 
             {
-                DataTable fonte = new DataTable();
-                fonte = serieDAL.Consultar();
-
+                DataTable fonte = serieDAL.Consultar();
                 dgvResultado.DataSource = fonte;
-
                 cmbFiltroGenero.DataSource = serieDAL.listarGeneros(fonte);
             }
         }

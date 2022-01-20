@@ -70,7 +70,6 @@ namespace Videoteca.UI
                     txtPAIS.ReadOnly = false;
                     btnCancelar.Visible = false;
                 }
-
                 else
                 {
                     filmeDAL.Cadastrar(filmeBLL);
@@ -81,8 +80,6 @@ namespace Videoteca.UI
                         elencoFilmeBLL.NOME_ATOR = item.NOME_ATOR;
                         elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
                     }
-
-
                     MessageBox.Show("Filme Cadastrado!");
                 }
 
@@ -176,11 +173,8 @@ namespace Videoteca.UI
         {
             if (e.TabPageIndex == 1) 
             {
-                DataTable fonte = new DataTable();
-                fonte = filmeDAL.Consultar();
-
+                DataTable fonte = filmeDAL.Consultar();
                 dgvResultado.DataSource = fonte;
-
                 cmbFiltroGenero.DataSource = cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
             }
         }

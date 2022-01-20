@@ -44,13 +44,19 @@ namespace Videoteca.UI
                     txtNOME_ATOR.ReadOnly = false;
                     btnCancelar.Visible = false;
                 }
-
                 else
                 {
                     //Enviar para o Cadastrar da camada DAL
-                    atorDAL.Cadastrar(atorBLL);
-                    MessageBox.Show("Ator cadastrado!");
-
+                    try
+                    {
+                        atorDAL.Cadastrar(atorBLL);
+                        MessageBox.Show("Ator cadastrado!");
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Não foi possível fazer o Registro." 
+                            + Environment.NewLine + "***O Ator já está cadastrado!***");
+                    }
                 }
 
                 groupBox1.Text = "Registrar Ator";

@@ -50,7 +50,7 @@ namespace Videoteca.DAL
 
             while (dr.Read())
             {
-                resultado.Add(dr["NOME_ATOR"].ToString());
+                resultado.Add(dr["NOME_ATOR"].ToString() ?? "");
             }
             dr.Close();
             con.Desconectar();
