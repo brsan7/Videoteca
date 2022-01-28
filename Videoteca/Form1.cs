@@ -84,7 +84,7 @@ namespace Videoteca
             }
             else
             {
-                if(status.TestarConexao())
+                if (status.TestarConexao())
                 {
                     lblUsuario.Text = "Status : Conexão Estabelecida";
                     atoresToolStripMenuItem.Enabled = true;
@@ -98,7 +98,7 @@ namespace Videoteca
                     MessageBox.Show("Verifique a configuração de conexão com o Banco de Dados");
                     configuracoesToolStripMenuItem_Click(null, null);
                 }
-                
+
             }
         }
 

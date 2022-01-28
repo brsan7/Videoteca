@@ -3,62 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Videoteca.BLL
 {
     class ElencoFilmeBLL
     {
-        private int _id_elenco;
+        [Key]
+        public int ID_ELENCO { get; set; } = 0;
 
-        private int _id_filme;
+        [ForeignKey("Filme")]
+        public int ID_FILME { get; set; } = 0;
 
-        private string _nome_ator = "";
+        [ForeignKey("Ator")]
+        [MaxLength(50)]
+        public string NOME_ATOR { get; set; } = String.Empty;
 
-        public int ID_ELENCO
-        {
-            get
-            {
-                return _id_elenco;
-            }
+        public FilmeBLL? Filme { get; set; } = null;
 
-            set
-            {
-                _id_elenco = value;
-            }
-        }
+        public AtorBLL? Ator { get; set; } = null;
 
-        public int ID_FILME
-        {
-            get
-            {
-                return _id_filme;
-            }
+        //private int _id_elenco;
 
-            set
-            {
-                _id_filme = value;
-            }
-        }
+        //private int _id_filme;
 
-        public string NOME_ATOR
-        {
-            get
-            {
-                return _nome_ator;
-            }
+        //private string _nome_ator = "";
 
-            set
-            {
-                _nome_ator = value;
-            }
-        }
+        //public int ID_ELENCO
+        //{
+        //    get
+        //    {
+        //        return _id_elenco;
+        //    }
+
+        //    set
+        //    {
+        //        _id_elenco = value;
+        //    }
+        //}
+
+        //public int ID_FILME
+        //{
+        //    get
+        //    {
+        //        return _id_filme;
+        //    }
+
+        //    set
+        //    {
+        //        _id_filme = value;
+        //    }
+        //}
+
+        //public string NOME_ATOR
+        //{
+        //    get
+        //    {
+        //        return _nome_ator;
+        //    }
+
+        //    set
+        //    {
+        //        _nome_ator = value;
+        //    }
+        //}
 
         public List<string> lstAtoresInserir(List<string> lstRegistrada, List<AtorBLL> lstAtualizada)
         {
             List<string> inserir = new List<string>();
-            foreach(AtorBLL item in lstAtualizada)
+            foreach (AtorBLL item in lstAtualizada)
             {
-                if(!lstRegistrada.Contains(item.NOME_ATOR))
+                if (!lstRegistrada.Contains(item.NOME_ATOR))
                 {
                     inserir.Add(item.NOME_ATOR);
                 }
@@ -75,12 +91,12 @@ namespace Videoteca.BLL
             {
                 foreach (AtorBLL item_lstAtualizada in lstAtualizada)
                 {
-                    if (item_lstAtualizada.NOME_ATOR.Equals(ator_lstRegistrada)) 
+                    if (item_lstAtualizada.NOME_ATOR.Equals(ator_lstRegistrada))
                     {
                         contido = true;
                     }
                 }
-                if(!contido)
+                if (!contido)
                 {
                     remover.Add(ator_lstRegistrada);
                 }

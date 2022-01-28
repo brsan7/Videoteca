@@ -3,189 +3,220 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Videoteca.BLL
 {
     class SerieBLL
     {
-        private int _id_serie;
+        [Key]
+        public int ID_SERIE { get; set; } = 0;
 
-        private string _titulo_serie = "";
+        [MaxLength(50)]
+        public string TITULO_SERIE { get; set; } = String.Empty;
 
-        private string _capitulo = "";
+        [MaxLength(50)]
+        public string CAPITULO { get; set; } = String.Empty;
 
-        private string _descricao = "";
+        [MaxLength(400)]
+        public string? DESCRICAO { get; set; }
 
-        private int _temporada = 0;
+        public int TEMPORADA { get; set; }
 
-        private int _episodio = 0;
+        public int EPISODIO { get; set; }
 
-        private string _genero = "";
+        [MaxLength(50)]
+        public string GENERO { get; set; } = String.Empty;
 
-        private string _pais = "";
+        [MaxLength(20)]
+        public string? PAIS { get; set; }
 
-        private int _ano = 0;
+        public int ANO { get; set; }
 
-        private int _duracao = 0;
+        public int DURACAO { get; set; }
 
-        private int _avaliacao = 0;
+        public int AVALIACAO { get; set; }
 
-        private bool _assistido = false;
+        public bool ASSISTIDO { get; set; }
+        //private int _id_serie;
 
-        public int ID_SERIE
-        {
-            get
-            {
-                return _id_serie;
-            }
+        //private string _titulo_serie = "";
 
-            set
-            {
-                _id_serie = value;
-            }
-        }
-        public string TITULO_SERIE
-        {
-            get
-            {
-                return _titulo_serie;
-            }
+        //private string _capitulo = "";
 
-            set
-            {
-                _titulo_serie = value;
-            }
-        }
+        //private string _descricao = "";
 
-        public string CAPITULO
-        {
-            get
-            {
-                return _capitulo;
-            }
+        //private int _temporada = 0;
 
-            set
-            {
-                _capitulo = value;
-            }
-        }
+        //private int _episodio = 0;
 
-        public string DESCRICAO
-        {
-            get
-            {
-                return _descricao;
-            }
+        //private string _genero = "";
 
-            set
-            {
-                _descricao = value;
-            }
-        }
+        //private string _pais = "";
 
-        public int TEMPORADA
-        {
-            get
-            {
-                return _temporada;
-            }
+        //private int _ano = 0;
 
-            set
-            {
-                _temporada = value;
-            }
-        }
+        //private int _duracao = 0;
 
-        public int EPISODIO
-        {
-            get
-            {
-                return _episodio;
-            }
+        //private int _avaliacao = 0;
 
-            set
-            {
-                _episodio = value;
-            }
-        }
+        //private bool _assistido = false;
 
-        public string GENERO
-        {
-            get
-            {
-                return _genero;
-            }
+        //public int ID_SERIE
+        //{
+        //    get
+        //    {
+        //        return _id_serie;
+        //    }
 
-            set
-            {
-                _genero = value;
-            }
-        }
+        //    set
+        //    {
+        //        _id_serie = value;
+        //    }
+        //}
+        //public string TITULO_SERIE
+        //{
+        //    get
+        //    {
+        //        return _titulo_serie;
+        //    }
 
-        public string PAIS
-        {
-            get
-            {
-                return _pais;
-            }
+        //    set
+        //    {
+        //        _titulo_serie = value;
+        //    }
+        //}
 
-            set
-            {
-                _pais = value;
-            }
-        }
+        //public string CAPITULO
+        //{
+        //    get
+        //    {
+        //        return _capitulo;
+        //    }
 
-        public int ANO
-        {
-            get
-            {
-                return _ano;
-            }
+        //    set
+        //    {
+        //        _capitulo = value;
+        //    }
+        //}
 
-            set
-            {
-                _ano = value;
-            }
-        }
+        //public string DESCRICAO
+        //{
+        //    get
+        //    {
+        //        return _descricao;
+        //    }
 
-        public int DURACAO
-        {
-            get
-            {
-                return _duracao;
-            }
+        //    set
+        //    {
+        //        _descricao = value;
+        //    }
+        //}
 
-            set
-            {
-                _duracao = value;
-            }
-        }
+        //public int TEMPORADA
+        //{
+        //    get
+        //    {
+        //        return _temporada;
+        //    }
 
-        public int AVALIACAO
-        {
-            get
-            {
-                return _avaliacao;
-            }
+        //    set
+        //    {
+        //        _temporada = value;
+        //    }
+        //}
 
-            set
-            {
-                _avaliacao = value;
-            }
-        }
+        //public int EPISODIO
+        //{
+        //    get
+        //    {
+        //        return _episodio;
+        //    }
 
-        public bool ASSISTIDO
-        {
-            get
-            {
-                return _assistido;
-            }
+        //    set
+        //    {
+        //        _episodio = value;
+        //    }
+        //}
 
-            set
-            {
-                _assistido = value;
-            }
-        }
+        //public string GENERO
+        //{
+        //    get
+        //    {
+        //        return _genero;
+        //    }
+
+        //    set
+        //    {
+        //        _genero = value;
+        //    }
+        //}
+
+        //public string PAIS
+        //{
+        //    get
+        //    {
+        //        return _pais;
+        //    }
+
+        //    set
+        //    {
+        //        _pais = value;
+        //    }
+        //}
+
+        //public int ANO
+        //{
+        //    get
+        //    {
+        //        return _ano;
+        //    }
+
+        //    set
+        //    {
+        //        _ano = value;
+        //    }
+        //}
+
+        //public int DURACAO
+        //{
+        //    get
+        //    {
+        //        return _duracao;
+        //    }
+
+        //    set
+        //    {
+        //        _duracao = value;
+        //    }
+        //}
+
+        //public int AVALIACAO
+        //{
+        //    get
+        //    {
+        //        return _avaliacao;
+        //    }
+
+        //    set
+        //    {
+        //        _avaliacao = value;
+        //    }
+        //}
+
+        //public bool ASSISTIDO
+        //{
+        //    get
+        //    {
+        //        return _assistido;
+        //    }
+
+        //    set
+        //    {
+        //        _assistido = value;
+        //    }
+        //}
 
         public string[] validacao()
         {

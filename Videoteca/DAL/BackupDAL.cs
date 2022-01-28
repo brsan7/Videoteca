@@ -19,7 +19,7 @@ namespace Videoteca.DAL
             cmd.Connection = con.Conectar();
             cmd.CommandText = "BACKUP DATABASE [" +
                                Properties.Settings.Default.NomeBaseDeDados + "]" +
-                               " TO DISK = '" + caminho +  "' WITH COPY_ONLY";
+                               " TO DISK = '" + caminho + "' WITH COPY_ONLY";
             cmd.ExecuteNonQuery();
             con.Desconectar();
         }

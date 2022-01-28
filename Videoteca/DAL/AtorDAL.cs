@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
 using Videoteca.BLL;
 
 
@@ -13,145 +6,105 @@ namespace Videoteca.DAL
 {
     class AtorDAL
     {
-        Conexao con = new Conexao();
-
-        public void Cadastrar(AtorBLL a)
+        public void Cadastrar(AtorBLL ator)
         {
-            //Instanciar um objeto de comando SQL.
-            SqlCommand cmd = new SqlCommand();
-            //Configurar a conexao.
-            cmd.Connection = con.Conectar();
-            //Configurar o comando SQL.
-            cmd.CommandText = @"INSERT INTO Atores(
-                                    NOME_ATOR,
-                                    IDADE,
-                                    PAIS,
-                                    APOSENTADO)
-                                VALUES(@nome_ator,@idade,@pais,@aposentado)";
-            //Configurar os valores.
-            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
-            cmd.Parameters.AddWithValue("@idade", a.IDADE);
-            cmd.Parameters.AddWithValue("@pais", a.PAIS);
-            cmd.Parameters.AddWithValue("@aposentado", a.APOSENTADO);
-            //Executar os comandos SQL.
-            cmd.ExecuteNonQuery();
-            //Fechar a conexão com o banco de dados.
-            con.Desconectar();
-        }
-
-        public DataTable Consultar()
-        {
-            //Tabela de dados no padrão C# (String, double, float, int...).
-            DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT 
-                                    *
-                                FROM
-                                    Atores";
-            //Adaptador de dados padrão SQL para C#
-            SqlDataAdapter da = new SqlDataAdapter();
-            //Configurar qual comando de consulta
-            da.SelectCommand = cmd;
-            //Preencher o DataTable com o resultado adaptado da consulta
-            da.Fill(dt);
-
-            con.Desconectar();
-
-            return dt;
-        }
-
-        //Sobrecarga do metodo consultar (Filtro).
-        public DataTable Consultar(AtorBLL a)
-        {
-            //Tabela de dados no padrão C# (String, double, float, int...).
-            DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT 
-                                    *
-                                FROM
-                                    Atores
-                                WHERE
-                                    NOME_ATOR like @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", "%" + a.NOME_ATOR + "%");
-            //Adaptador de dados padrão SQL para C#
-            SqlDataAdapter da = new SqlDataAdapter();
-            //Configurar qual comando de consulta
-            da.SelectCommand = cmd;
-            //Preencher o DataTable com o resultado adaptado da consulta
-            da.Fill(dt);
-
-            con.Desconectar();
-
-            return dt;
-        }
-
-        public void Excluir(AtorBLL a)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    Atores
-                                WHERE
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
-
-        public AtorBLL PreecheAtor(AtorBLL a)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT 
-                                    *
-                                FROM 
-                                    Atores
-                                WHERE 
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            if (dr.HasRows)
+            using (var db = new VideotecaContext())
             {
-                dr.Read();
-                a.NOME_ATOR = dr["NOME_ATOR"].ToString() ?? "";
-                a.IDADE = Convert.ToInt16(dr["IDADE"].ToString());
-                a.PAIS = dr["PAIS"].ToString() ?? "";
-                a.APOSENTADO = Convert.ToBoolean(dr["APOSENTADO"]);
-                dr.Close();
-                con.Desconectar();
+                try
+                {
+                    db.AtorBLL.Add(ator);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
             }
-            else
-            {
-                a.NOME_ATOR = "Inválido";
-            }
-
-            return (a);
-
         }
 
-        public void Atualizar(AtorBLL a)
+        public List<AtorBLL> Consultar()
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"UPDATE
-                                    Atores
-                                SET
-                                    NOME_ATOR = @nome_ator,
-                                    IDADE = @idade,
-                                    PAIS = @pais,
-                                    APOSENTADO = @aposentado
-                                WHERE
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
-            cmd.Parameters.AddWithValue("@idade", a.IDADE);
-            cmd.Parameters.AddWithValue("@pais", a.PAIS);
-            cmd.Parameters.AddWithValue("@aposentado", a.APOSENTADO);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
+            List<AtorBLL> resultado;
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    resultado = (from Atores in db.AtorBLL select Atores).ToList<AtorBLL>();
+                }
+                catch (Exception)
+                {
+                    resultado = new List<AtorBLL>();
+                }
+            }
+            return resultado;
+        }
+
+        public List<AtorBLL> Consultar(string busca)
+        {
+            List<AtorBLL> resultado;
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    resultado = (from atores in db.AtorBLL
+                                 where atores.NOME_ATOR.Contains(busca)
+                                 select atores).ToList();
+                }
+                catch (Exception)
+                {
+                    resultado = new List<AtorBLL>();
+                }
+            }
+            return resultado;
+        }
+
+        public void Excluir(AtorBLL ator)
+        {
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    db.AtorBLL.Remove(ator);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
+            }
+        }
+
+        public AtorBLL PreecheAtor(string ator)
+        {
+            AtorBLL resultado;
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    resultado = db.AtorBLL.Find(ator) ?? new AtorBLL();
+                }
+                catch (Exception)
+                {
+                    resultado = new AtorBLL();
+                }
+            }
+            return resultado;
+        }
+
+        public void Atualizar(AtorBLL ator)
+        {
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    db.AtorBLL.Update(ator);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
+            }
         }
     }
 }

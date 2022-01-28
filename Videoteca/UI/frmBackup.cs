@@ -26,7 +26,7 @@ namespace Videoteca.UI
 
             if (resposta != DialogResult.Cancel)
             {
-                bkpDAL.GerarBackup(saveFileDialog1.FileName);
+                //bkpDAL.GerarBackup(saveFileDialog1.FileName);
                 MessageBox.Show("Backup Concluído");
             }
         }
@@ -38,7 +38,7 @@ namespace Videoteca.UI
 
             if (resposta != DialogResult.Cancel)
             {
-                bkpDAL.RestaurarBackup(openFileDialog1.FileName);
+                //bkpDAL.RestaurarBackup(openFileDialog1.FileName);
                 MessageBox.Show("Backup Restaurado");
             }
         }

@@ -1,128 +1,92 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
 using Videoteca.BLL;
 
 namespace Videoteca.DAL
 {
     class ElencoSerieDAL
     {
-        Conexao con = new Conexao();
-
-        public void Cadastrar(ElencoSerieBLL e)
+        public void Cadastrar(ElencoSerieBLL elenco)
         {
-            
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"INSERT INTO ElencoSerie(                                 
-                                    ID_SERIE,
-                                    NOME_ATOR
-                                    )
-                                VALUES(@id_serie, @nome_ator)";
-            cmd.Parameters.AddWithValue("@id_serie", e.ID_SERIE);
-            cmd.Parameters.AddWithValue("@nome_ator", e.NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
-
-
-
-        public List<string> Consultar(int id_serie)
-        {
-            List<string> resultado = new List<string>();
-
-            DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT 
-                                    *                                                               
-                                FROM
-                                    ElencoSerie
-                                WHERE
-                                    ID_SERIE = @id_serie";
-            cmd.Parameters.AddWithValue("@id_serie", id_serie);
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            while (dr.Read())
+            using (var db = new VideotecaContext())
             {
-                resultado.Add(dr["NOME_ATOR"].ToString());
+                try
+                {
+                    db.ElencoSerieBLL.Add(elenco);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
             }
-            dr.Close();
-            con.Desconectar();
-            
-            return resultado;
         }
 
-        public DataTable Consultar(AtorBLL a)
+        public List<ElencoSerieBLL> Consultar(int id_serie)
+        {
+            List<ElencoSerieBLL> resultado;
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    resultado = (from elencoSerie in db.ElencoSerieBLL
+                                 where elencoSerie.ID_SERIE == id_serie
+                                 select elencoSerie).ToList<ElencoSerieBLL>();
+                }
+                catch (Exception)
+                {
+                    resultado = new List<ElencoSerieBLL>();
+                }
+                return resultado;
+            }
+        }
+
+        public DataTable Consultar(string nome_ator)
         {
             DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT
-                                    Series.ID_SERIE,
-                                    TITULO_SERIE
-                                FROM ElencoSerie
-                                INNER JOIN Series 
-                                    ON (Series.ID_SERIE = ElencoSerie.ID_SERIE)
-	                                WHERE NOME_ATOR  = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd;
-            da.Fill(dt);
+            dt.Columns.Add("ID_SERIE");
+            dt.Columns.Add("TITULO_SERIE");
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    var atuacoesAtor = from elencoSerie in db.ElencoSerieBLL
+                                       join serie in db.SerieBLL
+                                       on elencoSerie.ID_SERIE equals serie.ID_SERIE
+                                       where elencoSerie.NOME_ATOR == nome_ator
+                                       select new { serie.ID_SERIE, serie.TITULO_SERIE };
 
-            con.Desconectar();
-
+                    foreach (var serie in atuacoesAtor)
+                    {
+                        dt.Rows.Add(serie.ID_SERIE, serie.TITULO_SERIE);
+                    }
+                }
+                catch (Exception)
+                {
+                    //return = null;
+                }
+            }
             return dt;
         }
 
-        public void Excluir(ElencoSerieBLL e)
+        public void Excluir(ElencoSerieBLL elencoSerie)
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    ElencoSerie
-                                WHERE
-                                    ID_SERIE = @id_serie
-                                AND
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@id_serie", e.ID_SERIE);
-            cmd.Parameters.AddWithValue("@nome_ator", e.NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    db.ElencoSerieBLL.Remove(
+                        db.ElencoSerieBLL.Single(
+                            registro => 
+                            registro.ID_SERIE == elencoSerie.ID_SERIE
+                            && registro.NOME_ATOR == elencoSerie.NOME_ATOR));
 
-        public void Excluir(int ID_SERIE)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    ElencoSerie
-                                WHERE
-                                    ID_SERIE = @id_serie";
-            cmd.Parameters.AddWithValue("@id_serie", ID_SERIE);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
-
-        public void Excluir(string NOME_ATOR)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    ElencoSerie
-                                WHERE
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
+            }
         }
     }
 }

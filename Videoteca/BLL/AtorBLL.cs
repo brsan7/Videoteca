@@ -3,75 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Videoteca.BLL
 {
     class AtorBLL
     {
-        private string _nome_ator = "";
+        [Key]
+        [MaxLength(50)]
+        public string NOME_ATOR { get; set; } = String.Empty;
 
-        private int _idade = 0;
+        public int IDADE { get; set; }
 
-        private string _pais = "";
+        [MaxLength(20)]
+        public string PAIS { get; set; } = String.Empty;
 
-        private bool _aposentado = false;
+        public bool APOSENTADO { get; set; }
 
-        public string NOME_ATOR
-        {
-            get
-            {
-                return _nome_ator;
-            }
 
-            set
-            {
-                _nome_ator = value;
-            }
-        }
 
-        public int IDADE
-        {
-            get
-            {
-                return _idade;
-            }
 
-            set
-            {
-                _idade = value;
-            }
-        }
 
-        public string PAIS
-        {
-            get
-            {
-                return _pais;
-            }
+        //private int _idade = 0;
 
-            set
-            {
-                _pais = value;
-            }
-        }
+        //private string _pais = "";
 
-        public bool APOSENTADO
-        {
-            get
-            {
-                return _aposentado;
-            }
+        //private bool _aposentado = false;
 
-            set
-            {
-                _aposentado = value;
-            }
-        }
+        //public string NOME_ATOR
+        //{
+        //    get
+        //    {
+        //        return _nome_ator;
+        //    }
+
+        //    set
+        //    {
+        //        _nome_ator = value;
+        //    }
+        //}
+
+        //public int IDADE
+        //{
+        //    get
+        //    {
+        //        return _idade;
+        //    }
+
+        //    set
+        //    {
+        //        _idade = value;
+        //    }
+        //}
+
+        //public string PAIS
+        //{
+        //    get
+        //    {
+        //        return _pais;
+        //    }
+
+        //    set
+        //    {
+        //        _pais = value;
+        //    }
+        //}
+
+        //public bool APOSENTADO
+        //{
+        //    get
+        //    {
+        //        return _aposentado;
+        //    }
+
+        //    set
+        //    {
+        //        _aposentado = value;
+        //    }
+        //}
 
         public bool validacao()
         {
             bool valido = true;
-            if (_nome_ator.Equals(""))
+            if (NOME_ATOR.Equals(""))
             {
                 valido = false;
             }

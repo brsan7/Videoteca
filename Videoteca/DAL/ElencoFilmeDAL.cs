@@ -1,130 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
 using Videoteca.BLL;
 
 namespace Videoteca.DAL
 {
     class ElencoFilmeDAL
     {
-        Conexao con = new Conexao();
-
-        public void Cadastrar(ElencoFilmeBLL e)
+        public void Cadastrar(ElencoFilmeBLL elenco)
         {
-            
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"INSERT INTO ElencoFilme(                                 
-                                    ID_FILME,
-                                    NOME_ATOR
-                                    )
-                                VALUES(@id_filme, @nome_ator)";
-            cmd.Parameters.AddWithValue("@id_filme", e.ID_FILME);
-            cmd.Parameters.AddWithValue("@nome_ator", e.NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
-
-
-
-        public List<string> Consultar(int id_filme)
-        {
-            List<string> resultado = new List<string>();
-
-            DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT 
-                                    *                                                               
-                                FROM
-                                    ElencoFilme
-                                WHERE
-                                    ID_FILME = @id_filme";
-            cmd.Parameters.AddWithValue("@id_filme", id_filme);
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            while (dr.Read())
+            using (var db = new VideotecaContext())
             {
-                resultado.Add(dr["NOME_ATOR"].ToString());
+                try
+                {
+                    db.ElencoFilmeBLL.Add(elenco);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
             }
-            dr.Close();
-            con.Desconectar();
-            
-            return resultado;
         }
 
 
-        public DataTable Consultar(AtorBLL a)
+
+        public List<ElencoFilmeBLL> Consultar(int id_filme)
         {
+            List<ElencoFilmeBLL> resultado;
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    resultado = (from elencoFilme in db.ElencoFilmeBLL 
+                                 where elencoFilme.ID_FILME == id_filme
+                                 select elencoFilme).ToList<ElencoFilmeBLL>();
+                }
+                catch (Exception)
+                {
+                    resultado = new List<ElencoFilmeBLL>();
+                }
+                return resultado;
+            }
+        }
 
-            DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"SELECT
-                                    Filmes.ID_FILME,
-                                    TITULO_FILME
-                                FROM ElencoFilme
-                                INNER JOIN Filmes 
-                                    ON (Filmes.ID_FILME = ElencoFilme.ID_FILME)
-	                                WHERE NOME_ATOR  = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", a.NOME_ATOR);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd;
-            da.Fill(dt);
 
-            con.Desconectar();
+        public DataTable Consultar(string nome_ator)
+        {
+            DataTable dt = new DataTable ();
+            dt.Columns.Add("ID_FILME");
+            dt.Columns.Add("TITULO_FILME");
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    var atuacoesAtor = from elencoFilme in db.ElencoFilmeBLL
+                                       join filme in db.FilmeBLL
+                                       on elencoFilme.ID_FILME equals filme.ID_FILME
+                                       where elencoFilme.NOME_ATOR == nome_ator
+                                       select new { filme.ID_FILME, filme.TITULO_FILME };
 
+                    foreach (var filme in atuacoesAtor)
+                    {
+                        dt.Rows.Add(filme.ID_FILME, filme.TITULO_FILME);
+                    }
+                }
+                catch (Exception)
+                {
+                    //return = null;
+                }
+            }
             return dt;
         }
 
-        public void Excluir(ElencoFilmeBLL e)
+        public void Excluir(ElencoFilmeBLL elencoFilme)
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    ElencoFilme
-                                WHERE
-                                    ID_FILME = @id_filme
-                                AND
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@id_filme", e.ID_FILME);
-            cmd.Parameters.AddWithValue("@nome_ator", e.NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
+            using (var db = new VideotecaContext())
+            {
+                try
+                {
+                    db.ElencoFilmeBLL.Remove(
+                        db.ElencoFilmeBLL.Single(
+                            registro =>
+                            registro.ID_FILME == elencoFilme.ID_FILME
+                            && registro.NOME_ATOR == elencoFilme.NOME_ATOR));
 
-        public void Excluir(int ID_FILME)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    ElencoFilme
-                                WHERE
-                                    ID_FILME = @id_filme";
-            cmd.Parameters.AddWithValue("@id_filme", ID_FILME);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
-        }
-
-        public void Excluir(string NOME_ATOR)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con.Conectar();
-            cmd.CommandText = @"DELETE
-                                FROM 
-                                    ElencoFilme
-                                WHERE
-                                    NOME_ATOR = @nome_ator";
-            cmd.Parameters.AddWithValue("@nome_ator", NOME_ATOR);
-            cmd.ExecuteNonQuery();
-            con.Desconectar();
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    //
+                }
+            }
         }
     }
 }

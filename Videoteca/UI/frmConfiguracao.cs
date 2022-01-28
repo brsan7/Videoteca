@@ -17,7 +17,7 @@ namespace Videoteca.UI
             InitializeComponent();
         }
 
-        private void frmConfiguracao_Load(object sender, EventArgs e)
+        private void frmConfiguracao_Load(object? sender, EventArgs? e)
         {
             txtTitulo.Text = Properties.Settings.Default.Titulo;
             txtNomeBase.Text = Properties.Settings.Default.NomeBaseDeDados;

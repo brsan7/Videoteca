@@ -39,7 +39,7 @@
             this.txtPAIS = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnCadastrar = new System.Windows.Forms.Button();
+            this.btnRegistro = new System.Windows.Forms.Button();
             this.txtNOME_ATOR = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvAtorSeries = new System.Windows.Forms.DataGridView();
@@ -96,7 +96,7 @@
             this.groupBox1.Controls.Add(this.txtPAIS);
             this.groupBox1.Controls.Add(this.lblNome);
             this.groupBox1.Controls.Add(this.btnCancelar);
-            this.groupBox1.Controls.Add(this.btnCadastrar);
+            this.groupBox1.Controls.Add(this.btnRegistro);
             this.groupBox1.Controls.Add(this.txtNOME_ATOR);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -199,17 +199,17 @@
             this.btnCancelar.Visible = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // btnCadastrar
+            // btnRegistro
             // 
-            this.btnCadastrar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCadastrar.Location = new System.Drawing.Point(27, 246);
-            this.btnCadastrar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnCadastrar.Name = "btnCadastrar";
-            this.btnCadastrar.Size = new System.Drawing.Size(107, 37);
-            this.btnCadastrar.TabIndex = 5;
-            this.btnCadastrar.Text = "Cadastrar";
-            this.btnCadastrar.UseVisualStyleBackColor = true;
-            this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
+            this.btnRegistro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnRegistro.Location = new System.Drawing.Point(27, 246);
+            this.btnRegistro.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnRegistro.Name = "btnRegistro";
+            this.btnRegistro.Size = new System.Drawing.Size(107, 37);
+            this.btnRegistro.TabIndex = 5;
+            this.btnRegistro.Text = "Cadastrar";
+            this.btnRegistro.UseVisualStyleBackColor = true;
+            this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
             // txtNOME_ATOR
             // 
@@ -363,7 +363,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tbpCadastro;
         private System.Windows.Forms.TabPage tbpConsulta;
-        private System.Windows.Forms.Button btnCadastrar;
+        private System.Windows.Forms.Button btnRegistro;
         private System.Windows.Forms.TextBox txtPAIS;
         private System.Windows.Forms.TextBox txtNOME_ATOR;
         private System.Windows.Forms.Label lblPais;

@@ -3,55 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Videoteca.BLL
 {
     class ElencoSerieBLL
     {
-        private int _id_elenco;
+        [Key]
+        public int ID_ELENCO { get; set; } = 0;
 
-        private int _id_serie;
+        [ForeignKey("Serie")]
+        public int ID_SERIE { get; set; } = 0;
 
-        private string _nome_ator = "";
+        [ForeignKey("Ator")]
+        [MaxLength(50)]
+        public string NOME_ATOR { get; set; } = String.Empty;
 
-        public int ID_ELENCO
-        {
-            get
-            {
-                return _id_elenco;
-            }
+        public SerieBLL? Serie { get; set; } = null;
 
-            set
-            {
-                _id_elenco = value;
-            }
-        }
+        public AtorBLL? Ator { get; set; } = null;
 
-        public int ID_SERIE
-        {
-            get
-            {
-                return _id_serie;
-            }
+        //private int _id_elenco;
 
-            set
-            {
-                _id_serie = value;
-            }
-        }
+        //private int _id_serie;
 
-        public string NOME_ATOR
-        {
-            get
-            {
-                return _nome_ator;
-            }
+        //private string _nome_ator = "";
 
-            set
-            {
-                _nome_ator = value;
-            }
-        }
+        //public int ID_ELENCO
+        //{
+        //    get
+        //    {
+        //        return _id_elenco;
+        //    }
+
+        //    set
+        //    {
+        //        _id_elenco = value;
+        //    }
+        //}
+
+        //public int ID_SERIE
+        //{
+        //    get
+        //    {
+        //        return _id_serie;
+        //    }
+
+        //    set
+        //    {
+        //        _id_serie = value;
+        //    }
+        //}
+
+        //public string NOME_ATOR
+        //{
+        //    get
+        //    {
+        //        return _nome_ator;
+        //    }
+
+        //    set
+        //    {
+        //        _nome_ator = value;
+        //    }
+        //}
 
         public List<string> lstAtoresInserir(List<string> lstRegistrada, List<AtorBLL> lstAtualizada)
         {

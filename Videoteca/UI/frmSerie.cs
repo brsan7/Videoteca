@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Videoteca.BLL;
+﻿using Videoteca.BLL;
 using Videoteca.DAL;
 
 namespace Videoteca.UI
@@ -56,16 +47,17 @@ namespace Videoteca.UI
                     serieDAL.Atualizar(serieBLL);
 
                     elencoSerieBLL.ID_SERIE = serieBLL.ID_SERIE;
-                    foreach (var ator in elencoSerieBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoSerie))
-                    {
-                        elencoSerieBLL.NOME_ATOR = ator;
-                        elencoSerieDAL.Cadastrar(elencoSerieBLL);
-                    }
-
                     foreach (var ator in elencoSerieBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoSerie))
                     {
                         elencoSerieBLL.NOME_ATOR = ator;
                         elencoSerieDAL.Excluir(elencoSerieBLL);
+                    }
+
+                    elencoSerieBLL.ID_ELENCO = 0;
+                    foreach (var ator in elencoSerieBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoSerie))
+                    {
+                        elencoSerieBLL.NOME_ATOR = ator;
+                        elencoSerieDAL.Cadastrar(elencoSerieBLL);
                     }
 
                     MessageBox.Show("Serie Atualizada!");
@@ -74,9 +66,11 @@ namespace Videoteca.UI
                     txtPAIS.ReadOnly = false;
                     btnCancelar.Visible = false;
                 }
-
                 else
                 {
+                    elencoSerieBLL.ID_ELENCO = 0;
+                    serieBLL.ID_SERIE = 0;
+
                     serieDAL.Cadastrar(serieBLL);
 
                     elencoSerieBLL.ID_SERIE = serieDAL.BuscarUltimoRegistro(serieBLL).ID_SERIE;
@@ -85,8 +79,6 @@ namespace Videoteca.UI
                         elencoSerieBLL.NOME_ATOR = item.NOME_ATOR;
                         elencoSerieDAL.Cadastrar(elencoSerieBLL);
                     }
-
-
                     MessageBox.Show("Série Cadastrada!");
                 }
 
@@ -173,15 +165,15 @@ namespace Videoteca.UI
         private void txtFiltro_TextChanged(object? sender, EventArgs? e)
         {
             cmbFiltroGenero.SelectedIndex = 0;
-            serieBLL.TITULO_SERIE = txtFiltro.Text;
-            dgvResultado.DataSource = serieDAL.Consultar(serieBLL);
+            //serieBLL.TITULO_SERIE = txtFiltro.Text;
+            dgvResultado.DataSource = serieDAL.FiltrarTitulo(txtFiltro.Text);
         }
 
         private void cmbGeneros_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbFiltroGenero.SelectedIndex > 0)
             {
-                dgvResultado.DataSource = serieDAL.Consultar(cmbFiltroGenero.Text);
+                dgvResultado.DataSource = serieDAL.FiltrarGenero(cmbFiltroGenero.Text);
             }
             else
             {
@@ -193,12 +185,9 @@ namespace Videoteca.UI
         {
             if (e.TabPageIndex == 1) 
             {
-                DataTable fonte = new DataTable();
-                fonte = serieDAL.Consultar();
+                dgvResultado.DataSource = serieDAL.Consultar();
 
-                dgvResultado.DataSource = fonte;
-
-                cmbFiltroGenero.DataSource = serieDAL.listarGeneros(fonte);
+                cmbFiltroGenero.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
             }
         }
 
@@ -216,7 +205,6 @@ namespace Videoteca.UI
                 if (resposta == DialogResult.Yes)
                 {
                     serieBLL.ID_SERIE = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value);
-                    elencoSerieDAL.Excluir(serieBLL.ID_SERIE);
                     serieDAL.Excluir(serieBLL);
                     txtFiltro_TextChanged(null, null);
                 }
@@ -242,8 +230,7 @@ namespace Videoteca.UI
             btnCancelar.Visible = true;
             btnCadastrar.Text = "Atualizar";
             
-            serieBLL.ID_SERIE = id_serie;
-            serieBLL = serieDAL.PreecheSerie(serieBLL);
+            serieBLL = serieDAL.PreecheSerie(id_serie);
             
             txtTITULO_SERIE.Text = serieBLL.TITULO_SERIE;
             txtCAPITULO.Text = serieBLL.CAPITULO;
@@ -260,10 +247,10 @@ namespace Videoteca.UI
             lstElencoSerie.Clear();
             lstElencoRegistrado.Clear();
 
-            foreach (var ator in elencoSerieDAL.Consultar(Convert.ToInt16(serieBLL.ID_SERIE)))
+            foreach (var elencoSerie in elencoSerieDAL.Consultar(Convert.ToInt16(serieBLL.ID_SERIE)))
             {
-                lstElencoSerie.Add(new AtorBLL() { NOME_ATOR = ator });
-                lstElencoRegistrado.Add(ator);
+                lstElencoSerie.Add(new AtorBLL() { NOME_ATOR = elencoSerie.NOME_ATOR });
+                lstElencoRegistrado.Add(elencoSerie.NOME_ATOR);
             }
             setup_dgvElenco();
             btnInserir_statusTexto(false);
@@ -275,7 +262,7 @@ namespace Videoteca.UI
             frmAtor visualizacao = new frmAtor();
             visualizacao.MdiParent = frmMenu.ActiveForm;
             visualizacao.Show();
-            visualizacao.preencherRegistroAtor(ator);
+            visualizacao.PreencherRegistroAtor(ator);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

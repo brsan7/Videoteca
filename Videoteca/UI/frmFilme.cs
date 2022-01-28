@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Videoteca.BLL;
+﻿using Videoteca.BLL;
 using Videoteca.DAL;
 
 namespace Videoteca.UI
@@ -52,16 +43,17 @@ namespace Videoteca.UI
                     filmeDAL.Atualizar(filmeBLL);
 
                     elencoFilmeBLL.ID_FILME = filmeBLL.ID_FILME;
-                    foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoFilme))
-                    {
-                        elencoFilmeBLL.NOME_ATOR = ator;
-                        elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
-                    }
-
                     foreach (var ator in elencoFilmeBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoFilme))
                     {
                         elencoFilmeBLL.NOME_ATOR = ator;
                         elencoFilmeDAL.Excluir(elencoFilmeBLL);
+                    }
+
+                    elencoFilmeBLL.ID_ELENCO = 0;
+                    foreach (var ator in elencoFilmeBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoFilme))
+                    {
+                        elencoFilmeBLL.NOME_ATOR = ator;
+                        elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
                     }
 
                     MessageBox.Show("Filme Atualizado!");
@@ -70,9 +62,11 @@ namespace Videoteca.UI
                     txtPAIS.ReadOnly = false;
                     btnCancelar.Visible = false;
                 }
-
                 else
                 {
+                    elencoFilmeBLL.ID_ELENCO = 0;
+                    filmeBLL.ID_FILME = 0;
+
                     filmeDAL.Cadastrar(filmeBLL);
 
                     elencoFilmeBLL.ID_FILME = filmeDAL.BuscarUltimoRegistro(filmeBLL).ID_FILME;
@@ -81,8 +75,6 @@ namespace Videoteca.UI
                         elencoFilmeBLL.NOME_ATOR = item.NOME_ATOR;
                         elencoFilmeDAL.Cadastrar(elencoFilmeBLL);
                     }
-
-
                     MessageBox.Show("Filme Cadastrado!");
                 }
 
@@ -156,15 +148,14 @@ namespace Videoteca.UI
         private void txtFiltro_TextChanged(object? sender, EventArgs? e)
         {
             cmbFiltroGenero.SelectedIndex = 0;
-            filmeBLL.TITULO_FILME = txtFiltro.Text;
-            dgvResultado.DataSource = filmeDAL.Consultar(filmeBLL);
+            dgvResultado.DataSource = filmeDAL.FiltrarTitulo(txtFiltro.Text);
         }
 
         private void cmbGeneros_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbFiltroGenero.SelectedIndex > 0)
             {
-                dgvResultado.DataSource = filmeDAL.Consultar(cmbFiltroGenero.Text);
+                dgvResultado.DataSource = filmeDAL.FiltrarGenero(cmbFiltroGenero.Text);
             }
             else
             {
@@ -176,12 +167,9 @@ namespace Videoteca.UI
         {
             if (e.TabPageIndex == 1) 
             {
-                DataTable fonte = new DataTable();
-                fonte = filmeDAL.Consultar();
+                dgvResultado.DataSource = filmeDAL.Consultar();
 
-                dgvResultado.DataSource = fonte;
-
-                cmbFiltroGenero.DataSource = cmbGENERO.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
+                cmbFiltroGenero.DataSource = filmeDAL.listarGeneros(filmeDAL.Consultar());
             }
         }
 
@@ -199,7 +187,6 @@ namespace Videoteca.UI
                 if (resposta == DialogResult.Yes)
                 {
                     filmeBLL.ID_FILME = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_FILME"].Value);
-                    elencoFilmeDAL.Excluir(filmeBLL.ID_FILME);
                     filmeDAL.Excluir(filmeBLL);
                     txtFiltro_TextChanged(null, null);
                 }
@@ -213,20 +200,19 @@ namespace Videoteca.UI
         private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int id_filme = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_FILME"].Value);
-            preencherRegistroFilme(id_filme);
-            
+            PreencherRegistroFilme(id_filme);
+
             tabControl1.SelectTab(0);
         }
 
-        public void preencherRegistroFilme(int id_filme)
+        public void PreencherRegistroFilme(int id_filme)
         {
             atualizar = true;
             btnCancelar.Visible = true;
             btnCadastrar.Text = "Atualizar";
             groupBox1.Text = "Atualização de Filme";
-
-            filmeBLL.ID_FILME = id_filme;
-            filmeBLL = filmeDAL.PreecheFilme(filmeBLL);
+            
+            filmeBLL = filmeDAL.PreecheFilme(id_filme);
             
             txtTITULO_FILME.Text = filmeBLL.TITULO_FILME;
             txtDESCRICAO.Text = filmeBLL.DESCRICAO;
@@ -240,10 +226,10 @@ namespace Videoteca.UI
             lstElencoFilme.Clear();
             lstElencoRegistrado.Clear();
 
-            foreach (var ator in elencoFilmeDAL.Consultar(Convert.ToInt16(filmeBLL.ID_FILME)))
+            foreach (var elencoFilme in elencoFilmeDAL.Consultar(Convert.ToInt16(filmeBLL.ID_FILME)))
             {
-                lstElencoFilme.Add(new AtorBLL() { NOME_ATOR = ator});
-                lstElencoRegistrado.Add(ator);
+                lstElencoFilme.Add(new AtorBLL() { NOME_ATOR = elencoFilme.NOME_ATOR });
+                lstElencoRegistrado.Add(elencoFilme.NOME_ATOR);
             }
             setup_dgvElenco();
             btnInserir_statusTexto(false);
@@ -257,7 +243,7 @@ namespace Videoteca.UI
             frmAtor visualizacao = new frmAtor();
             visualizacao.MdiParent = frmMenu.ActiveForm;
             visualizacao.Show();
-            visualizacao.preencherRegistroAtor(ator);
+            visualizacao.PreencherRegistroAtor(ator);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

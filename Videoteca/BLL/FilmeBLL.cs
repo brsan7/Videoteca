@@ -3,145 +3,169 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Videoteca.BLL
 {
     class FilmeBLL
     {
-        private int _id_filme;
+        [Key]
+        public int ID_FILME { get; set; } = 0;
 
-        private string _titulo_filme = "";
+        [MaxLength(50)]
+        public string TITULO_FILME { get; set; } = String.Empty;
 
-        private string _descricao = "";
+        [MaxLength(300)]
+        public string? DESCRICAO { get; set; }
 
-        private string _genero = "";
+        [MaxLength(25)]
+        public string GENERO { get; set; } = String.Empty;
 
-        private string _pais = "";
+        [MaxLength(25)]
+        public string PAIS { get; set; } = String.Empty;
 
-        private int _ano = 0;
+        public int ANO { get; set; }
 
-        private int _duracao = 0;
+        public int DURACAO { get; set; }
 
-        private int _avaliacao = 0;
+        public int AVALIACAO { get; set; }
 
-        private bool _assistido = false;
+        public bool ASSISTIDO { get; set; }
+        //private int _id_filme;
 
-        public int ID_FILME
-        {
-            get
-            {
-                return _id_filme;
-            }
+        //private string _titulo_filme = "";
 
-            set
-            {
-                _id_filme = value;
-            }
-        }
+        //private string _descricao = "";
 
-        public string TITULO_FILME
-        {
-            get
-            {
-                return _titulo_filme;
-            }
+        //private string _genero = "";
 
-            set
-            {
-                _titulo_filme = value;
-            }
-        }
+        //private string _pais = "";
 
-        public string DESCRICAO
-        {
-            get
-            {
-                return _descricao;
-            }
+        //private int _ano = 0;
 
-            set
-            {
-                _descricao = value;
-            }
-        }
+        //private int _duracao = 0;
 
-        public string GENERO
-        {
-            get
-            {
-                return _genero;
-            }
+        //private int _avaliacao = 0;
 
-            set
-            {
-                _genero = value;
-            }
-        }
+        //private bool _assistido = false;
 
-        public string PAIS
-        {
-            get
-            {
-                return _pais;
-            }
+        //public int ID_FILME
+        //{
+        //    get
+        //    {
+        //        return _id_filme;
+        //    }
 
-            set
-            {
-                _pais = value;
-            }
-        }
+        //    set
+        //    {
+        //        _id_filme = value;
+        //    }
+        //}
 
-        public int ANO
-        {
-            get
-            {
-                return _ano;
-            }
+        //public string TITULO_FILME
+        //{
+        //    get
+        //    {
+        //        return _titulo_filme;
+        //    }
 
-            set
-            {
-                _ano = value;
-            }
-        }
+        //    set
+        //    {
+        //        _titulo_filme = value;
+        //    }
+        //}
 
-        public int DURACAO
-        {
-            get
-            {
-                return _duracao;
-            }
+        //public string DESCRICAO
+        //{
+        //    get
+        //    {
+        //        return _descricao;
+        //    }
 
-            set
-            {
-                _duracao = value;
-            }
-        }
+        //    set
+        //    {
+        //        _descricao = value;
+        //    }
+        //}
 
-        public int AVALIACAO
-        {
-            get
-            {
-                return _avaliacao;
-            }
+        //public string GENERO
+        //{
+        //    get
+        //    {
+        //        return _genero;
+        //    }
 
-            set
-            {
-                _avaliacao = value;
-            }
-        }
+        //    set
+        //    {
+        //        _genero = value;
+        //    }
+        //}
 
-        public bool ASSISTIDO
-        {
-            get
-            {
-                return _assistido;
-            }
+        //public string PAIS
+        //{
+        //    get
+        //    {
+        //        return _pais;
+        //    }
 
-            set
-            {
-                _assistido = value;
-            }
-        }
+        //    set
+        //    {
+        //        _pais = value;
+        //    }
+        //}
+
+        //public int ANO
+        //{
+        //    get
+        //    {
+        //        return _ano;
+        //    }
+
+        //    set
+        //    {
+        //        _ano = value;
+        //    }
+        //}
+
+        //public int DURACAO
+        //{
+        //    get
+        //    {
+        //        return _duracao;
+        //    }
+
+        //    set
+        //    {
+        //        _duracao = value;
+        //    }
+        //}
+
+        //public int AVALIACAO
+        //{
+        //    get
+        //    {
+        //        return _avaliacao;
+        //    }
+
+        //    set
+        //    {
+        //        _avaliacao = value;
+        //    }
+        //}
+
+        //public bool ASSISTIDO
+        //{
+        //    get
+        //    {
+        //        return _assistido;
+        //    }
+
+        //    set
+        //    {
+        //        _assistido = value;
+        //    }
+        //}
 
         public string[] validacao()
         {
