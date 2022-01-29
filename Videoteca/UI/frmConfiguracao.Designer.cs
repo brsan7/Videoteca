@@ -1,6 +1,6 @@
 ﻿namespace Videoteca.UI
 {
-    partial class frmConfiguracao
+    partial class FrmConfiguracao
     {
         /// <summary>
         /// Required designer variable.

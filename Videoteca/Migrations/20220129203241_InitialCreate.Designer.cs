@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Videoteca.BLL;
+using Videoteca.Entidade;
 
 #nullable disable
 
 namespace Videoteca.Migrations
 {
     [DbContext(typeof(VideotecaContext))]
-    [Migration("20220127211632_InitialCreate")]
+    [Migration("20220129203241_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace Videoteca.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Videoteca.BLL.AtorBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.Atores", b =>
                 {
                     b.Property<string>("NOME_ATOR")
                         .HasMaxLength(50)
@@ -42,10 +42,10 @@ namespace Videoteca.Migrations
 
                     b.HasKey("NOME_ATOR");
 
-                    b.ToTable("AtorBLL");
+                    b.ToTable("Atores");
                 });
 
-            modelBuilder.Entity("Videoteca.BLL.ElencoFilmeBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.ElencoFilmes", b =>
                 {
                     b.Property<int>("ID_ELENCO")
                         .ValueGeneratedOnAdd()
@@ -67,10 +67,10 @@ namespace Videoteca.Migrations
 
                     b.HasIndex("NOME_ATOR");
 
-                    b.ToTable("ElencoFilmeBLL");
+                    b.ToTable("ElencoFilmes");
                 });
 
-            modelBuilder.Entity("Videoteca.BLL.ElencoSerieBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.ElencoSeries", b =>
                 {
                     b.Property<int>("ID_ELENCO")
                         .ValueGeneratedOnAdd()
@@ -92,10 +92,10 @@ namespace Videoteca.Migrations
 
                     b.HasIndex("NOME_ATOR");
 
-                    b.ToTable("ElencoSerieBLL");
+                    b.ToTable("ElencoSeries");
                 });
 
-            modelBuilder.Entity("Videoteca.BLL.FilmeBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.Filmes", b =>
                 {
                     b.Property<int>("ID_FILME")
                         .ValueGeneratedOnAdd()
@@ -136,10 +136,10 @@ namespace Videoteca.Migrations
 
                     b.HasKey("ID_FILME");
 
-                    b.ToTable("FilmeBLL");
+                    b.ToTable("Filmes");
                 });
 
-            modelBuilder.Entity("Videoteca.BLL.SerieBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.Series", b =>
                 {
                     b.Property<int>("ID_SERIE")
                         .ValueGeneratedOnAdd()
@@ -190,18 +190,18 @@ namespace Videoteca.Migrations
 
                     b.HasKey("ID_SERIE");
 
-                    b.ToTable("SerieBLL");
+                    b.ToTable("Series");
                 });
 
-            modelBuilder.Entity("Videoteca.BLL.ElencoFilmeBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.ElencoFilmes", b =>
                 {
-                    b.HasOne("Videoteca.BLL.FilmeBLL", "Filme")
+                    b.HasOne("Videoteca.Entidade.Filmes", "Filme")
                         .WithMany()
                         .HasForeignKey("ID_FILME")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Videoteca.BLL.AtorBLL", "Ator")
+                    b.HasOne("Videoteca.Entidade.Atores", "Ator")
                         .WithMany()
                         .HasForeignKey("NOME_ATOR")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -212,15 +212,15 @@ namespace Videoteca.Migrations
                     b.Navigation("Filme");
                 });
 
-            modelBuilder.Entity("Videoteca.BLL.ElencoSerieBLL", b =>
+            modelBuilder.Entity("Videoteca.Entidade.ElencoSeries", b =>
                 {
-                    b.HasOne("Videoteca.BLL.SerieBLL", "Serie")
+                    b.HasOne("Videoteca.Entidade.Series", "Serie")
                         .WithMany()
                         .HasForeignKey("ID_SERIE")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Videoteca.BLL.AtorBLL", "Ator")
+                    b.HasOne("Videoteca.Entidade.Atores", "Ator")
                         .WithMany()
                         .HasForeignKey("NOME_ATOR")
                         .OnDelete(DeleteBehavior.Cascade)

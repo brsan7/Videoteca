@@ -1,6 +1,6 @@
 ﻿namespace Videoteca
 {
-    partial class frmMenu
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -63,21 +63,21 @@
             this.atoresToolStripMenuItem.Name = "atoresToolStripMenuItem";
             this.atoresToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.atoresToolStripMenuItem.Text = "Atores";
-            this.atoresToolStripMenuItem.Click += new System.EventHandler(this.atorToolStripMenuItem_Click);
+            this.atoresToolStripMenuItem.Click += new System.EventHandler(this.AtorToolStripMenuItem_Click);
             // 
             // filmesToolStripMenuItem
             // 
             this.filmesToolStripMenuItem.Name = "filmesToolStripMenuItem";
             this.filmesToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.filmesToolStripMenuItem.Text = "Filmes";
-            this.filmesToolStripMenuItem.Click += new System.EventHandler(this.filmeToolStripMenuItem_Click);
+            this.filmesToolStripMenuItem.Click += new System.EventHandler(this.FilmeToolStripMenuItem_Click);
             // 
             // seriesToolStripMenuItem
             // 
             this.seriesToolStripMenuItem.Name = "seriesToolStripMenuItem";
             this.seriesToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.seriesToolStripMenuItem.Text = "Series";
-            this.seriesToolStripMenuItem.Click += new System.EventHandler(this.serieToolStripMenuItem_Click);
+            this.seriesToolStripMenuItem.Click += new System.EventHandler(this.SerieToolStripMenuItem_Click);
             // 
             // janelasAbertasToolStripMenuItem
             // 
@@ -92,7 +92,7 @@
             this.configuraçõesToolStripMenuItem.Name = "configuraçõesToolStripMenuItem";
             this.configuraçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.configuraçõesToolStripMenuItem.Text = "Configurações";
-            this.configuraçõesToolStripMenuItem.Click += new System.EventHandler(this.configuracoesToolStripMenuItem_Click);
+            this.configuraçõesToolStripMenuItem.Click += new System.EventHandler(this.ConfiguracoesToolStripMenuItem_Click);
             // 
             // backupToolStripMenuItem
             // 
@@ -100,7 +100,7 @@
             this.backupToolStripMenuItem.Name = "backupToolStripMenuItem";
             this.backupToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.backupToolStripMenuItem.Text = "Backup";
-            this.backupToolStripMenuItem.Click += new System.EventHandler(this.backupToolStripMenuItem_Click);
+            this.backupToolStripMenuItem.Click += new System.EventHandler(this.BackupToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -132,8 +132,8 @@
             this.Name = "frmMenu";
             this.Text = "Menu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMenu_FormClosing);
-            this.Load += new System.EventHandler(this.frmMenu_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMenu_FormClosing);
+            this.Load += new System.EventHandler(this.FrmMenu_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

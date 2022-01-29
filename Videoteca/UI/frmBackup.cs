@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace Videoteca.UI
 {
-    public partial class frmBackup : Form
+    public partial class FrmBackup : Form
     {
-        public frmBackup()
+        public FrmBackup()
         {
             InitializeComponent();
         }
 
-        DAL.BackupDAL bkpDAL = new DAL.BackupDAL();
+        Repositorio.BackupRep bkpDAL = new Repositorio.BackupRep();
 
         private void btnGerar_Click(object sender, EventArgs e)
         {

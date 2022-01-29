@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Videoteca.UI
 {
-    public partial class frmConfiguracao : Form
+    public partial class FrmConfiguracao : Form
     {
-        public frmConfiguracao()
+        public FrmConfiguracao()
         {
             InitializeComponent();
         }

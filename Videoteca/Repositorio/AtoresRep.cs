@@ -1,18 +1,18 @@
 ﻿using System.Data;
-using Videoteca.BLL;
+using Videoteca.Entidade;
 
 
-namespace Videoteca.DAL
+namespace Videoteca.Repositorio
 {
-    class AtorDAL
+    class AtoresRep
     {
-        public void Cadastrar(AtorBLL ator)
+        public static void Cadastrar(Atores ator)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.AtorBLL.Add(ator);
+                    db.Atores.Add(ator);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -22,49 +22,49 @@ namespace Videoteca.DAL
             }
         }
 
-        public List<AtorBLL> Consultar()
+        public static List<Atores> Consultar()
         {
-            List<AtorBLL> resultado;
+            List<Atores> resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = (from Atores in db.AtorBLL select Atores).ToList<AtorBLL>();
+                    resultado = (from Atores in db.Atores select Atores).ToList<Atores>();
                 }
                 catch (Exception)
                 {
-                    resultado = new List<AtorBLL>();
+                    resultado = new List<Atores>();
                 }
             }
             return resultado;
         }
 
-        public List<AtorBLL> Consultar(string busca)
+        public static List<Atores> Consultar(string busca)
         {
-            List<AtorBLL> resultado;
+            List<Atores> resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = (from atores in db.AtorBLL
+                    resultado = (from atores in db.Atores
                                  where atores.NOME_ATOR.Contains(busca)
                                  select atores).ToList();
                 }
                 catch (Exception)
                 {
-                    resultado = new List<AtorBLL>();
+                    resultado = new List<Atores>();
                 }
             }
             return resultado;
         }
 
-        public void Excluir(AtorBLL ator)
+        public static void Excluir(Atores ator)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.AtorBLL.Remove(ator);
+                    db.Atores.Remove(ator);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -74,30 +74,30 @@ namespace Videoteca.DAL
             }
         }
 
-        public AtorBLL PreecheAtor(string ator)
+        public static Atores PreecheAtor(string ator)
         {
-            AtorBLL resultado;
+            Atores resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = db.AtorBLL.Find(ator) ?? new AtorBLL();
+                    resultado = db.Atores.Find(ator) ?? new Atores();
                 }
                 catch (Exception)
                 {
-                    resultado = new AtorBLL();
+                    resultado = new Atores();
                 }
             }
             return resultado;
         }
 
-        public void Atualizar(AtorBLL ator)
+        public static void Atualizar(Atores ator)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.AtorBLL.Update(ator);
+                    db.Atores.Update(ator);
                     db.SaveChanges();
                 }
                 catch (Exception)

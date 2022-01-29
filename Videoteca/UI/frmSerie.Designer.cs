@@ -1,6 +1,6 @@
 ﻿namespace Videoteca.UI
 {
-    partial class frmSerie
+    partial class FrmSerie
     {
         /// <summary>
         /// Required designer variable.
@@ -31,6 +31,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numAVALIACAO = new System.Windows.Forms.NumericUpDown();
+            this.numDURACAO = new System.Windows.Forms.NumericUpDown();
+            this.numANO = new System.Windows.Forms.NumericUpDown();
+            this.numEPISODIO = new System.Windows.Forms.NumericUpDown();
+            this.numTEMPORADA = new System.Windows.Forms.NumericUpDown();
             this.cmbGENERO = new System.Windows.Forms.ComboBox();
             this.lblEpisodio = new System.Windows.Forms.Label();
             this.lblTemporada = new System.Windows.Forms.Label();
@@ -61,23 +66,18 @@
             this.lblFiltroTitulo = new System.Windows.Forms.Label();
             this.txtFiltro = new System.Windows.Forms.TextBox();
             this.dgvResultado = new System.Windows.Forms.DataGridView();
-            this.numTEMPORADA = new System.Windows.Forms.NumericUpDown();
-            this.numEPISODIO = new System.Windows.Forms.NumericUpDown();
-            this.numANO = new System.Windows.Forms.NumericUpDown();
-            this.numDURACAO = new System.Windows.Forms.NumericUpDown();
-            this.numAVALIACAO = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.tabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAVALIACAO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDURACAO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numANO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEPISODIO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTEMPORADA)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvElenco)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultado)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTEMPORADA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numEPISODIO)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numANO)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDURACAO)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAVALIACAO)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -142,6 +142,66 @@
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Registro de Série";
+            // 
+            // numAVALIACAO
+            // 
+            this.numAVALIACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numAVALIACAO.Location = new System.Drawing.Point(131, 465);
+            this.numAVALIACAO.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numAVALIACAO.Name = "numAVALIACAO";
+            this.numAVALIACAO.Size = new System.Drawing.Size(69, 29);
+            this.numAVALIACAO.TabIndex = 47;
+            // 
+            // numDURACAO
+            // 
+            this.numDURACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numDURACAO.Location = new System.Drawing.Point(422, 420);
+            this.numDURACAO.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numDURACAO.Name = "numDURACAO";
+            this.numDURACAO.Size = new System.Drawing.Size(69, 29);
+            this.numDURACAO.TabIndex = 46;
+            // 
+            // numANO
+            // 
+            this.numANO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numANO.Location = new System.Drawing.Point(422, 375);
+            this.numANO.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numANO.Name = "numANO";
+            this.numANO.Size = new System.Drawing.Size(69, 29);
+            this.numANO.TabIndex = 45;
+            // 
+            // numEPISODIO
+            // 
+            this.numEPISODIO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numEPISODIO.Location = new System.Drawing.Point(422, 328);
+            this.numEPISODIO.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numEPISODIO.Name = "numEPISODIO";
+            this.numEPISODIO.Size = new System.Drawing.Size(69, 29);
+            this.numEPISODIO.TabIndex = 44;
+            // 
+            // numTEMPORADA
+            // 
+            this.numTEMPORADA.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numTEMPORADA.Location = new System.Drawing.Point(131, 328);
+            this.numTEMPORADA.Name = "numTEMPORADA";
+            this.numTEMPORADA.Size = new System.Drawing.Size(69, 29);
+            this.numTEMPORADA.TabIndex = 43;
             // 
             // cmbGENERO
             // 
@@ -235,7 +295,7 @@
             this.btnCadastrar.TabIndex = 14;
             this.btnCadastrar.Text = "Cadastrar";
             this.btnCadastrar.UseVisualStyleBackColor = true;
-            this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
+            this.btnCadastrar.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
             // lblAvaliacao
             // 
@@ -399,12 +459,14 @@
             this.dgvElenco.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvElenco.ColumnHeadersVisible = false;
             this.dgvElenco.Location = new System.Drawing.Point(6, 22);
+            this.dgvElenco.MultiSelect = false;
             this.dgvElenco.Name = "dgvElenco";
             this.dgvElenco.ReadOnly = true;
             this.dgvElenco.RowHeadersVisible = false;
             this.dgvElenco.RowTemplate.Height = 25;
             this.dgvElenco.Size = new System.Drawing.Size(355, 328);
             this.dgvElenco.TabIndex = 14;
+            this.dgvElenco.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvElenco_CellClick);
             this.dgvElenco.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvElenco_CellDoubleClick);
             // 
             // btnInserir
@@ -521,90 +583,30 @@
             this.dgvResultado.TabIndex = 4;
             this.dgvResultado.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultado_CellDoubleClick);
             // 
-            // numTEMPORADA
-            // 
-            this.numTEMPORADA.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.numTEMPORADA.Location = new System.Drawing.Point(131, 328);
-            this.numTEMPORADA.Name = "numTEMPORADA";
-            this.numTEMPORADA.Size = new System.Drawing.Size(69, 29);
-            this.numTEMPORADA.TabIndex = 43;
-            // 
-            // numEPISODIO
-            // 
-            this.numEPISODIO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.numEPISODIO.Location = new System.Drawing.Point(422, 328);
-            this.numEPISODIO.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.numEPISODIO.Name = "numEPISODIO";
-            this.numEPISODIO.Size = new System.Drawing.Size(69, 29);
-            this.numEPISODIO.TabIndex = 44;
-            // 
-            // numANO
-            // 
-            this.numANO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.numANO.Location = new System.Drawing.Point(422, 375);
-            this.numANO.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numANO.Name = "numANO";
-            this.numANO.Size = new System.Drawing.Size(69, 29);
-            this.numANO.TabIndex = 45;
-            // 
-            // numDURACAO
-            // 
-            this.numDURACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.numDURACAO.Location = new System.Drawing.Point(422, 420);
-            this.numDURACAO.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numDURACAO.Name = "numDURACAO";
-            this.numDURACAO.Size = new System.Drawing.Size(69, 29);
-            this.numDURACAO.TabIndex = 46;
-            // 
-            // numAVALIACAO
-            // 
-            this.numAVALIACAO.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.numAVALIACAO.Location = new System.Drawing.Point(131, 465);
-            this.numAVALIACAO.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numAVALIACAO.Name = "numAVALIACAO";
-            this.numAVALIACAO.Size = new System.Drawing.Size(69, 29);
-            this.numAVALIACAO.TabIndex = 47;
-            // 
-            // frmSerie
+            // FrmSerie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 561);
             this.Controls.Add(this.tabControl1);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "frmSerie";
+            this.Name = "FrmSerie";
             this.Text = "Serie";
             this.Load += new System.EventHandler(this.frmSerie_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAVALIACAO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDURACAO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numANO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEPISODIO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTEMPORADA)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvElenco)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultado)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTEMPORADA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numEPISODIO)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numANO)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDURACAO)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAVALIACAO)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -1,6 +1,6 @@
 ﻿namespace Videoteca.UI
 {
-    partial class frmAtor
+    partial class FrmAtor
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(895, 341);
             this.tabControl1.TabIndex = 0;
-            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
+            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabControl1_Selected);
             // 
             // tbpCadastro
             // 
@@ -197,7 +197,7 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Visible = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // btnRegistro
             // 
@@ -209,7 +209,7 @@
             this.btnRegistro.TabIndex = 5;
             this.btnRegistro.Text = "Cadastrar";
             this.btnRegistro.UseVisualStyleBackColor = true;
-            this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click);
+            this.btnRegistro.Click += new System.EventHandler(this.BtnRegistro_Click);
             // 
             // txtNOME_ATOR
             // 
@@ -249,7 +249,7 @@
             this.dgvAtorSeries.RowTemplate.Height = 25;
             this.dgvAtorSeries.Size = new System.Drawing.Size(388, 107);
             this.dgvAtorSeries.TabIndex = 1;
-            this.dgvAtorSeries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAtorSeries_CellDoubleClick);
+            this.dgvAtorSeries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAtorSeries_CellDoubleClick);
             // 
             // dgvAtorFilmes
             // 
@@ -267,7 +267,7 @@
             this.dgvAtorFilmes.RowTemplate.Height = 25;
             this.dgvAtorFilmes.Size = new System.Drawing.Size(388, 107);
             this.dgvAtorFilmes.TabIndex = 0;
-            this.dgvAtorFilmes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAtorFilmes_CellDoubleClick);
+            this.dgvAtorFilmes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAtorFilmes_CellDoubleClick);
             // 
             // tbpConsulta
             // 
@@ -294,7 +294,7 @@
             this.btnExcluir.TabIndex = 3;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
-            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+            this.btnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
             // 
             // lblFiltro
             // 
@@ -319,7 +319,7 @@
             this.txtFiltro.Name = "txtFiltro";
             this.txtFiltro.Size = new System.Drawing.Size(777, 23);
             this.txtFiltro.TabIndex = 1;
-            this.txtFiltro.TextChanged += new System.EventHandler(this.txtFiltro_TextChanged);
+            this.txtFiltro.TextChanged += new System.EventHandler(this.TxtFiltro_TextChanged);
             // 
             // dgvResultado
             // 
@@ -331,7 +331,7 @@
             this.dgvResultado.Name = "dgvResultado";
             this.dgvResultado.Size = new System.Drawing.Size(869, 238);
             this.dgvResultado.TabIndex = 0;
-            this.dgvResultado.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultado_CellDoubleClick);
+            this.dgvResultado.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvResultado_CellDoubleClick);
             // 
             // frmAtor
             // 
@@ -342,7 +342,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "frmAtor";
             this.Text = "Ator";
-            this.Load += new System.EventHandler(this.frmAtor_Load);
+            this.Load += new System.EventHandler(this.FrmAtor_Load);
             this.tabControl1.ResumeLayout(false);
             this.tbpCadastro.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

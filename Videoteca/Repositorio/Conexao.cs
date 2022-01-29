@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Data; //Trabalhar com dados.
 using System.Data.SqlClient; //Cliente do servidor SQLServer.
 
-namespace Videoteca.DAL
+namespace Videoteca.Repositorio
 {
     class Conexao
     {

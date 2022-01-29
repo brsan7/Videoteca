@@ -1,137 +1,22 @@
-﻿using Videoteca.BLL;
-using Videoteca.DAL;
+﻿using Videoteca.Entidade;
+using Videoteca.Repositorio;
+using Videoteca.Dominio;
 
 namespace Videoteca.UI
 {
-    public partial class frmSerie : Form
+    public partial class FrmSerie : Form
     {
-        public frmSerie()
-        {
-            InitializeComponent();
-        }
+        Series seriesEnt = new();
+        Atores atoresEnt = new();
+        ElencoSeries elencoSeriesEnt = new();
+        List<Atores> lstElencoSerie = new();
+        List<string> lstElencoRegistrado = new();
 
-        SerieBLL serieBLL = new SerieBLL();
-        SerieDAL serieDAL = new SerieDAL();
-        AtorBLL atorBLL = new AtorBLL();
-        AtorDAL atorDAL = new AtorDAL();
-        ElencoSerieBLL elencoSerieBLL = new ElencoSerieBLL();
-        ElencoSerieDAL elencoSerieDAL = new ElencoSerieDAL();
-        List<AtorBLL> lstElencoSerie = new List<AtorBLL>();
-        List<string> lstElencoRegistrado = new List<string>();
         bool atualizar;
 
-        private void btnCadastrar_Click(object sender, EventArgs e)
+        public FrmSerie()
         {
-            numTEMPORADA.ForeColor = Color.Black;
-            numEPISODIO.ForeColor = Color.Black;
-            cmbGENERO.ForeColor = Color.Black;
-
-            serieBLL.TITULO_SERIE = txtTITULO_SERIE.Text;
-            serieBLL.CAPITULO = txtCAPITULO.Text;
-            serieBLL.DESCRICAO = txtDESCRICAO.Text;
-            serieBLL.TEMPORADA = Convert.ToInt32(numTEMPORADA.Value);
-            serieBLL.EPISODIO = Convert.ToInt32(numEPISODIO.Value);
-            serieBLL.GENERO = cmbGENERO.Text;
-            serieBLL.PAIS = txtPAIS.Text;
-            serieBLL.ANO = Convert.ToInt32(numANO.Value);
-            serieBLL.DURACAO = Convert.ToInt32(numDURACAO.Value);
-            serieBLL.AVALIACAO = Convert.ToInt32(numAVALIACAO.Value);
-            serieBLL.ASSISTIDO = txtASSISTIDO.Checked;
-
-            string[] validacao = serieBLL.validacao();
-
-            if (validacao[0].Equals("valido"))
-            {
-                if (atualizar)
-                {
-                    serieDAL.Atualizar(serieBLL);
-
-                    elencoSerieBLL.ID_SERIE = serieBLL.ID_SERIE;
-                    foreach (var ator in elencoSerieBLL.lstAtoresRemover(lstElencoRegistrado, lstElencoSerie))
-                    {
-                        elencoSerieBLL.NOME_ATOR = ator;
-                        elencoSerieDAL.Excluir(elencoSerieBLL);
-                    }
-
-                    elencoSerieBLL.ID_ELENCO = 0;
-                    foreach (var ator in elencoSerieBLL.lstAtoresInserir(lstElencoRegistrado, lstElencoSerie))
-                    {
-                        elencoSerieBLL.NOME_ATOR = ator;
-                        elencoSerieDAL.Cadastrar(elencoSerieBLL);
-                    }
-
-                    MessageBox.Show("Serie Atualizada!");
-                    btnCadastrar.Text = "Cadastrar";
-                    atualizar = false;
-                    txtPAIS.ReadOnly = false;
-                    btnCancelar.Visible = false;
-                }
-                else
-                {
-                    elencoSerieBLL.ID_ELENCO = 0;
-                    serieBLL.ID_SERIE = 0;
-
-                    serieDAL.Cadastrar(serieBLL);
-
-                    elencoSerieBLL.ID_SERIE = serieDAL.BuscarUltimoRegistro(serieBLL).ID_SERIE;
-                    foreach (var item in lstElencoSerie)
-                    {
-                        elencoSerieBLL.NOME_ATOR = item.NOME_ATOR;
-                        elencoSerieDAL.Cadastrar(elencoSerieBLL);
-                    }
-                    MessageBox.Show("Série Cadastrada!");
-                }
-
-                groupBox1.Text = "Registro de Serie";
-                txtTITULO_SERIE.Clear();
-                txtCAPITULO.Clear();
-                txtDESCRICAO.Clear();
-                numTEMPORADA.Value = 0;
-                numEPISODIO.Value = 0;
-                cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
-                txtPAIS.Clear();
-                numANO.Value = 0;
-                numDURACAO.Value = 0;
-                numAVALIACAO.Value = 0;
-                txtASSISTIDO.Checked = false;
-                lstElencoSerie.Clear();
-                lstElencoRegistrado.Clear();
-                dgvElenco.DataSource = null;
-
-                txtTITULO_SERIE.Focus();
-            }
-            else
-            {
-                string mensagem = "";
-
-                foreach (string itemValidacao in validacao)
-                {
-                    switch (itemValidacao)
-                    {
-                        case "TITULO_SERIE":
-                            txtTITULO_SERIE.PlaceholderText = "*Campo Obrigatório";
-                            mensagem += "O Campo ''Título'' é obrigatório"
-                                + Environment.NewLine + Environment.NewLine;
-                            break;
-                        case "TEMPORADA":
-                            numTEMPORADA.ForeColor = Color.Red;
-                            mensagem += "O Campo ''Temporada'' é obrigatório" 
-                                + Environment.NewLine + Environment.NewLine;
-                            break;
-                        case "EPISODIO":
-                            numEPISODIO.ForeColor = Color.Red;
-                            mensagem += "O Campo ''Episódio'' é obrigatório" 
-                                + Environment.NewLine + Environment.NewLine;
-                            break;
-                        case "GENERO":
-                            cmbGENERO.ForeColor = Color.Red;
-                            mensagem += "O Campo ''Gênero'' é obrigatório" 
-                                + Environment.NewLine + Environment.NewLine;
-                            break;
-                    }
-                }
-                MessageBox.Show(mensagem);
-            }
+            InitializeComponent();
         }
 
         private void frmSerie_Load(object sender, EventArgs e)
@@ -140,7 +25,7 @@ namespace Videoteca.UI
             setup_cmbAtores();
 
             //Fonte de dados do ComboBox(Lista)
-            cmbGENERO.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
+            cmbGENERO.DataSource = SerieDom.ListarGeneros(SeriesRep.Consultar());
 
             //Configurar DataGridView
             //Evitar Edição
@@ -162,136 +47,123 @@ namespace Videoteca.UI
             dgvElenco.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
-        private void txtFiltro_TextChanged(object? sender, EventArgs? e)
+        /////////////////INICIO EVENTO: btnRegistro_Click/////////////////
+        private void btnRegistro_Click(object sender, EventArgs e)
         {
-            cmbFiltroGenero.SelectedIndex = 0;
-            //serieBLL.TITULO_SERIE = txtFiltro.Text;
-            dgvResultado.DataSource = serieDAL.FiltrarTitulo(txtFiltro.Text);
-        }
+            SetupRegistro();
 
-        private void cmbGeneros_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbFiltroGenero.SelectedIndex > 0)
+            string[] validacao = SerieDom.Validacao(seriesEnt);
+
+            if (validacao[0].Equals("valido"))
             {
-                dgvResultado.DataSource = serieDAL.FiltrarGenero(cmbFiltroGenero.Text);
+                if (atualizar)
+                {
+                    btnRegistro_AcaoClick_Atualizar();
+                }
+                else
+                {
+                    btnRegistro_AcaoClick_Cadastrar();
+                }
+
+                btnCancelar_Click(null, null);
             }
             else
             {
-                dgvResultado.DataSource = serieDAL.Consultar();
+                ValidacaoMsg(validacao);
             }
         }
 
-        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        private void SetupRegistro()
         {
-            if (e.TabPageIndex == 1) 
-            {
-                dgvResultado.DataSource = serieDAL.Consultar();
+            numTEMPORADA.ForeColor = Color.Black;
+            numEPISODIO.ForeColor = Color.Black;
+            cmbGENERO.ForeColor = Color.Black;
 
-                cmbFiltroGenero.DataSource = serieDAL.listarGeneros(serieDAL.Consultar());
-            }
+            seriesEnt.TITULO_SERIE = txtTITULO_SERIE.Text;
+            seriesEnt.CAPITULO = txtCAPITULO.Text;
+            seriesEnt.DESCRICAO = txtDESCRICAO.Text;
+            seriesEnt.TEMPORADA = Convert.ToInt32(numTEMPORADA.Value);
+            seriesEnt.EPISODIO = Convert.ToInt32(numEPISODIO.Value);
+            seriesEnt.GENERO = cmbGENERO.Text;
+            seriesEnt.PAIS = txtPAIS.Text;
+            seriesEnt.ANO = Convert.ToInt32(numANO.Value);
+            seriesEnt.DURACAO = Convert.ToInt32(numDURACAO.Value);
+            seriesEnt.AVALIACAO = Convert.ToInt32(numAVALIACAO.Value);
+            seriesEnt.ASSISTIDO = txtASSISTIDO.Checked;
         }
 
-        private void btnExcluir_Click(object sender, EventArgs e)
+        private void btnRegistro_AcaoClick_Atualizar()
         {
-            DialogResult resposta;
+            SeriesRep.Atualizar(seriesEnt);
 
-            if (dgvResultado.SelectedRows.Count > 0)
+            elencoSeriesEnt.ID_SERIE = seriesEnt.ID_SERIE;
+            foreach (var ator in ElencoDom.LstAtoresRemover(lstElencoRegistrado, lstElencoSerie))
             {
-                resposta = MessageBox.Show("Deseja realmente excluir?",
-                                            "Confirmação",
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question,
-                                            MessageBoxDefaultButton.Button2);
-                if (resposta == DialogResult.Yes)
+                elencoSeriesEnt.NOME_ATOR = ator;
+                ElencoSeriesRep.Excluir(elencoSeriesEnt);
+            }
+
+            foreach (var ator in ElencoDom.LstAtoresInserir(lstElencoRegistrado, lstElencoSerie))
+            {
+                elencoSeriesEnt.ID_ELENCO = 0;
+                elencoSeriesEnt.NOME_ATOR = ator;
+                ElencoSeriesRep.Cadastrar(elencoSeriesEnt);
+            }
+            MessageBox.Show("Serie Atualizada!");
+            
+        }
+
+        private void btnRegistro_AcaoClick_Cadastrar()
+        {
+            seriesEnt.ID_SERIE = 0;
+
+            SeriesRep.Cadastrar(seriesEnt);
+
+            elencoSeriesEnt.ID_SERIE = SeriesRep.BuscarUltimoRegistro(seriesEnt).ID_SERIE;
+            foreach (var item in lstElencoSerie)
+            {
+                elencoSeriesEnt.ID_ELENCO = 0;
+                elencoSeriesEnt.NOME_ATOR = item.NOME_ATOR;
+                ElencoSeriesRep.Cadastrar(elencoSeriesEnt);
+            }
+            MessageBox.Show("Série Cadastrada!");
+        }
+
+        private void ValidacaoMsg(string[] validacao)
+        {
+            string mensagem = "";
+
+            foreach (string itemValidacao in validacao)
+            {
+                switch (itemValidacao)
                 {
-                    serieBLL.ID_SERIE = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value);
-                    serieDAL.Excluir(serieBLL);
-                    txtFiltro_TextChanged(null, null);
+                    case "TITULO_SERIE":
+                        txtTITULO_SERIE.PlaceholderText = "*Campo Obrigatório";
+                        mensagem += "O Campo ''Título'' é obrigatório"
+                            + Environment.NewLine + Environment.NewLine;
+                        break;
+                    case "TEMPORADA":
+                        numTEMPORADA.ForeColor = Color.Red;
+                        mensagem += "O Campo ''Temporada'' é obrigatório"
+                            + Environment.NewLine + Environment.NewLine;
+                        break;
+                    case "EPISODIO":
+                        numEPISODIO.ForeColor = Color.Red;
+                        mensagem += "O Campo ''Episódio'' é obrigatório"
+                            + Environment.NewLine + Environment.NewLine;
+                        break;
+                    case "GENERO":
+                        cmbGENERO.ForeColor = Color.Red;
+                        mensagem += "O Campo ''Gênero'' é obrigatório"
+                            + Environment.NewLine + Environment.NewLine;
+                        break;
                 }
             }
-            else
-            {
-                MessageBox.Show("Selecione um registro");
-            }
+            MessageBox.Show(mensagem);
         }
+        /////////////////FIM EVENTO: btnRegistro_Click/////////////////
 
-        private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int id_serie = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value);
-            preencherRegistroSerie(id_serie);
-
-            tabControl1.SelectTab(0);
-        }
-
-        public void preencherRegistroSerie(int id_serie)
-        {
-            groupBox1.Text = "Atualização de Série";
-            atualizar = true;
-            btnCancelar.Visible = true;
-            btnCadastrar.Text = "Atualizar";
-            
-            serieBLL = serieDAL.PreecheSerie(id_serie);
-            
-            txtTITULO_SERIE.Text = serieBLL.TITULO_SERIE;
-            txtCAPITULO.Text = serieBLL.CAPITULO;
-            txtDESCRICAO.Text = serieBLL.DESCRICAO;
-            numTEMPORADA.Value = serieBLL.TEMPORADA;
-            numEPISODIO.Value = serieBLL.EPISODIO;
-            cmbGENERO.Text = serieBLL.GENERO;
-            txtPAIS.Text = serieBLL.PAIS;
-            numANO.Value = serieBLL.ANO;
-            numDURACAO.Value = serieBLL.DURACAO;
-            numAVALIACAO.Value = serieBLL.AVALIACAO;
-            txtASSISTIDO.Checked = Convert.ToBoolean(serieBLL.ASSISTIDO);
-
-            lstElencoSerie.Clear();
-            lstElencoRegistrado.Clear();
-
-            foreach (var elencoSerie in elencoSerieDAL.Consultar(Convert.ToInt16(serieBLL.ID_SERIE)))
-            {
-                lstElencoSerie.Add(new AtorBLL() { NOME_ATOR = elencoSerie.NOME_ATOR });
-                lstElencoRegistrado.Add(elencoSerie.NOME_ATOR);
-            }
-            setup_dgvElenco();
-            btnInserir_statusTexto(false);
-        }
-
-        private void dgvElenco_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            string ator = dgvElenco.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString() ?? "";
-            frmAtor visualizacao = new frmAtor();
-            visualizacao.MdiParent = frmMenu.ActiveForm;
-            visualizacao.Show();
-            visualizacao.PreencherRegistroAtor(ator);
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            btnCadastrar.Text = "Cadastrar";
-            atualizar = false;
-            btnCancelar.Visible = false;
-            txtPAIS.ReadOnly = false;
-
-            groupBox1.Text = "Registro de Série";
-            txtTITULO_SERIE.Clear();
-            txtCAPITULO.Clear();
-            txtDESCRICAO.Clear();
-            numTEMPORADA.Value = 0;
-            numEPISODIO.Value = 0;
-            cmbGENERO.SelectedIndex = 0;
-            txtPAIS.Clear();
-            numANO.Value = 0;
-            numDURACAO.Value = 0;
-            numAVALIACAO.Value = 0;
-            txtASSISTIDO.Checked = false;
-            dgvElenco.DataSource = null;
-            lstElencoSerie.Clear();
-            lstElencoRegistrado.Clear();
-            btnInserir_statusTexto(false);
-
-            txtTITULO_SERIE.Focus();
-        }
-
+        /////////////////INICIO EVENTO: btnInserirAtorElenco_Click/////////////////
         private void btnInserirAtorElenco_Click(object sender, EventArgs e)
         {
             DialogResult resposta;
@@ -306,11 +178,11 @@ namespace Videoteca.UI
                                     MessageBoxDefaultButton.Button2);
                 if (resposta == DialogResult.Yes)
                 {
-                    atorBLL.NOME_ATOR = cmbAtorInsert;
-                    atorDAL.Cadastrar(atorBLL);
+                    atoresEnt.NOME_ATOR = cmbAtorInsert;
+                    AtoresRep.Cadastrar(atoresEnt);
                     MessageBox.Show("Ator Cadastrado!");
 
-                    lstElencoSerie.Add(new AtorBLL() { NOME_ATOR = cmbAtorInsert });
+                    lstElencoSerie.Add(new Atores() { NOME_ATOR = cmbAtorInsert });
                     setup_cmbAtores();
                     cmbAtores.Text = cmbAtorInsert;
 
@@ -326,16 +198,78 @@ namespace Videoteca.UI
                 }
                 else
                 {
-                    lstElencoSerie.Add(new AtorBLL() { NOME_ATOR = cmbAtorInsert });
+                    lstElencoSerie.Add(new Atores() { NOME_ATOR = cmbAtorInsert });
                     btnInserir.Text = "Remover";
                 }
             }
             setup_dgvElenco();
         }
 
+        private void setup_cmbAtores()
+        {
+            AtoresRep atoresDAL = new();
+
+            //Fonte de dados do ComboBox(DataTable)
+            cmbAtores.DataSource = AtoresRep.Consultar();
+            //Configurar qual coluna sera utilizada para os valores
+            cmbAtores.ValueMember = "NOME_ATOR";
+            //Configurar qual coluna sera utilizada para exibiçao
+            cmbAtores.DisplayMember = "NOME_ATOR";
+        }
+
+        private bool verificarAtorInserido(string ator)
+        {
+            bool contido = false;
+            foreach (Atores item in lstElencoSerie)
+            {
+                if (item.NOME_ATOR.Equals(ator))
+                {
+                    contido = true;
+                    break;
+                }
+            }
+            return contido;
+        }
+
+        private int lstElencoFilme_getIndex(string ator)
+        {
+            int index = 0;
+            foreach (var a in lstElencoSerie)
+            {
+                if (a.NOME_ATOR.Equals(ator))
+                {
+                    break;
+                }
+                index++;
+            }
+            return index;
+        }
+
+        private void setup_dgvElenco()
+        {
+            dgvElenco.DataSource = null;
+            dgvElenco.DataSource = lstElencoSerie;
+            dgvElenco.Columns["IDADE"].Visible = false;
+            dgvElenco.Columns["PAIS"].Visible = false;
+            dgvElenco.Columns["APOSENTADO"].Visible = false;
+        }
+        /////////////////FIM EVENTO: btnInserirAtorElenco_Click/////////////////
+
+        /////////////////INICIO EVENTO: dgvElenco_CellDoubleClick/////////////////
+        private void dgvElenco_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ator = dgvElenco.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString() ?? "";
+            FrmAtor visualizacao = new();
+            visualizacao.MdiParent = FrmMain.ActiveForm;
+            visualizacao.Show();
+            visualizacao.PreencherRegistroAtor(ator);
+        }
+        /////////////////FIM EVENTO: dgvElenco_CellDoubleClick/////////////////
+
+        /////////////////INICIO EVENTOS: cmbAtores/////////////////
         private void cmbAtores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnInserir_statusTexto(false);
+            StatusTexto_btnInserir(false);
         }
 
         private void cmbAtores_TextChanged(object sender, EventArgs e)
@@ -350,12 +284,12 @@ namespace Videoteca.UI
                 }
             }
 
-            btnInserir_statusTexto(registrar);
+            StatusTexto_btnInserir(registrar);
 
             txtASSISTIDO.Checked = registrar;
         }
 
-        private void btnInserir_statusTexto(bool registrar)
+        private void StatusTexto_btnInserir(bool registrar)
         {
             if (registrar)
             {
@@ -373,54 +307,145 @@ namespace Videoteca.UI
                 }
             }
         }
+        /////////////////FIM EVENTOS: cmbAtores/////////////////
 
-        private void setup_cmbAtores()
+        /////////////////INICIO EVENTO: btnCancelar_Click/////////////////
+        private void btnCancelar_Click(object? sender, EventArgs? e)
         {
-            AtorDAL atoresDAL = new AtorDAL();
+            btnCadastrar.Text = "Cadastrar";
+            atualizar = false;
+            btnCancelar.Visible = false;
 
-            //Fonte de dados do ComboBox(DataTable)
-            cmbAtores.DataSource = atoresDAL.Consultar();
-            //Configurar qual coluna sera utilizada para os valores
-            cmbAtores.ValueMember = "NOME_ATOR";
-            //Configurar qual coluna sera utilizada para exibiçao
-            cmbAtores.DisplayMember = "NOME_ATOR";
-        }
-
-        private void setup_dgvElenco()
-        {
+            groupBox1.Text = "Registro de Série";
+            txtTITULO_SERIE.Clear();
+            txtCAPITULO.Clear();
+            txtDESCRICAO.Clear();
+            numTEMPORADA.Value = 0;
+            numEPISODIO.Value = 0;
+            cmbGENERO.DataSource = SerieDom.ListarGeneros(SeriesRep.Consultar());
+            txtPAIS.Clear();
+            numANO.Value = 0;
+            numDURACAO.Value = 0;
+            numAVALIACAO.Value = 0;
+            txtASSISTIDO.Checked = false;
             dgvElenco.DataSource = null;
-            dgvElenco.DataSource = lstElencoSerie;
-            dgvElenco.Columns["IDADE"].Visible = false;
-            dgvElenco.Columns["PAIS"].Visible = false;
-            dgvElenco.Columns["APOSENTADO"].Visible = false;
+            lstElencoSerie.Clear();
+            lstElencoRegistrado.Clear();
+            StatusTexto_btnInserir(false);
+
+            txtTITULO_SERIE.Focus();
+        }
+        /////////////////FIM EVENTO: btnCancelar_Click/////////////////
+        
+        /////////////////INICIO EVENTO: tabControl1_Selected/////////////////
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPageIndex == 1)
+            {
+                dgvResultado.DataSource = SeriesRep.Consultar();
+
+                cmbFiltroGenero.DataSource = SerieDom.ListarGeneros(SeriesRep.Consultar());
+            }
+        }
+        /////////////////FIM EVENTO: tabControl1_Selected/////////////////
+
+        /////////////////INICIO EVENTO: txtFiltro_TextChanged/////////////////
+        private void txtFiltro_TextChanged(object? sender, EventArgs? e)
+        {
+            cmbFiltroGenero.SelectedIndex = 0;
+            dgvResultado.DataSource = SeriesRep.FiltrarTitulo(txtFiltro.Text);
+        }
+        /////////////////FIM EVENTO: txtFiltro_TextChanged/////////////////
+
+        /////////////////INICIO EVENTO: cmbGeneros_SelectedIndexChanged/////////////////
+        private void cmbGeneros_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbFiltroGenero.SelectedIndex > 0)
+            {
+                dgvResultado.DataSource = SeriesRep.FiltrarGenero(cmbFiltroGenero.Text);
+            }
+            else
+            {
+                dgvResultado.DataSource = SeriesRep.Consultar();
+            }
+        }
+        /////////////////FIM EVENTO: cmbGeneros_SelectedIndexChanged/////////////////
+
+        /////////////////INICIO EVENTO: btnExcluir_Click/////////////////
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            DialogResult resposta;
+
+            if (dgvResultado.SelectedRows.Count > 0)
+            {
+                resposta = MessageBox.Show("Deseja realmente excluir?",
+                                            "Confirmação",
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question,
+                                            MessageBoxDefaultButton.Button2);
+                if (resposta == DialogResult.Yes)
+                {
+                    seriesEnt.ID_SERIE = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value);
+                    SeriesRep.Excluir(seriesEnt);
+                    txtFiltro_TextChanged(null, null);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione um registro");
+            }
+        }
+        /////////////////FIM EVENTO: btnExcluir_Click/////////////////
+
+        /////////////////INICIO EVENTO: dgvResultado_CellDoubleClick/////////////////
+        private void dgvResultado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id_serie = Convert.ToInt16(dgvResultado.SelectedRows[0].Cells["ID_SERIE"].Value);
+            PreencherRegistroSerie(id_serie);
+
+            tabControl1.SelectTab(0);
         }
 
-        private int lstElencoFilme_getIndex(string ator)
+        public void PreencherRegistroSerie(int id_serie)
         {
-            int index = 0;
-            foreach (var a in lstElencoSerie)
-            {
-                if (a.NOME_ATOR.Equals(ator))
-                {
-                    break;
-                }
-                index++;
-            }
-            return index;
-        }
+            groupBox1.Text = "Atualização de Série";
+            atualizar = true;
+            btnCancelar.Visible = true;
+            btnCadastrar.Text = "Atualizar";
+            
+            seriesEnt = SeriesRep.PreecheSerie(id_serie);
+            
+            txtTITULO_SERIE.Text = seriesEnt.TITULO_SERIE;
+            txtCAPITULO.Text = seriesEnt.CAPITULO;
+            txtDESCRICAO.Text = seriesEnt.DESCRICAO;
+            numTEMPORADA.Value = seriesEnt.TEMPORADA;
+            numEPISODIO.Value = seriesEnt.EPISODIO;
+            cmbGENERO.Text = seriesEnt.GENERO;
+            txtPAIS.Text = seriesEnt.PAIS;
+            numANO.Value = seriesEnt.ANO;
+            numDURACAO.Value = seriesEnt.DURACAO;
+            numAVALIACAO.Value = seriesEnt.AVALIACAO;
+            txtASSISTIDO.Checked = Convert.ToBoolean(seriesEnt.ASSISTIDO);
 
-        private bool verificarAtorInserido(string ator)
-        {
-            bool contido = false;
-            foreach (AtorBLL item in lstElencoSerie)
+            lstElencoSerie.Clear();
+            lstElencoRegistrado.Clear();
+
+            foreach (var elencoSerie in ElencoSeriesRep.Consultar(Convert.ToInt16(seriesEnt.ID_SERIE)))
             {
-                if (item.NOME_ATOR.Equals(ator))
-                {
-                    contido = true;
-                    break;
-                }
+                lstElencoSerie.Add(new Atores() { NOME_ATOR = elencoSerie.NOME_ATOR });
+                lstElencoRegistrado.Add(elencoSerie.NOME_ATOR);
             }
-            return contido;
+            setup_dgvElenco();
+            StatusTexto_btnInserir(false);
         }
+        /////////////////FIM EVENTO: dgvResultado_CellDoubleClick/////////////////
+
+        /////////////////INICIO EVENTO: dgvElenco_CellClick/////////////////
+        private void dgvElenco_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string nome_ator = dgvElenco.SelectedRows[0].Cells["NOME_ATOR"].Value.ToString() ?? String.Empty;
+            cmbAtores.Text = nome_ator;
+        }
+        /////////////////FIM EVENTO: dgvElenco_CellClick/////////////////
     }
 }

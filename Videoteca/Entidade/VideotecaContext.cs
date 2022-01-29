@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Videoteca.BLL
+namespace Videoteca.Entidade
 {
     internal class VideotecaContext : DbContext
     {
@@ -17,10 +17,10 @@ namespace Videoteca.BLL
                                     Integrated Security=true");
         }
 
-        public DbSet<AtorBLL> AtorBLL { get; set; } = null!;
-        public DbSet<FilmeBLL> FilmeBLL { get; set; } = null!;
-        public DbSet<SerieBLL> SerieBLL { get; set; } = null!;
-        public DbSet<ElencoFilmeBLL> ElencoFilmeBLL { get; set; } = null!;
-        public DbSet<ElencoSerieBLL> ElencoSerieBLL { get; set; } = null!;
+        public DbSet<Atores> Atores { get; set; } = null!;
+        public DbSet<Filmes> Filmes { get; set; } = null!;
+        public DbSet<Series> Series { get; set; } = null!;
+        public DbSet<ElencoFilmes> ElencoFilmes { get; set; } = null!;
+        public DbSet<ElencoSeries> ElencoSeries { get; set; } = null!;
     }
 }

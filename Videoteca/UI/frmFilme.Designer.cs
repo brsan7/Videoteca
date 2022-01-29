@@ -1,6 +1,6 @@
 ﻿namespace Videoteca.UI
 {
-    partial class frmFilme
+    partial class FrmFilme
     {
         /// <summary>
         /// Required designer variable.
@@ -211,7 +211,7 @@
             this.btnCadastrar.TabIndex = 11;
             this.btnCadastrar.Text = "Cadastrar";
             this.btnCadastrar.UseVisualStyleBackColor = true;
-            this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
+            this.btnCadastrar.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
             // lblAvaliacao
             // 
@@ -375,12 +375,14 @@
             this.dgvElenco.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvElenco.ColumnHeadersVisible = false;
             this.dgvElenco.Location = new System.Drawing.Point(6, 28);
+            this.dgvElenco.MultiSelect = false;
             this.dgvElenco.Name = "dgvElenco";
             this.dgvElenco.ReadOnly = true;
             this.dgvElenco.RowHeadersVisible = false;
             this.dgvElenco.RowTemplate.Height = 25;
             this.dgvElenco.Size = new System.Drawing.Size(355, 328);
             this.dgvElenco.TabIndex = 11;
+            this.dgvElenco.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvElenco_CellClick);
             this.dgvElenco.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvElenco_CellDoubleClick);
             // 
             // btnInserir
@@ -497,14 +499,14 @@
             this.dgvResultado.TabIndex = 4;
             this.dgvResultado.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultado_CellDoubleClick);
             // 
-            // frmFilme
+            // FrmFilme
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 561);
             this.Controls.Add(this.tabControl1);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "frmFilme";
+            this.Name = "FrmFilme";
             this.Text = "Filme";
             this.Load += new System.EventHandler(this.frmFilme_Load);
             this.tabControl1.ResumeLayout(false);

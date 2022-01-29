@@ -1,17 +1,17 @@
 ﻿using System.Data;
-using Videoteca.BLL;
+using Videoteca.Entidade;
 
-namespace Videoteca.DAL
+namespace Videoteca.Repositorio
 {
-    class ElencoFilmeDAL
+    class ElencoFilmesRep
     {
-        public void Cadastrar(ElencoFilmeBLL elenco)
+        public static void Cadastrar(ElencoFilmes elenco)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.ElencoFilmeBLL.Add(elenco);
+                    db.ElencoFilmes.Add(elenco);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -21,39 +21,36 @@ namespace Videoteca.DAL
             }
         }
 
-
-
-        public List<ElencoFilmeBLL> Consultar(int id_filme)
+        public static List<ElencoFilmes> Consultar(int id_filme)
         {
-            List<ElencoFilmeBLL> resultado;
+            List<ElencoFilmes> resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = (from elencoFilme in db.ElencoFilmeBLL 
+                    resultado = (from elencoFilme in db.ElencoFilmes 
                                  where elencoFilme.ID_FILME == id_filme
-                                 select elencoFilme).ToList<ElencoFilmeBLL>();
+                                 select elencoFilme).ToList<ElencoFilmes>();
                 }
                 catch (Exception)
                 {
-                    resultado = new List<ElencoFilmeBLL>();
+                    resultado = new List<ElencoFilmes>();
                 }
                 return resultado;
             }
         }
 
-
-        public DataTable Consultar(string nome_ator)
+        public static DataTable Consultar(string nome_ator)
         {
-            DataTable dt = new DataTable ();
+            DataTable dt = new();
             dt.Columns.Add("ID_FILME");
             dt.Columns.Add("TITULO_FILME");
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    var atuacoesAtor = from elencoFilme in db.ElencoFilmeBLL
-                                       join filme in db.FilmeBLL
+                    var atuacoesAtor = from elencoFilme in db.ElencoFilmes
+                                       join filme in db.Filmes
                                        on elencoFilme.ID_FILME equals filme.ID_FILME
                                        where elencoFilme.NOME_ATOR == nome_ator
                                        select new { filme.ID_FILME, filme.TITULO_FILME };
@@ -71,14 +68,14 @@ namespace Videoteca.DAL
             return dt;
         }
 
-        public void Excluir(ElencoFilmeBLL elencoFilme)
+        public static void Excluir(ElencoFilmes elencoFilme)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.ElencoFilmeBLL.Remove(
-                        db.ElencoFilmeBLL.Single(
+                    db.ElencoFilmes.Remove(
+                        db.ElencoFilmes.Single(
                             registro =>
                             registro.ID_FILME == elencoFilme.ID_FILME
                             && registro.NOME_ATOR == elencoFilme.NOME_ATOR));

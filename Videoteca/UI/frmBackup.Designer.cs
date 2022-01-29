@@ -1,6 +1,6 @@
 ﻿namespace Videoteca.UI
 {
-    partial class frmBackup
+    partial class FrmBackup
     {
         /// <summary>
         /// Required designer variable.

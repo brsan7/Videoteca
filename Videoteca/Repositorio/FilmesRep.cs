@@ -1,17 +1,17 @@
 ﻿using System.Data;
-using Videoteca.BLL;
+using Videoteca.Entidade;
 
-namespace Videoteca.DAL
+namespace Videoteca.Repositorio
 {
-    class SerieDAL
+    class FilmesRep
     {
-        public void Cadastrar(SerieBLL serie)
+        public static void Cadastrar(Filmes filme)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.SerieBLL.Add(serie);
+                    db.Filmes.Add(filme);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -21,84 +21,85 @@ namespace Videoteca.DAL
             }
         }
 
-        public List<SerieBLL> Consultar()
+        public static List<Filmes> Consultar()
         {
-            List<SerieBLL> resultado;
+            List<Filmes> resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = (from filmes in db.SerieBLL select filmes).ToList<SerieBLL>();
+                    resultado = (from filmes in db.Filmes select filmes).ToList<Filmes>();
                 }
                 catch (Exception)
                 {
-                    resultado = new List<SerieBLL>();
+                    resultado = new List<Filmes>();
                 }
             }
             return resultado;
         }
 
-        public List<SerieBLL> FiltrarTitulo(string busca)
+        public static List<Filmes> FiltrarTitulo(string busca)
         {
-            List<SerieBLL> resultado;
+            List<Filmes> resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = (from filmes in db.SerieBLL
-                                 where filmes.TITULO_SERIE.Contains(busca)
+                    resultado = (from filmes in db.Filmes
+                                 where filmes.TITULO_FILME.Contains(busca)
                                  select filmes).ToList();
                 }
                 catch (Exception)
                 {
-                    resultado = new List<SerieBLL>();
+                    resultado = new List<Filmes>();
                 }
             }
             return resultado;
         }
 
-        public List<SerieBLL> FiltrarGenero(string busca)
+        public static List<Filmes> FiltrarGenero(string busca)
         {
-            List<SerieBLL> resultado;
+            List<Filmes> resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = (from filmes in db.SerieBLL
+                    resultado = (from filmes in db.Filmes
                                  where filmes.GENERO == busca
                                  select filmes).ToList();
                 }
                 catch (Exception)
                 {
-                    resultado = new List<SerieBLL>();
+                    resultado = new List<Filmes>();
                 }
             }
             return resultado;
         }
 
-        public SerieBLL BuscarUltimoRegistro(SerieBLL serie)
+        public static Filmes BuscarUltimoRegistro(Filmes filme)
         {
-            SerieBLL resultado;
+            Filmes resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = db.SerieBLL.OrderByDescending(f => f.TITULO_SERIE == serie.TITULO_SERIE).First();
+                    resultado = db.Filmes.OrderByDescending(f => f.TITULO_FILME == filme.TITULO_FILME).First();
                 }
                 catch (Exception)
                 {
-                    resultado = new SerieBLL();
+                    resultado = new Filmes();
                 }
             }
             return resultado;
         }
-        public void Excluir(SerieBLL serie)
+
+        public static void Excluir(Filmes filme)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.SerieBLL.Remove(serie);
+                    db.Filmes.Remove(filme);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -108,30 +109,30 @@ namespace Videoteca.DAL
             }
         }
 
-        public SerieBLL PreecheSerie(int id_serie)
+        public static Filmes PreecheFilme(int id_filme)
         {
-            SerieBLL resultado;
+            Filmes resultado;
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    resultado = db.SerieBLL.Find(id_serie) ?? new SerieBLL();
+                    resultado = db.Filmes.Find(id_filme) ?? new Filmes();
                 }
                 catch (Exception)
                 {
-                    resultado = new SerieBLL();
+                    resultado = new Filmes();
                 }
             }
             return resultado;
         }
 
-        public void Atualizar(SerieBLL serie)
+        public static void Atualizar(Filmes filme)
         {
             using (var db = new VideotecaContext())
             {
                 try
                 {
-                    db.SerieBLL.Update(serie);
+                    db.Filmes.Update(filme);
                     db.SaveChanges();
                 }
                 catch (Exception)
@@ -139,20 +140,6 @@ namespace Videoteca.DAL
                     //
                 }
             }
-        }
-
-        public List<string> listarGeneros(List<SerieBLL> fonte)
-        {
-            List<string> lstGenero = new List<string>();
-            lstGenero.Add("Gênero");
-            foreach (var item in fonte)
-            {
-                if (!lstGenero.Contains(item.GENERO))
-                {
-                    lstGenero.Add(item.GENERO);
-                }
-            }
-            return lstGenero;
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Videoteca.DAL
+namespace Videoteca.Repositorio
 {
-    class BackupDAL
+    class BackupRep
     {
         Conexao con = new Conexao();
 

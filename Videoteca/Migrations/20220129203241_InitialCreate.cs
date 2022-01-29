@@ -9,7 +9,7 @@ namespace Videoteca.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AtorBLL",
+                name: "Atores",
                 columns: table => new
                 {
                     NOME_ATOR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -19,11 +19,11 @@ namespace Videoteca.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AtorBLL", x => x.NOME_ATOR);
+                    table.PrimaryKey("PK_Atores", x => x.NOME_ATOR);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FilmeBLL",
+                name: "Filmes",
                 columns: table => new
                 {
                     ID_FILME = table.Column<int>(type: "int", nullable: false)
@@ -39,11 +39,11 @@ namespace Videoteca.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmeBLL", x => x.ID_FILME);
+                    table.PrimaryKey("PK_Filmes", x => x.ID_FILME);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SerieBLL",
+                name: "Series",
                 columns: table => new
                 {
                     ID_SERIE = table.Column<int>(type: "int", nullable: false)
@@ -62,11 +62,11 @@ namespace Videoteca.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SerieBLL", x => x.ID_SERIE);
+                    table.PrimaryKey("PK_Series", x => x.ID_SERIE);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ElencoFilmeBLL",
+                name: "ElencoFilmes",
                 columns: table => new
                 {
                     ID_ELENCO = table.Column<int>(type: "int", nullable: false)
@@ -76,23 +76,23 @@ namespace Videoteca.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ElencoFilmeBLL", x => x.ID_ELENCO);
+                    table.PrimaryKey("PK_ElencoFilmes", x => x.ID_ELENCO);
                     table.ForeignKey(
-                        name: "FK_ElencoFilmeBLL_AtorBLL_NOME_ATOR",
+                        name: "FK_ElencoFilmes_Atores_NOME_ATOR",
                         column: x => x.NOME_ATOR,
-                        principalTable: "AtorBLL",
+                        principalTable: "Atores",
                         principalColumn: "NOME_ATOR",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ElencoFilmeBLL_FilmeBLL_ID_FILME",
+                        name: "FK_ElencoFilmes_Filmes_ID_FILME",
                         column: x => x.ID_FILME,
-                        principalTable: "FilmeBLL",
+                        principalTable: "Filmes",
                         principalColumn: "ID_FILME",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ElencoSerieBLL",
+                name: "ElencoSeries",
                 columns: table => new
                 {
                     ID_ELENCO = table.Column<int>(type: "int", nullable: false)
@@ -102,58 +102,58 @@ namespace Videoteca.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ElencoSerieBLL", x => x.ID_ELENCO);
+                    table.PrimaryKey("PK_ElencoSeries", x => x.ID_ELENCO);
                     table.ForeignKey(
-                        name: "FK_ElencoSerieBLL_AtorBLL_NOME_ATOR",
+                        name: "FK_ElencoSeries_Atores_NOME_ATOR",
                         column: x => x.NOME_ATOR,
-                        principalTable: "AtorBLL",
+                        principalTable: "Atores",
                         principalColumn: "NOME_ATOR",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ElencoSerieBLL_SerieBLL_ID_SERIE",
+                        name: "FK_ElencoSeries_Series_ID_SERIE",
                         column: x => x.ID_SERIE,
-                        principalTable: "SerieBLL",
+                        principalTable: "Series",
                         principalColumn: "ID_SERIE",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ElencoFilmeBLL_ID_FILME",
-                table: "ElencoFilmeBLL",
+                name: "IX_ElencoFilmes_ID_FILME",
+                table: "ElencoFilmes",
                 column: "ID_FILME");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ElencoFilmeBLL_NOME_ATOR",
-                table: "ElencoFilmeBLL",
+                name: "IX_ElencoFilmes_NOME_ATOR",
+                table: "ElencoFilmes",
                 column: "NOME_ATOR");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ElencoSerieBLL_ID_SERIE",
-                table: "ElencoSerieBLL",
+                name: "IX_ElencoSeries_ID_SERIE",
+                table: "ElencoSeries",
                 column: "ID_SERIE");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ElencoSerieBLL_NOME_ATOR",
-                table: "ElencoSerieBLL",
+                name: "IX_ElencoSeries_NOME_ATOR",
+                table: "ElencoSeries",
                 column: "NOME_ATOR");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ElencoFilmeBLL");
+                name: "ElencoFilmes");
 
             migrationBuilder.DropTable(
-                name: "ElencoSerieBLL");
+                name: "ElencoSeries");
 
             migrationBuilder.DropTable(
-                name: "FilmeBLL");
+                name: "Filmes");
 
             migrationBuilder.DropTable(
-                name: "AtorBLL");
+                name: "Atores");
 
             migrationBuilder.DropTable(
-                name: "SerieBLL");
+                name: "Series");
         }
     }
 }

@@ -1,26 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Videoteca.UI;
 
 namespace Videoteca
 {
-    public partial class frmMenu : Form
+    public partial class FrmMain : Form
     {
-        public frmMenu()
+        public FrmMain()
         {
             InitializeComponent();
         }
 
-        private void atorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AtorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Instanciando um objeto da tela frmAluno
-            UI.frmAtor tela = new UI.frmAtor();
+            FrmAtor tela = new();
 
             //Prender dentro deste formulario (frmMenu)
             tela.MdiParent = this;
@@ -29,10 +21,10 @@ namespace Videoteca
             tela.Show();
         }
 
-        private void filmeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FilmeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Instanciando um objeto da tela frmAluno
-            UI.frmFilme tela = new UI.frmFilme();
+            FrmFilme tela = new();
 
             //Prender dentro deste formulario (frmMenu)
             tela.MdiParent = this;
@@ -41,10 +33,10 @@ namespace Videoteca
             tela.Show();
         }
 
-        private void serieToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SerieToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Instanciando um objeto da tela frmAluno
-            UI.frmSerie tela = new UI.frmSerie();
+            FrmSerie tela = new();
 
             //Prender dentro deste formulario (frmMenu)
             tela.MdiParent = this;
@@ -53,7 +45,7 @@ namespace Videoteca
             tela.Show();
         }
 
-        private void frmMenu_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult resposta;
 
@@ -64,12 +56,12 @@ namespace Videoteca
             }
         }
 
-        private void frmMenu_Load(object sender, EventArgs e)
+        private void FrmMenu_Load(object sender, EventArgs e)
         {
             this.Text = Properties.Settings.Default.Titulo;
             this.BackColor = Properties.Settings.Default.CorDasTelas;
 
-            DAL.Conexao status = new DAL.Conexao();
+            Repositorio.Conexao status = new();
 
             atoresToolStripMenuItem.Enabled = false;
             filmesToolStripMenuItem.Enabled = false;
@@ -80,7 +72,7 @@ namespace Videoteca
             {
                 lblUsuario.Text = "Status : Banco de Dados não configurado";
                 MessageBox.Show("Configure a conexão com o Banco de Dados");
-                configuracoesToolStripMenuItem_Click(null, null);
+                ConfiguracoesToolStripMenuItem_Click(null, null);
             }
             else
             {
@@ -96,22 +88,22 @@ namespace Videoteca
                 {
                     lblUsuario.Text = "Status : Conexão não Estabelecida";
                     MessageBox.Show("Verifique a configuração de conexão com o Banco de Dados");
-                    configuracoesToolStripMenuItem_Click(null, null);
+                    ConfiguracoesToolStripMenuItem_Click(null, null);
                 }
 
             }
         }
 
-        private void configuracoesToolStripMenuItem_Click(object? sender, EventArgs? e)
+        private void ConfiguracoesToolStripMenuItem_Click(object? sender, EventArgs? e)
         {
-            UI.frmConfiguracao tela = new UI.frmConfiguracao();
+            FrmConfiguracao tela = new();
             tela.MdiParent = this;
             tela.Show();
         }
 
-        private void backupToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BackupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UI.frmBackup tela = new UI.frmBackup();
+            FrmBackup tela = new();
             tela.MdiParent = this;
             tela.Show();
         }
