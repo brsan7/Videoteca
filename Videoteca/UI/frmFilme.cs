@@ -64,7 +64,6 @@ namespace Videoteca.UI
                 {
                     btnRegistro_AcaoClick_Cadastrar();
                 }
-
                 btnCancelar_Click(null,null);
             }
             else
@@ -192,8 +191,6 @@ namespace Videoteca.UI
 
         private void setup_cmbAtores()
         {
-            AtoresRep atoresDAL = new();
-
             //Fonte de dados do ComboBox(DataTable)
             cmbAtores.DataSource = AtoresRep.Consultar();
             //Configurar qual coluna sera utilizada para os valores
@@ -232,8 +229,8 @@ namespace Videoteca.UI
 
         private void setup_dgvElenco()
         {
-            dgvElenco.DataSource = null;
-            dgvElenco.DataSource = lstElencoFilme;
+            List<Atores> fonte = new(lstElencoFilme);
+            dgvElenco.DataSource = fonte;
             dgvElenco.Columns["IDADE"].Visible = false;
             dgvElenco.Columns["PAIS"].Visible = false;
             dgvElenco.Columns["APOSENTADO"].Visible = false;
@@ -314,7 +311,7 @@ namespace Videoteca.UI
             numDURACAO.Value = 0;
             numAVALIACAO.Value = 0;
             txtASSISTIDO.Checked = false;
-            dgvElenco.DataSource = null;
+            dgvElenco.DataSource = new List<Atores>();
             lstElencoFilme.Clear();
             lstElencoRegistrado.Clear();
 
