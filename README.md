@@ -1,50 +1,54 @@
 Videoteca
 ===================================
 
-Projeto inspirado no exercÌcio de sÈries em um aplicativo de console <a href="https://github.com/brsan7/Exercicio_Series_DIO">(Exercicio_Series_DIO)</a> 
+Projeto inspirado no exerc√≠cio de s√©ries em um aplicativo de console <a href="https://github.com/brsan7/Exercicio_Series_DIO">(Exercicio_Series_DIO)</a> 
 e usado para praticar os conhecimentos adquirido nos BootCamps MRV Fullstack Developer e LocalizaLabs .NET Developer - Cursados na <a href="https://www.dio.me/">DIO</a> (Digital Innovation One).  
-Para a evoluÁ„o do exercÌcio, foi utilizado:  
+Para a evolu√ß√£o do exerc√≠cio, foi utilizado:  
 `Microsoft.EntityFrameworkCore.SqlServer` *com a abordagem Code First*  
   
-Consiste em um banco de dados relacional para registro de Atores, Filmes e Series e proporcionar uma interface amigavÈl para consulta, registro e alteraÁ„o dos relacionamentos entre as tabelas:  
+Consiste em um banco de dados relacional para registro de Atores, Filmes e Series e proporcionar uma interface amigav√©l para consulta, registro e altera√ß√£o dos relacionamentos entre as tabelas:  
 
 * Relacionamento 1 - *Atores -> ElencoFilme <- Filmes*  
 * Relacionamento 2 - *Atores -> ElencoSerie <- Series*  
 
 -------
 * **Atores**  
-*Concentra informaÁıes pessoais de cada ator*
+*Concentra informa√ß√µes pessoais de cada ator*
 -------	
 * **Filmes**  
-*Concentra informaÁıes unicas de cada filme*
+*Concentra informa√ß√µes unicas de cada filme*
 -------	
 * **Series**  
-*Concentra informaÁıes unicas de cada sÈrie*
+*Concentra informa√ß√µes unicas de cada s√©rie*
 -------
 * **ElencoFilme**  
-*Concentra as informaÁıes de todos os filmes registrados que cada ator registrado trabalhou*
+*Concentra as informa√ß√µes de todos os filmes registrados que cada ator registrado trabalhou*
 -------
 * **ElencoSerie**  
-*Concentra as informaÁıes de todas as sÈries registrados que cada ator registrado trabalhou*
+*Concentra as informa√ß√µes de todas as s√©ries registrados que cada ator registrado trabalhou*
 -------
-**Screenshots**  
+## **Screenshots**  
   
-* Telas de configuraÁ„o
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_0_0.png" height="949" width="506" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_0_1.png" height="949" width="614" >  
--------
+* Telas de configura√ß√£o
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_0_0.PNG" height="506" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_0_1.PNG" height="614" width="949" >  
+  
+-------  
 * Telas de Atores  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_1_0.png" height="949" width="614" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_1_1.png" height="949" width="614" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_1_2.png" height="949" width="614" >  
--------
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_1_0.PNG" height="614" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_1_1.PNG" height="614" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_1_2.PNG" height="614" width="949" >  
+  
+-------  
 * Telas de Filmes  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_2_0.png" height="949" width="614" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_2_1.png" height="949" width="614" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_2_2.png" height="949" width="614" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_2_0.PNG" height="614" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_2_1.PNG" height="614" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_2_2.PNG" height="614" width="949" >  
+  
 -------
-* Telas de SÈries  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_3_0.png" height="949" width="614" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_3_1.png" height="949" width="614" >  
-<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_3_2.png" height="949" width="614" >  
+* Telas de S√©ries  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_3_0.PNG" height="614" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_3_1.PNG" height="614" width="949" >  
+<img src="https://github.com/brsan7/Videoteca/blob/master/Screenshots/Screenshot_3_2.PNG" height="614" width="949" >  
+  
 -------
